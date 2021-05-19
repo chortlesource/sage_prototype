@@ -29,9 +29,11 @@
 //
 
 int main(const int argc, const char *argv[]) {
-  state_ptr st = std::make_shared<state>();
-  st = nullptr;
-  DEBUG("Hello Sage!");
+  // Initialize the game engine
+  engine sage;
+
+  // Run the game engine
+  sage.start();
 
   return 0;
 }

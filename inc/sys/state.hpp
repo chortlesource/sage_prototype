@@ -57,12 +57,18 @@ public:
   void update();
 
   // state get and set functions
-  void          set_status(status const& value) { g_status = value;}
-  istate const& get_input() { return g_input; }
+  void     set_status(status const& value) { g_status = value;}
+
+  timer  &      get_timer()  { return g_timer; }
+
+  istate const& get_input()  { return g_input; }
+  status const& get_status() { return g_status; }
+  double const& get_delta()  { return g_timer.delta(); }
 
 private:
-  status g_status;
+  timer  g_timer;
   istate g_input;
+  status g_status;
 };
 
 

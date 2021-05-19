@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////
 //
-// sage - state.cpp
+// sage - engine.hpp
 //
 // Copyright (c) 2021 Christopher M. Short
 //
@@ -21,30 +21,32 @@
 //
 ////////////////////////////////////////////////////////////////////////////
 
-#include <sage.hpp>
+#ifndef _SAGE_ENGINE_HPP
+#define _SAGE_ENGINE_HPP
 
 
 /////////////////////////////////////////////////////////////////
-// STATE Class implementation
+// ENGINE Class
 //
+// The engine class handles the main game loop logic
 
-state::state() : g_timer(), g_input(), g_status(status::init) {}
+class engine {
+public:
+  engine();
+  virtual ~engine();
+
+  virtual void start() final;
+
+private:
+  bool         initialized;
+  unsigned int eventid;
+  state_ptr    g_state;
+
+  // These functions are where game logic is to be implemented
+  virtual void on_user_init()     {}
+  virtual void on_user_update()   {}
+  virtual void on_user_finalize() {}
+};
 
 
-state::~state() {}
-
-
-void state::initialize(state_ptr const& g_state) {
-  g_status = state::status::run;
-}
-
-
-void state::update() {
-  if(g_status != state::status::run) return;
-
-  // Obtain the current mouse state
-  g_input.buttons = SDL_GetMouseState(&g_input.x, &g_input.y);
-
-  // Update the keyboard state
-  SDL_PumpEvents();
-}
+#endif // _SAGE_ENGINE_HPP

@@ -59,6 +59,7 @@
 
 // System
 #include <sys/state.hpp>
+#include <sys/engine.hpp>
 
 
 #endif // SAGE_HPP
