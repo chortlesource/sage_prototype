@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////
 //
-// sage - sage.cpp
+// sage - state.cpp
 //
 // Copyright (c) 2021 Christopher M. Short
 //
@@ -24,14 +24,27 @@
 #include <sage.hpp>
 
 
-/////////////////////////////////////////////////////////////
-// MAIN FUNCTION
+/////////////////////////////////////////////////////////////////
+// STATE Class implementation
 //
 
-int main(const int argc, const char *argv[]) {
-  state_ptr st = std::make_shared<state>();
-  st = nullptr;
-  DEBUG("Hello Sage!");
+state::state() : g_status(status::init), g_input() {}
 
-  return 0;
+
+state::~state() {}
+
+
+void state::initialize(state_ptr const& g_state) {
+  g_status = state::status::run;
+}
+
+
+void state::update() {
+  if(g_status != state::status::run) return;
+
+  // Obtain the current mouse state
+  g_input.buttons = SDL_GetMouseState(&g_input.x, &g_input.y);
+
+  // Update the keyboard state
+  SDL_PumpEvents();
 }
