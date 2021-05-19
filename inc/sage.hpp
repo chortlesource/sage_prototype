@@ -57,6 +57,9 @@
 #include <util/debug.hpp>
 #include <util/timer.hpp>
 
+// Object
+#include <obj/object.hpp>
+
 // System
 #include <sys/assets.hpp>
 #include <sys/state.hpp>
