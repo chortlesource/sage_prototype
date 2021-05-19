@@ -29,7 +29,7 @@
 //
 
 int main(const int argc, const char *argv[]) {
-  std::cout << "Hello Sage!" << std::endl;
+  DEBUG("Hello Sage!");
 
   return 0;
 }

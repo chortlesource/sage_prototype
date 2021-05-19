@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////
 //
-// sage - sage.hpp
+// sage - forwards.hpp
 //
 // Copyright (c) 2021 Christopher M. Short
 //
@@ -21,41 +21,27 @@
 //
 ////////////////////////////////////////////////////////////////////////////
 
-#ifndef _SAGE_HPP
-#define _SAGE_HPP
+#ifndef _SAGE_FORWARDS_HPP
+#define _SAGE_FORWARDS_HPP
 
 
 /////////////////////////////////////////////////////////////
-// DEPENDENCIES
+// FORWARD DECLARATIONS
 //
 
-// SDL Dependencies
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_ttf.h>
-
-// Jsoncpp Dependencies
-#include <libs/json-forwards.h>
-#include <libs/json.h>
-
-// C++ Std Dependencies
-#include <iostream>
-#include <memory>
-#include <chrono>
-#include <iomanip>
-#include <fstream>
-#include <functional>
-#include <filesystem>
+// Utility Classes
+class timer;
 
 
 /////////////////////////////////////////////////////////////
-// LOCAL INCLUDES
+// APPLICATION GLOBALS
 //
 
-// Utility
-#include <util/forwards.hpp>
-#include <util/debug.hpp>
-#include <util/timer.hpp>
+static const std::string _APP_NAME    = "sage";
+static const std::string _APP_VERSION = "0.0.1-ALPHA";
+static const std::string _APP_AUTHOR  = "C. M. Short";
+static const std::string _APP_SOURCE  = "http://www.github.com/chortlesoft/sage";
+static const std::string _APP_INIT    = "./asset/init.json";
 
 
-#endif // SAGE_HPP
+#endif // _SAGE_FORWARDS_HPP
