@@ -28,13 +28,25 @@
 // STATE Class implementation
 //
 
-state::state() : g_timer(), g_input(), g_status(status::init) {}
+state::state() : g_timer(), g_assets(), g_input(), g_status(status::init), g_config(Json::Value::null) {}
 
 
 state::~state() {}
 
 
 void state::initialize(state_ptr const& g_state) {
+  // Load the default configuration files
+  g_config             = g_assets.load_json("init", _APP_INIT);
+  Json::Value g_fonts  = g_assets.load_json("fonts", g_config["FONTS_JSON"].asString());
+  Json::Value g_colors = g_assets.load_json("colors", g_config["COLORS_JSON"].asString());
+
+  // Load the game fonts
+  g_assets.load_fonts(g_fonts);
+
+  // Load the game colors
+  g_assets.load_colors(g_fonts);
+
+  // Set the gamestate status
   g_status = state::status::run;
 }
 

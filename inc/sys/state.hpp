@@ -57,18 +57,22 @@ public:
   void update();
 
   // state get and set functions
-  void     set_status(status const& value) { g_status = value;}
+  void set_status(status const& value) { g_status = value;}
 
-  timer  &      get_timer()  { return g_timer; }
-
-  istate const& get_input()  { return g_input; }
-  status const& get_status() { return g_status; }
-  double const& get_delta()  { return g_timer.delta(); }
+  timer       &      get_timer()  { return g_timer; }
+  assets      &      get_assets() { return g_assets; }
+  istate      const& get_input()  { return g_input; }
+  status      const& get_status() { return g_status; }
+  double      const& get_delta()  { return g_timer.delta(); }
+  Json::Value const& get_config() { return g_config; }
 
 private:
   timer  g_timer;
+  assets g_assets;
   istate g_input;
   status g_status;
+
+  Json::Value g_config;
 };
 
 

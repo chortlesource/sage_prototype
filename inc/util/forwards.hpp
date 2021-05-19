@@ -31,15 +31,25 @@
 
 // Utility Classes
 class timer;
+
+// System Classes
+class assets;
 class state;
+class engine;
 
 
 /////////////////////////////////////////////////////////////
 // SMART POINTERS
 //
 
-using state_ptr = std::shared_ptr<state>;
+// System Smart Pointers
+using state_ptr      = std::shared_ptr<state>;
 
+// SDL Smart Pointers
+using sdlwindow_ptr  = std::shared_ptr<SDL_Window>;
+using sdlrender_ptr  = std::shared_ptr<SDL_Renderer>;
+using sdltexture_ptr = std::shared_ptr<SDL_Texture>;
+using font_ptr       = std::shared_ptr<TTF_Font>;
 
 /////////////////////////////////////////////////////////////
 // APPLICATION GLOBALS

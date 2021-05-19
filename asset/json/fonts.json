@@ -1,0 +1,8 @@
+{
+  "SRC" :"./asset/fonts/beefd.ttf",
+  "NFONT": 2,
+  "SIZE" : {
+    "0": { "NAME": "M_MNU_BUTTON", "SIZE": 20 },
+    "1": { "NAME": "M_MNU_TITLE",  "SIZE": 30 }
+  }
+}

@@ -58,6 +58,7 @@
 #include <util/timer.hpp>
 
 // System
+#include <sys/assets.hpp>
 #include <sys/state.hpp>
 #include <sys/engine.hpp>
 

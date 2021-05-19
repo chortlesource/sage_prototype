@@ -1,0 +1,6 @@
+{
+	"APP_W": 1080,
+	"APP_H": 720,
+	"COLORS_JSON": "./asset/json/colors.json",
+	"FONTS_JSON": "./asset/json/fonts.json"
+}
