@@ -25,7 +25,7 @@
 
 
 /////////////////////////////////////////////////////////////
-// LAYER implementation
+// LAYER Class implementation
 //
 
 layer::layer(state_ptr const& g_state) : object(g_state) {

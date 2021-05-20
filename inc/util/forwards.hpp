@@ -52,6 +52,7 @@ class engine;
 // System Smart Pointers
 using state_ptr      = std::shared_ptr<state>;
 using object_ptr     = std::shared_ptr<object>;
+using layer_ptr      = std::shared_ptr<layer>;
 
 // SDL Smart Pointers
 using sdlwindow_ptr  = std::shared_ptr<SDL_Window>;

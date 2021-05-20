@@ -65,7 +65,6 @@ public:
   manager() : ids(0), delegates(), events() {}
   ~manager() {}
 
-  // Public MANAGER methods
   bool add_delegate(delegate const& del);
   bool remove_delegate(delegate const& del);
   void send_event(event const& e);

@@ -63,6 +63,7 @@ public:
   assets      &      get_assets()  { return g_assets; }
   window      &      get_window()  { return g_window; }
   manager     &      get_manager() { return g_manager; }
+  stage       &      get_stage()   { return g_stage; }
   istate      const& get_input()   { return g_input; }
   status      const& get_status()  { return g_status; }
   double      const& get_delta()   { return g_timer.delta(); }
@@ -72,6 +73,7 @@ private:
   timer   g_timer;
   assets  g_assets;
   manager g_manager;
+  stage   g_stage;
   window  g_window;
   istate  g_input;
   status  g_status;

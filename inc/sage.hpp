@@ -69,6 +69,7 @@
 #include <sys/events.hpp>
 #include <sys/manager.hpp>
 #include <sys/assets.hpp>
+#include <sys/stage.hpp>
 #include <sys/window.hpp>
 #include <sys/state.hpp>
 #include <sys/engine.hpp>

@@ -44,6 +44,9 @@ void state::initialize(state_ptr const& g_state) {
   // Initialize the game window
   g_window.initialize(g_config);
 
+  // Initialize the stage
+  g_stage.initialize(g_config);
+
   // Load the game fonts
   g_assets.load_fonts(g_fonts);
 
