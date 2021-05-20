@@ -1,0 +1,48 @@
+{
+	"ATLAS": "./asset/gfx/tdtiles.png",
+	"TILE_W": 16,
+	"TILE_H": 16,
+  "TILEN": 8,
+	"TILES": {
+		"1": {
+			"COLOR": "DEFAULT",
+			"X": 0,
+			"Y": 0
+		},
+		"2": {
+			"COLOR": "T_RED",
+			"X": 1,
+			"Y": 0
+		},
+		"3": {
+			"COLOR": "DEFAULT",
+			"X": 2,
+			"Y": 0
+		},
+		"4": {
+			"COLOR": "DEFAULT",
+			"X": 0,
+			"Y": 2
+		},
+		"5": {
+			"COLOR": "DEFAULT",
+			"X": 3,
+			"Y": 0
+		},
+		"6": {
+			"COLOR": "DEFAULT",
+			"X": 1,
+			"Y": 2
+		},
+		"7": {
+			"COLOR": "DEFAULT",
+			"X": 2,
+			"Y": 1
+		},
+		"8": {
+			"COLOR": "DEFAULT",
+			"X": 3,
+			"Y": 1
+		}
+	}
+}

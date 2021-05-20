@@ -39,6 +39,10 @@ void state::initialize(state_ptr const& g_state) {
   g_config             = g_assets.load_json("init", _APP_INIT);
   Json::Value g_fonts  = g_assets.load_json("fonts", g_config["FONTS_JSON"].asString());
   Json::Value g_colors = g_assets.load_json("colors", g_config["COLORS_JSON"].asString());
+  Json::Value g_tiles  = g_assets.load_json("atlas", g_config["ATLAS_JSON"].asString());
+
+  // Initialize the game window
+  g_window.initialize(g_config);
 
   // Load the game fonts
   g_assets.load_fonts(g_fonts);
@@ -46,8 +50,8 @@ void state::initialize(state_ptr const& g_state) {
   // Load the game colors
   g_assets.load_colors(g_colors);
 
-  // Initialize the game window
-  g_window.initialize(g_config);
+  // Load the game tiles
+  g_assets.load_tiles(g_state, g_tiles);
 
   // Set the gamestate status
   g_status = state::status::run;

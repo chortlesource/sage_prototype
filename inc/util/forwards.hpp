@@ -32,6 +32,9 @@
 // Utility Classes
 class timer;
 
+// Object Classes
+class tile;
+
 // System Classes
 class assets;
 class state;
@@ -50,6 +53,7 @@ using sdlwindow_ptr  = std::shared_ptr<SDL_Window>;
 using sdlrender_ptr  = std::shared_ptr<SDL_Renderer>;
 using sdltexture_ptr = std::shared_ptr<SDL_Texture>;
 using font_ptr       = std::shared_ptr<TTF_Font>;
+using tile_ptr       = std::shared_ptr<tile>;
 
 /////////////////////////////////////////////////////////////
 // APPLICATION GLOBALS
