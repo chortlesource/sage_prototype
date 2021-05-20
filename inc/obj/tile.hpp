@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////
 //
-// sage - sage.hpp
+// sage - tile.hpp
 //
 // Copyright (c) 2021 Christopher M. Short
 //
@@ -21,51 +21,21 @@
 //
 ////////////////////////////////////////////////////////////////////////////
 
-#ifndef _SAGE_HPP
-#define _SAGE_HPP
+#ifndef _SAGE_TILE_HPP
+#define _SAGE_TILE_HPP
 
 
 /////////////////////////////////////////////////////////////
-// DEPENDENCIES
+// TILE Class
 //
+// The tile class contains data used to render tiles
 
-// SDL Dependencies
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_ttf.h>
+class tile : public object {
+public:
+  tile(state_ptr const& g_state, sdltexture_ptr const& texture, SDL_Rect const& src, std::string const& colorid);
+  ~tile();
 
-// Jsoncpp Dependencies
-#include <libs/json-forwards.h>
-#include <libs/json.h>
-
-// C++ Std Dependencies
-#include <iostream>
-#include <memory>
-#include <chrono>
-#include <iomanip>
-#include <fstream>
-#include <functional>
-#include <filesystem>
+};
 
 
-/////////////////////////////////////////////////////////////
-// LOCAL INCLUDES
-//
-
-// Utility
-#include <util/forwards.hpp>
-#include <util/debug.hpp>
-#include <util/timer.hpp>
-
-// Object
-#include <obj/object.hpp>
-#include <obj/tile.hpp>
-
-// System
-#include <sys/assets.hpp>
-#include <sys/window.hpp>
-#include <sys/state.hpp>
-#include <sys/engine.hpp>
-
-
-#endif // SAGE_HPP
+#endif // _SAGE_TILE_HPP

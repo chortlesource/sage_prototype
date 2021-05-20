@@ -52,7 +52,7 @@ public:
   virtual SDL_Texture*        get_texture()  const final;
   virtual unsigned int const& get_id()       const final;
 
-private:
+protected:
   bool           initialized;
   bool           o_visible;
   bool           o_paused;

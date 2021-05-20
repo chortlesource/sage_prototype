@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////
 //
-// sage - sage.hpp
+// sage - window.hpp
 //
 // Copyright (c) 2021 Christopher M. Short
 //
@@ -21,51 +21,30 @@
 //
 ////////////////////////////////////////////////////////////////////////////
 
-#ifndef _SAGE_HPP
-#define _SAGE_HPP
+#ifndef _SAGE_WINDOW_HPP
+#define _SAGE_WINDOW_HPP
 
 
 /////////////////////////////////////////////////////////////
-// DEPENDENCIES
+// WINDOW Class
 //
+// The window class handles the sdl window logic
 
-// SDL Dependencies
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_ttf.h>
+class window {
+public:
+  window() {}
+  ~window();
 
-// Jsoncpp Dependencies
-#include <libs/json-forwards.h>
-#include <libs/json.h>
+  void initialize(Json::Value const& g_config);
+  void update(state_ptr const& g_state);
 
-// C++ Std Dependencies
-#include <iostream>
-#include <memory>
-#include <chrono>
-#include <iomanip>
-#include <fstream>
-#include <functional>
-#include <filesystem>
+  SDL_Window*   get_window();
+  SDL_Renderer* get_render();
 
+private:
+  bool          initialized;
+  sdlwindow_ptr g_window;
+  sdlrender_ptr g_renderer;
+};
 
-/////////////////////////////////////////////////////////////
-// LOCAL INCLUDES
-//
-
-// Utility
-#include <util/forwards.hpp>
-#include <util/debug.hpp>
-#include <util/timer.hpp>
-
-// Object
-#include <obj/object.hpp>
-#include <obj/tile.hpp>
-
-// System
-#include <sys/assets.hpp>
-#include <sys/window.hpp>
-#include <sys/state.hpp>
-#include <sys/engine.hpp>
-
-
-#endif // SAGE_HPP
+#endif // _SAGE_WINDOW_HPP

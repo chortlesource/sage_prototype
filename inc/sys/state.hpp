@@ -61,6 +61,7 @@ public:
 
   timer       &      get_timer()  { return g_timer; }
   assets      &      get_assets() { return g_assets; }
+  window      &      get_window() { return g_window; }
   istate      const& get_input()  { return g_input; }
   status      const& get_status() { return g_status; }
   double      const& get_delta()  { return g_timer.delta(); }
@@ -69,6 +70,7 @@ public:
 private:
   timer  g_timer;
   assets g_assets;
+  window g_window;
   istate g_input;
   status g_status;
 

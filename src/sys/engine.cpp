@@ -110,7 +110,7 @@ void engine::start() {
       // Update the game world
 
       // Render the game world to the screen
-      g_state->set_status(state::status::exit);
+      g_state->get_window().update(g_state);
       elapsed -= rate;
     }
   }

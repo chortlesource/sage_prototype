@@ -28,7 +28,7 @@
 // STATE Class implementation
 //
 
-state::state() : g_timer(), g_assets(), g_input(), g_status(status::init), g_config(Json::Value::null) {}
+state::state() : g_timer(), g_assets(), g_window(), g_input(), g_status(status::init), g_config(Json::Value::null) {}
 
 
 state::~state() {}
@@ -44,7 +44,10 @@ void state::initialize(state_ptr const& g_state) {
   g_assets.load_fonts(g_fonts);
 
   // Load the game colors
-  g_assets.load_colors(g_fonts);
+  g_assets.load_colors(g_colors);
+
+  // Initialize the game window
+  g_window.initialize(g_config);
 
   // Set the gamestate status
   g_status = state::status::run;
