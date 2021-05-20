@@ -83,6 +83,7 @@ void window::update(state_ptr const& g_state) {
       case SDL_WINDOWEVENT:
         switch(s_event.window.event) {
           case SDL_WINDOWEVENT_CLOSE:
+            // Set the status to exit
             g_state->set_status(state::status::exit);
             break;
           default:
@@ -93,6 +94,7 @@ void window::update(state_ptr const& g_state) {
     };
   }
 
+  // Render to the screen
   SDL_RenderPresent(g_renderer.get());
   SDL_SetRenderDrawColor(g_renderer.get(), 0, 0, 0, 255);
   SDL_RenderClear(g_renderer.get());

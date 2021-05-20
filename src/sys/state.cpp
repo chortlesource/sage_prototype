@@ -28,7 +28,7 @@
 // STATE Class implementation
 //
 
-state::state() : g_timer(), g_assets(), g_window(), g_input(), g_status(status::init), g_config(Json::Value::null) {}
+state::state() : g_timer(), g_assets(), g_manager(), g_window(), g_input(), g_status(status::init), g_config(Json::Value::null) {}
 
 
 state::~state() {}

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////
 //
-// sage - sage.hpp
+// sage - events.hpp
 //
 // Copyright (c) 2021 Christopher M. Short
 //
@@ -21,56 +21,50 @@
 //
 ////////////////////////////////////////////////////////////////////////////
 
-#ifndef _SAGE_HPP
-#define _SAGE_HPP
+#ifndef _SAGE_EVENTS_HPP
+#define _SAGE_EVENTS_HPP
 
 
 /////////////////////////////////////////////////////////////
-// DEPENDENCIES
+// EVENT enumeration and strings
 //
 
-// SDL Dependencies
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_ttf.h>
+enum class eventtype {
+  none, system
+};
 
-// Jsoncpp Dependencies
-#include <libs/json-forwards.h>
-#include <libs/json.h>
 
-// C++ Std Dependencies
-#include <iostream>
-#include <memory>
-#include <chrono>
-#include <iomanip>
-#include <fstream>
-#include <functional>
-#include <filesystem>
+static const std::array<std::string, 4> eventstring = {
+  "NON_EVENT", "SYSTEM_EVENT"
+};
 
-#include <string>
-#include <queue>
-#include <unordered_map>
 
 /////////////////////////////////////////////////////////////
-// LOCAL INCLUDES
+// SYSTEM_EVENT Struct
 //
 
-// Utility
-#include <util/forwards.hpp>
-#include <util/debug.hpp>
-#include <util/timer.hpp>
+struct system_event {
+  enum class action { none, halt, pause };
 
-// Object
-#include <obj/object.hpp>
-#include <obj/tile.hpp>
+  const eventtype e_type;
+  const action    e_action;
 
-// System
-#include <sys/events.hpp>
-#include <sys/manager.hpp>
-#include <sys/assets.hpp>
-#include <sys/window.hpp>
-#include <sys/state.hpp>
-#include <sys/engine.hpp>
+  system_event(eventtype const& e, action const& a) : e_type(e), e_action(a) {};
+};
 
 
-#endif // SAGE_HPP
+/////////////////////////////////////////////////////////////
+// EVENT Union
+//
+// The main event Union which contains all event types
+
+union event {
+  const eventtype    e_type;
+  const system_event e_system;
+
+  event() : e_type(eventtype::none) {};
+  event(system_event const& sys) : e_system(sys) {};
+};
+
+
+#endif // _SAGE_EVENTS_HPP
