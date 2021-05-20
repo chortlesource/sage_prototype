@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////
 //
-// sage - engine.hpp
+// sage - text.hpp
 //
 // Copyright (c) 2021 Christopher M. Short
 //
@@ -21,32 +21,24 @@
 //
 ////////////////////////////////////////////////////////////////////////////
 
-#ifndef _SAGE_ENGINE_HPP
-#define _SAGE_ENGINE_HPP
+#ifndef _SAGE_TEXT_HPP
+#define _SAGE_TEXT_HPP
 
 
-/////////////////////////////////////////////////////////////////
-// ENGINE Class
+/////////////////////////////////////////////////////////////
+// TEXT Class
 //
-// The engine class handles the main game loop logic
+// The text class is a basic text object
 
-class engine {
+
+class text : public object {
 public:
-  engine();
-  virtual ~engine();
-
-  virtual void start() final;
+  text(state_ptr const& g_state, std::string const& caption, std::string const& fontid, std::string const& colorid);
+  ~text();
 
 private:
-  bool         initialized;
-  unsigned int eventid;
-  state_ptr    g_state;
-
-  // These functions are where game logic is to be implemented
-  virtual void on_user_init();
-  virtual void on_user_update()   {}
-  virtual void on_user_finalize() {}
+  std::string t_text;
 };
 
 
-#endif // _SAGE_ENGINE_HPP
+#endif // _SAGE_TEXT_HPP

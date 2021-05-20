@@ -19,6 +19,7 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/libs)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/sys)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/obj)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/obj/ui)
 
 ## EXECUTABLE
 add_executable(${PROJECT_NAME} ${PROJECT_SRC})

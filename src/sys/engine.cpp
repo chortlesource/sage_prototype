@@ -120,3 +120,13 @@ void engine::start() {
   INFO("SAGE HALT");
   on_user_finalize();
 }
+
+
+void engine::on_user_init() {
+  // UI Engine Testing
+  object_ptr txt = std::make_shared<text>(g_state, "Some example text", "M_MNU_TITLE", "DEFAULT");
+  layer_ptr lay  = std::make_shared<layer>(g_state);
+  lay->add(txt);
+
+  g_state->get_stage().add(lay);
+}

@@ -64,6 +64,7 @@
 #include <obj/object.hpp>
 #include <obj/tile.hpp>
 #include <obj/layer.hpp>
+#include <obj/ui/text.hpp>
 
 // System
 #include <sys/events.hpp>
