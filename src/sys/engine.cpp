@@ -103,11 +103,13 @@ void engine::start() {
       g_state->update();
 
       // Poll for game events
+      g_state->get_manager().update();
 
       // Handle game logic
       on_user_update();
 
       // Update the game world
+      g_state->get_stage().update(g_state);
 
       // Render the game world to the screen
       g_state->get_window().update(g_state);
