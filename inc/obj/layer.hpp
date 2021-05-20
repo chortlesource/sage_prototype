@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////
 //
-// sage - sage.hpp
+// sage - layer.hpp
 //
 // Copyright (c) 2021 Christopher M. Short
 //
@@ -21,57 +21,30 @@
 //
 ////////////////////////////////////////////////////////////////////////////
 
-#ifndef _SAGE_HPP
-#define _SAGE_HPP
+#ifndef _SAGE_LAYER_HPP
+#define _SAGE_LAYER_HPP
 
 
 /////////////////////////////////////////////////////////////
-// DEPENDENCIES
+// LAYER Class
 //
+// The layer class contains objects to be drawn
 
-// SDL Dependencies
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_ttf.h>
+class layer : public object {
+public:
+  layer(state_ptr const& g_state);
+  virtual ~layer();
 
-// Jsoncpp Dependencies
-#include <libs/json-forwards.h>
-#include <libs/json.h>
+  virtual bool const& update(state_ptr const& g_state) override;
 
-// C++ Std Dependencies
-#include <iostream>
-#include <memory>
-#include <chrono>
-#include <iomanip>
-#include <fstream>
-#include <functional>
-#include <filesystem>
+  void add(object_ptr const& obj);
+  void pop();
 
-#include <string>
-#include <queue>
-#include <unordered_map>
+private:
+  std::vector<object_ptr> l_objects;
 
-/////////////////////////////////////////////////////////////
-// LOCAL INCLUDES
-//
-
-// Utility
-#include <util/forwards.hpp>
-#include <util/debug.hpp>
-#include <util/timer.hpp>
-
-// Object
-#include <obj/object.hpp>
-#include <obj/tile.hpp>
-#include <obj/layer.hpp>
-
-// System
-#include <sys/events.hpp>
-#include <sys/manager.hpp>
-#include <sys/assets.hpp>
-#include <sys/window.hpp>
-#include <sys/state.hpp>
-#include <sys/engine.hpp>
+  void draw(state_ptr const& g_state);
+};
 
 
-#endif // SAGE_HPP
+#endif // _SAGE_LAYER_HPP

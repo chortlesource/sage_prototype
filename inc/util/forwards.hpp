@@ -33,10 +33,14 @@
 class timer;
 
 // Object Classes
+class object;
 class tile;
+class layer;
 
 // System Classes
+class manager;
 class assets;
+class window;
 class state;
 class engine;
 
@@ -47,6 +51,7 @@ class engine;
 
 // System Smart Pointers
 using state_ptr      = std::shared_ptr<state>;
+using object_ptr     = std::shared_ptr<object>;
 
 // SDL Smart Pointers
 using sdlwindow_ptr  = std::shared_ptr<SDL_Window>;
