@@ -54,7 +54,7 @@ void object::set_paused(bool const& value)  {
 
 void object::set_position(SDL_Rect const& value) {
   o_changed  = true;
-  o_position = value;
+  o_position = SDL_Rect { value.x, value.y, o_source.w, o_source.h };
 };
 
 
@@ -97,6 +97,10 @@ SDL_Color const&    object::get_color()    const {
 SDL_Texture*        object::get_texture()  const {
   return o_texture.get();
 };
+
+sdltexture_ptr      object::get_textureptr()  const {
+  return o_texture;
+}
 
 
 unsigned int const& object::get_id()       const {

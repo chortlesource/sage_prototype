@@ -48,6 +48,7 @@
 #include <filesystem>
 
 #include <string>
+#include <array>
 #include <queue>
 #include <unordered_map>
 
@@ -65,6 +66,7 @@
 #include <obj/tile.hpp>
 #include <obj/layer.hpp>
 #include <obj/ui/text.hpp>
+#include <obj/ui/button.hpp>
 
 // System
 #include <sys/events.hpp>

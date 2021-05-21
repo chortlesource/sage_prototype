@@ -44,13 +44,14 @@ public:
   virtual void set_color(SDL_Color const& value) final;
   virtual void set_eventid(unsigned int const& value) final;
 
-  virtual bool const&         get_visible()  const final;
-  virtual bool const&         get_paused()   const final;
-  virtual SDL_Rect  const&    get_source()   const final;
-  virtual SDL_Rect  const&    get_position() const final;
-  virtual SDL_Color const&    get_color()    const final;
-  virtual SDL_Texture*        get_texture()  const final;
-  virtual unsigned int const& get_id()       const final;
+  virtual bool const&         get_visible()     const final;
+  virtual bool const&         get_paused()      const final;
+  virtual SDL_Rect  const&    get_source()      const final;
+  virtual SDL_Rect  const&    get_position()    const final;
+  virtual SDL_Color const&    get_color()       const final;
+  virtual SDL_Texture*        get_texture()     const final;
+  virtual sdltexture_ptr      get_textureptr()  const final;
+  virtual unsigned int const& get_id()          const final;
 
 protected:
   bool           initialized;

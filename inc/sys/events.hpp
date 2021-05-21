@@ -30,12 +30,12 @@
 //
 
 enum class eventtype {
-  none, system
+  none, system, button
 };
 
 
-static const std::array<std::string, 4> eventstring = {
-  "NON_EVENT", "SYSTEM_EVENT"
+static const std::array<std::string, 3> eventstring = {
+  "NON_EVENT", "SYSTEM_EVENT", "BUTTON_EVENT"
 };
 
 
@@ -54,6 +54,20 @@ struct system_event {
 
 
 /////////////////////////////////////////////////////////////
+// BUTTON_EVENT Struct
+//
+
+struct button_event {
+  enum class action { none, clicked };
+
+  const eventtype   e_type;
+  const action      e_action;
+  const char       *e_command;
+
+  button_event(eventtype const& e, action const& a, std::string const& c) : e_type(e), e_action(a), e_command(c.c_str()) {};
+};
+
+/////////////////////////////////////////////////////////////
 // EVENT Union
 //
 // The main event Union which contains all event types
@@ -61,9 +75,11 @@ struct system_event {
 union event {
   const eventtype    e_type;
   const system_event e_system;
+  const button_event e_button;
 
   event() : e_type(eventtype::none) {};
   event(system_event const& sys) : e_system(sys) {};
+  event(button_event const& btn) : e_button(btn) {};
 };
 
 
