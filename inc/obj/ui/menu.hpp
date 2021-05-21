@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////
 //
-// sage - layer.hpp
+// sage - menu.hpp
 //
 // Copyright (c) 2021 Christopher M. Short
 //
@@ -21,30 +21,19 @@
 //
 ////////////////////////////////////////////////////////////////////////////
 
-#ifndef _SAGE_LAYER_HPP
-#define _SAGE_LAYER_HPP
+#ifndef _SAGE_MENU_HPP
+#define _SAGE_MENU_HPP
 
 
 /////////////////////////////////////////////////////////////
-// LAYER Class
+// MENU Class
 //
-// The layer class contains objects to be drawn
+// The menu class handles the games main menu logic
 
-class layer : public object {
+class menu : public layer {
 public:
-  layer(state_ptr const& g_state);
-  virtual ~layer();
-
-  virtual bool const& update(state_ptr const& g_state) override;
-
-  void add(object_ptr const& obj);
-  void pop();
-
-protected:
-  std::vector<object_ptr> l_objects;
-
-  void draw(state_ptr const& g_state);
+  menu(state_ptr const& g_state);
+  
 };
 
-
-#endif // _SAGE_LAYER_HPP
+#endif // _SAGE_MENU_HPP

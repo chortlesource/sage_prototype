@@ -67,6 +67,7 @@
 #include <obj/layer.hpp>
 #include <obj/ui/text.hpp>
 #include <obj/ui/button.hpp>
+#include <obj/ui/menu.hpp>
 
 // System
 #include <sys/events.hpp>

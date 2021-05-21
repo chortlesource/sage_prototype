@@ -123,14 +123,6 @@ void engine::start() {
 
 
 void engine::on_user_init() {
-  // UI Engine Testing
-  object_ptr txt = std::make_shared<text>(g_state, "Some example text", "M_MNU_TITLE", "DEFAULT");
-  object_ptr btn = std::make_shared<button>(g_state, "HELP", "M_MNU_BUTTON", "SOMETHING");
-  btn->set_position({100, 100, 0, 0});
-
-  layer_ptr lay  = std::make_shared<layer>(g_state);
-  lay->add(txt);
-  lay->add(btn);
-
-  g_state->get_stage().add(lay);
+  layer_ptr mainmenu = std::make_shared<menu>(g_state);
+  g_state->get_stage().add(mainmenu);
 }
