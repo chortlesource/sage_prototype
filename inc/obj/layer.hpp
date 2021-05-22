@@ -38,10 +38,11 @@ public:
   virtual bool const& update(state_ptr const& g_state) override;
 
   void add(object_ptr const& obj);
-  void pop();
+  void pop(object_ptr const& obj);
 
 protected:
-  std::vector<object_ptr> l_objects;
+  std::unordered_map<unsigned int, object_ptr> l_objects;
+  std::vector<unsigned int>                    l_objectid;
 
   void draw(state_ptr const& g_state);
 };

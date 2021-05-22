@@ -45,14 +45,15 @@ layer::layer(state_ptr const& g_state) : object(g_state) {
 
 layer::~layer() {
   l_objects.clear();
+  l_objectid.clear();
 }
 
 
 bool const& layer::update(state_ptr const& g_state) {
   if(!initialized || o_paused) return o_changed;
 
-  for(auto &obj : l_objects)
-    o_changed += obj->update(g_state);
+  for(auto const& id : l_objectid)
+    o_changed += l_objects[id]->update(g_state);
 
   if(o_changed)
     draw(g_state);
@@ -62,13 +63,24 @@ bool const& layer::update(state_ptr const& g_state) {
 
 
 void layer::add(object_ptr const& obj) {
-  l_objects.push_back(obj);
+  if((l_objects.try_emplace(obj->get_id(), obj)).second)
+    INFO("Added object:", obj->get_id());
+  else
+    WARN("Object already loaded:", obj->get_id());
+
+  l_objectid.push_back(obj->get_id());
   o_changed = true;
 }
 
 
-void layer::pop() {
-  l_objects.pop_back();
+void layer::pop(object_ptr const& obj) {
+  l_objects.erase(obj->get_id());
+
+  for(auto itr = l_objectid.begin(); itr != l_objectid.end(); itr++) {
+    if(*itr == obj->get_id())
+      l_objectid.erase(itr);
+  }
+
   o_changed = true;
 }
 
@@ -84,8 +96,11 @@ void layer::draw(state_ptr const& g_state) {
   SDL_RenderClear(render);
 
   // Cycle through and draw objects to the layer
-  for(auto &obj : l_objects)
+  for(auto const& id : l_objectid) {
+    object_ptr &obj = l_objects[id];
+
     SDL_RenderCopy(render, obj->get_texture(), &obj->get_source(), &obj->get_position());
+  }
 
   SDL_SetRenderTarget(render, NULL);
   o_changed = false;
