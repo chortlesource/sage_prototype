@@ -69,6 +69,9 @@
 #include <obj/ui/button.hpp>
 #include <obj/ui/menu.hpp>
 
+// Core
+#include <core/game.hpp>
+
 // System
 #include <sys/events.hpp>
 #include <sys/manager.hpp>

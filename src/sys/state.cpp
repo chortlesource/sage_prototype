@@ -28,10 +28,12 @@
 // STATE Class implementation
 //
 
-state::state() : g_timer(), g_assets(), g_manager(), g_window(), g_input(), g_status(status::init), g_config(Json::Value::null) {}
+state::state() : g_timer(), g_assets(), g_manager(), g_stage(), g_game(nullptr), g_window(), g_input(), g_status(status::init), g_config(Json::Value::null) {}
 
 
-state::~state() {}
+state::~state() {
+  g_game = nullptr;
+}
 
 
 void state::initialize(state_ptr const& g_state) {

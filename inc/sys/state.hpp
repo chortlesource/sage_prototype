@@ -64,19 +64,21 @@ public:
   window      &      get_window()  { return g_window; }
   manager     &      get_manager() { return g_manager; }
   stage       &      get_stage()   { return g_stage; }
+  game_ptr    &      get_game()    { return g_game; }
   istate      const& get_input()   { return g_input; }
   status      const& get_status()  { return g_status; }
   double      const& get_delta()   { return g_timer.delta(); }
   Json::Value const& get_config()  { return g_config; }
 
 private:
-  timer   g_timer;
-  assets  g_assets;
-  manager g_manager;
-  stage   g_stage;
-  window  g_window;
-  istate  g_input;
-  status  g_status;
+  timer    g_timer;
+  assets   g_assets;
+  manager  g_manager;
+  stage    g_stage;
+  game_ptr g_game;
+  window   g_window;
+  istate   g_input;
+  status   g_status;
 
   Json::Value g_config;
 };

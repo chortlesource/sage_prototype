@@ -37,6 +37,9 @@ class object;
 class tile;
 class layer;
 
+// Core Classes
+class game;
+
 // System Classes
 class manager;
 class assets;
@@ -53,6 +56,7 @@ class engine;
 using state_ptr      = std::shared_ptr<state>;
 using object_ptr     = std::shared_ptr<object>;
 using layer_ptr      = std::shared_ptr<layer>;
+using game_ptr       = std::shared_ptr<game>;
 
 // SDL Smart Pointers
 using sdlwindow_ptr  = std::shared_ptr<SDL_Window>;
