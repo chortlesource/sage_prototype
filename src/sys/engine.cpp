@@ -56,8 +56,12 @@ engine::engine() {
   g_state = std::make_shared<state>();
   g_state->initialize(g_state);
 
+  // Add engine event listeners
+  register_delegates();
+
   // Initialize game
   on_user_init();
+
 
   initialized = true;
 }
@@ -65,6 +69,9 @@ engine::engine() {
 
 engine::~engine() {
   initialized = false;
+
+  // Remove engine event listeners
+  remove_delegates();
   g_state     = nullptr;
 
   IMG_Quit();
@@ -125,4 +132,31 @@ void engine::start() {
 void engine::on_user_init() {
   layer_ptr mainmenu = std::make_shared<menu>(g_state);
   g_state->get_stage().add(mainmenu);
+}
+
+
+void engine::register_delegates() {
+  eventid = g_state->get_manager().get_delegate_id();
+
+  // Register the event listeners
+  std::function<void(event const&)> callback = [=](event const& e) -> void { this->on_event(e); };
+
+  g_state->get_manager().add_delegate(delegate(eventid, eventtype::button, callback));
+}
+
+
+void engine::remove_delegates() {
+  g_state->get_manager().remove_delegate(delegate(eventid, eventtype::button, nullptr));
+}
+
+
+void engine::on_event(event const& e) {
+  switch(e.type) {
+    case eventtype::button:
+      if(e.button.command == "MNU_QUIT")
+        g_state->set_status(state::status::exit);
+      break;
+    default:
+      break;
+  }
 }

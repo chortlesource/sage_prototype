@@ -46,6 +46,10 @@ private:
   virtual void on_user_init();
   virtual void on_user_update()   {}
   virtual void on_user_finalize() {}
+
+  void register_delegates();
+  void remove_delegates();
+  void on_event(event const& e);
 };
 
 

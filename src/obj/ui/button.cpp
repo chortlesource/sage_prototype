@@ -66,7 +66,7 @@ bool const& button::update(state_ptr const& g_state) {
       o_texture = b_texts[2].get_textureptr();
       o_changed  = true;
       if(!b_clicked) {
-        g_state->get_manager().send_event(event(button_event(eventtype::button, button_event::action::clicked, b_action)));
+        g_state->get_manager().send_event(event(button_event(button_event::type::clicked, b_action)));
         b_clicked = true;
       }
     } else {

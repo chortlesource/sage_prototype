@@ -94,7 +94,7 @@ void manager::update() {
   while(!events.empty()) {
 
     // Ascertain this type of event exists
-    auto find_list = delegates.find(events.front().e_type);
+    auto find_list = delegates.find(events.front().type);
     if(find_list != delegates.end()) {
 
       // Obtain the list of listeners
@@ -107,7 +107,7 @@ void manager::update() {
       // Pop the event from the queue
       events.pop();
     } else {
-      ERROR("Unexpected event occured", eventstring[static_cast<int>(events.front().e_type)]);
+      ERROR("Unexpected event occured", eventstring[static_cast<int>(events.front().type)]);
       events.pop(); // Prevents infinite loop
     }
   }
