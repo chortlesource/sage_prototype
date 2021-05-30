@@ -64,10 +64,18 @@ void state::initialize(state_ptr const& g_state) {
 
 
 void state::update() {
-  if(g_status != state::status::run) return;
+  if(g_status == state::status::exit) return;
 
   // Obtain the current mouse state
   g_input.buttons = SDL_GetMouseState(&g_input.x, &g_input.y);
+
+  // Track window resizes
+  SDL_GetWindowSize(g_window.get_window(), &g_input.width, &g_input.height);
+
+  float scalex = ((float)g_input.width / g_config["APP_W"].asInt());
+  float scaley = ((float)g_input.height / g_config["APP_H"].asInt());
+  g_input.x /= scalex;
+  g_input.y /= scaley;
 
   // Update the keyboard state
   SDL_PumpEvents();

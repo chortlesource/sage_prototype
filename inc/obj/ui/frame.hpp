@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////
 //
-// sage - stage.hpp
+// sage - frame.hpp
 //
 // Copyright (c) 2021 Christopher M. Short
 //
@@ -21,38 +21,18 @@
 //
 ////////////////////////////////////////////////////////////////////////////
 
-#ifndef _SAGE_STAGE_HPP
-#define _SAGE_STAGE_HPP
+#ifndef _SAGE_FRAME_HPP
+#define _SAGE_FRAME_HPP
 
 
 /////////////////////////////////////////////////////////////
-// STAGE Class
+// FRAME Class
 //
-// The stage class renders layers of objects to the window
+// The frame class displays the game stat frame
 
-class stage {
-public:
-  stage();
-  ~stage();
-
-  void initialize(Json::Value const& g_config);
-  void update(state_ptr const& g_state);
-
-  void add(layer_ptr const& layer);
-  void pop();
-  void clear();
-
-  void add_menu(std::string const& id, layer_ptr const& menu);
-  void use_menu(std::string const& id);
-  void pop_menu();
-
-private:
-  bool                    initialized;
-  unsigned int            s_menu_depth;
-  SDL_Rect                s_position;
-  std::vector<layer_ptr>  s_layers;
-  std::unordered_map<std::string, layer_ptr>  s_menus;
+class frame : public layer {
+  
 };
 
 
-#endif // _SAGE_STAGE_HPP
+#endif // _SAGE_FRAME_HPP

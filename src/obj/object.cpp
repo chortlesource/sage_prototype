@@ -40,6 +40,7 @@ object::~object() {
 
 bool const& object::update(state_ptr const& g_state) { return o_changed; };
 
+void        object::finalize(state_ptr const& g_state) {};
 
 void object::set_visible(bool const& value) {
   o_changed = true;

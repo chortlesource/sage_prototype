@@ -36,6 +36,7 @@ public:
   virtual ~object();
 
   virtual bool const& update(state_ptr const& g_state);
+  virtual void        finalize(state_ptr const& g_state);
 
   // object get and set functions
   virtual void set_visible(bool const& value) final;

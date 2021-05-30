@@ -51,6 +51,8 @@ engine::engine() {
    INFO("Initialized SDL_TTF Library");
   }
 
+  SDL_SetHint (SDL_HINT_RENDER_SCALE_QUALITY, "2");
+
   // Initialize the game state
   INFO("Initialize the gamestate");
   g_state = std::make_shared<state>();
@@ -130,8 +132,19 @@ void engine::start() {
 
 
 void engine::on_user_init() {
+  // Initialize the main menu
   layer_ptr mainmenu = std::make_shared<menu>(g_state);
-  g_state->get_stage().add(mainmenu);
+  g_state->get_stage().add_menu("MAIN_MENU", mainmenu);
+
+  // Generate the map
+  layer_ptr lay = std::make_shared<layer>(g_state);
+  object_ptr m  = std::make_shared<map>(g_state, 30, 30);
+  lay->add(m);
+  g_state->get_stage().add(lay);
+
+  // Show the main menu by default
+  g_state->get_stage().use_menu("MAIN_MENU");
+  g_state->set_status(state::status::menu);
 }
 
 
@@ -142,19 +155,46 @@ void engine::register_delegates() {
   std::function<void(event const&)> callback = [=](event const& e) -> void { this->on_event(e); };
 
   g_state->get_manager().add_delegate(delegate(eventid, eventtype::button, callback));
+  g_state->get_manager().add_delegate(delegate(eventid, eventtype::key, callback));
+  g_state->get_manager().add_delegate(delegate(eventid, eventtype::system, callback));
 }
 
 
 void engine::remove_delegates() {
   g_state->get_manager().remove_delegate(delegate(eventid, eventtype::button, nullptr));
+  g_state->get_manager().remove_delegate(delegate(eventid, eventtype::key, nullptr));
+  g_state->get_manager().remove_delegate(delegate(eventid, eventtype::system, nullptr));
 }
 
 
 void engine::on_event(event const& e) {
   switch(e.type) {
+    case eventtype::system:
+      if(e.system.action == system_event::type::halt)
+        g_state->set_status(state::status::exit);
+      break;
     case eventtype::button:
       if(e.button.command == "MNU_QUIT")
         g_state->set_status(state::status::exit);
+      else if(e.button.command == "MNU_NEW") {
+        break;
+      }
+      break;
+    case eventtype::key:
+      if(e.key.keytype == key_event::type::release) {
+        if(e.key.scancode == SDL_SCANCODE_ESCAPE) {
+          if(g_state->get_status() == state::status::run) {
+            g_state->get_stage().use_menu("MAIN_MENU");
+            g_state->set_status(state::status::menu);
+            return;
+          }
+          if(g_state->get_status() == state::status::menu) {
+            g_state->get_stage().pop_menu();
+            g_state->set_status(state::status::run);
+            return;
+          }
+        }
+      }
       break;
     default:
       break;

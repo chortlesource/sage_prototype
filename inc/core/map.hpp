@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////
 //
-// sage - stage.hpp
+// sage - map.hpp
 //
 // Copyright (c) 2021 Christopher M. Short
 //
@@ -21,38 +21,36 @@
 //
 ////////////////////////////////////////////////////////////////////////////
 
-#ifndef _SAGE_STAGE_HPP
-#define _SAGE_STAGE_HPP
+#ifndef _SAGE_MAP_HPP
+#define _SAGE_MAP_HPP
 
 
 /////////////////////////////////////////////////////////////
-// STAGE Class
+// MAP Class
 //
-// The stage class renders layers of objects to the window
+// The map class is a basic level map to be drawn to the stage
 
-class stage {
+class map : public object {
 public:
-  stage();
-  ~stage();
+  map(state_ptr const& g_state, int const& w, int const& h);
+  ~map();
 
-  void initialize(Json::Value const& g_config);
-  void update(state_ptr const& g_state);
-
-  void add(layer_ptr const& layer);
-  void pop();
-  void clear();
-
-  void add_menu(std::string const& id, layer_ptr const& menu);
-  void use_menu(std::string const& id);
-  void pop_menu();
+  virtual bool const& update(state_ptr const& g_state) override;
 
 private:
-  bool                    initialized;
-  unsigned int            s_menu_depth;
-  SDL_Rect                s_position;
-  std::vector<layer_ptr>  s_layers;
-  std::unordered_map<std::string, layer_ptr>  s_menus;
+  int              m_width;
+  int              m_height;
+  int              m_offsetx;
+  int              m_offsety;
+  int              m_zoom;
+  bool             m_pressed;
+  sdltexture_ptr   m_overlay;
+  sdltexture_ptr   m_maptxtr;
+  std::vector<int> m_map;
+
+  void gen_overlay(state_ptr const& g_state, int const& tile_w, int const& tile_h);
+  void gen_maptxtr(state_ptr const& g_state, int const& tile_w, int const& tile_h);
+
 };
 
-
-#endif // _SAGE_STAGE_HPP
+#endif // _SAGE_MAP_HPP
