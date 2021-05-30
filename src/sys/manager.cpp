@@ -90,6 +90,30 @@ void manager::send_event(event const& e) {
 
 
 void manager::update() {
+  SDL_Event s_event;
+
+  // Handle SDL events
+  if(SDL_PollEvent(&s_event)) {
+    switch(s_event.type) {
+      case SDL_KEYDOWN:
+        {
+          key_event k(key_event::type::press, s_event.key.keysym.sym, s_event.key.keysym.scancode, s_event.key.state, s_event.key.keysym.mod);
+          events.push(event(k));
+          INFO("KEY_DOWN: ", SDL_GetKeyName(s_event.key.keysym.sym));
+        }
+        break;
+      case SDL_KEYUP:
+        {
+          key_event k(key_event::type::release, s_event.key.keysym.sym, s_event.key.keysym.scancode, s_event.key.state, s_event.key.keysym.mod);
+          events.push(event(k));
+          INFO("KEY_UP: ", SDL_GetKeyName(s_event.key.keysym.sym));
+        }
+        break;
+      default:
+        break;
+    }
+  }
+
   // We process all events until the queue is empty
   while(!events.empty()) {
 

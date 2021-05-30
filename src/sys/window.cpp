@@ -43,7 +43,7 @@ void window::initialize(Json::Value const& g_config) {
 
   // Create the window
   sdlwindow_ptr win(SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED,
-    SDL_WINDOWPOS_CENTERED, w, h, SDL_WINDOW_SHOWN), [=](SDL_Window *w) { SDL_DestroyWindow(w); });
+    SDL_WINDOWPOS_CENTERED, w, h, SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN), [=](SDL_Window *w) { SDL_DestroyWindow(w); });
 
   g_window = win;
   if(g_window == nullptr) {

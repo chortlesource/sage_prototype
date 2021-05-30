@@ -28,7 +28,7 @@
 // STAGE Class implementation
 //
 
-stage::stage() : initialized(false), s_menuirq(false), s_position(), s_layers(), s_menus() {}
+stage::stage() : initialized(false), s_menu_depth(0), s_position(), s_layers(), s_menus() {}
 
 
 stage::~stage() {
@@ -54,9 +54,8 @@ void stage::update(state_ptr const& g_state) {
 
   if(!s_layers.empty()) {
     // Update our layers
-    if(!s_menuirq)
-      for(auto &l : s_layers)
-        l->update(g_state);
+    for(auto &l : s_layers)
+      l->update(g_state);
 
     // Draw our layers to the window
     for(auto &l : s_layers) {
@@ -64,58 +63,68 @@ void stage::update(state_ptr const& g_state) {
         SDL_RenderCopy(g_state->get_window().get_render(), l->get_texture(), NULL, &s_position);
     }
   }
-
-  // Update our menu's
-  if(!s_menus.empty()) {
-    for(auto &m : s_menus) {
-      m->update(g_state);
-      if(m->get_visible())
-        SDL_RenderCopy(g_state->get_window().get_render(), m->get_texture(), NULL, &s_position);
-    }
-  }
 }
 
 
 void stage::add(layer_ptr const& layer) {
+  // Add new layers to the back of the vector
   s_layers.push_back(layer);
-
-  // Ensure we pause the new layer if menus are active
-  if(s_menuirq)
-    s_layers[s_layers.size() - 1]->set_paused(true);
 }
 
 
 void stage::pop() {
-  // Pop from the back of the layer stack
+  // Pop from the back of the layer vector
   s_layers.pop_back();
 }
 
 
-void stage::add_menu(layer_ptr const& menu) {
-  if(!s_menuirq) {
-    // If irq is not set then set it
-    for(auto &l : s_layers)
-      l->set_paused(true);
+void stage::clear() {
+  // Clear the layer stack
+  s_layers.clear();
+}
 
-    s_menuirq = true;
-  } else {
-    // Pause menu's currently in use
-    s_menus.back()->set_paused(true);
+
+void stage::add_menu(std::string const& id, layer_ptr const& menu) {
+  // Add it to the menu map
+  if((s_menus.try_emplace(id, menu)).second)
+    INFO("Menu added:", id);
+  else
+    WARN("Duplicate menu: ", id);
+}
+
+
+void stage::use_menu(std::string const& id) {
+  // First pause all the layers
+  for(auto &layers : s_layers)
+    layers->set_paused(true);
+
+  try {
+    // Try to add out menu to the layer vector
+    s_layers.push_back(s_menus.at(id));
+    s_menu_depth += 1; // to track how many menu's are present
+
+  } catch (std::out_of_range const& oor) {
+    ERROR("Menu not found: ", id);
+
+    // Unpause to avoid hanging
+    for(auto &layers : s_layers)
+      layers->set_paused(false);
   }
-
-  // Add our menu
-  s_menus.push_back(menu);
 }
 
 
 void stage::pop_menu() {
-  // Pop from the back of the menu stack
-  s_menus.pop_back();
+  if(s_menu_depth == 0) return;
 
-  if(s_menuirq) {
-    if(s_menus.empty())
-      s_menuirq = false;
-    else
-      s_menus.back()->set_paused(false);
+  // Pop our menu from the back
+  s_layers.pop_back();
+  s_menu_depth -= 1;
+
+  // Clarify if there are no more menu's
+  if(s_menu_depth == 0) {
+    for(auto &layers : s_layers)
+      layers->set_paused(false);
+  } else {
+    s_layers.back()->set_paused(false);
   }
 }

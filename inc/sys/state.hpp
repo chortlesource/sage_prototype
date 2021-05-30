@@ -32,12 +32,19 @@
 // and keyboard input
 
 struct istate {
+  // Mouse state
   int             x;
   int             y;
   uint32_t        buttons;
+
+  // Window state
+  int             width;
+  int             height;
+
+  // Keyboard state
   const uint8_t  *keys;
 
-  istate() : x(0), y(0), buttons(0), keys(SDL_GetKeyboardState(NULL)) {};
+  istate() : x(0), y(0), buttons(0), width(0), height(0), keys(SDL_GetKeyboardState(NULL)) {};
 };
 
 
@@ -48,7 +55,7 @@ struct istate {
 
 class state {
 public:
-  enum class status { init, run, pause, exit };
+  enum class status { init, run, menu, pause, exit };
 
   state();
   ~state();

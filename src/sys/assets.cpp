@@ -235,7 +235,7 @@ void             assets::load_tiles(state_ptr const& g_state, Json::Value const&
   int tile_h = t_config["TILE_H"].asInt();
   int ntiles = t_config["TILEN"].asInt();
 
-  for(int n = 1; n < ntiles; n++) {
+  for(int n = 1; n < ntiles + 1; n++) {
     std::string index   = std::to_string(n);
 
     std::string colorid = t_config["TILES"][index]["COLOR"].asString();

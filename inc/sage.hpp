@@ -71,6 +71,7 @@
 
 // Core
 #include <core/game.hpp>
+#include <core/map.hpp>
 
 // System
 #include <sys/events.hpp>
