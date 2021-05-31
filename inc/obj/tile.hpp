@@ -32,7 +32,7 @@
 
 class tile : public object {
 public:
-  tile(state_ptr const& g_state, sdltexture_ptr const& texture, SDL_Rect const& src, std::string const& colorid);
+  tile(state_ptr const& g_state, sdltexture_ptr const& texture, SDL_Rect const& src);
   ~tile();
 
 };

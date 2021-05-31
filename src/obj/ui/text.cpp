@@ -34,11 +34,11 @@ text::text(state_ptr const& g_state, std::string const& caption, std::string con
   // Some helper vars to generate the button
   SDL_Renderer *render = g_state->get_window().get_render();
   TTF_Font     *font   = g_state->get_assets().find_font(fontid).get();
-  SDL_Color    color   = g_state->get_assets().find_color(colorid);
+  o_color              = g_state->get_assets().find_color(colorid);
 
 
   // Create a surface for the text
-  SDL_Surface *surf = TTF_RenderText_Solid(font, t_text.c_str(), color);
+  SDL_Surface *surf = TTF_RenderText_Solid(font, t_text.c_str(), o_color);
 
   if(surf == nullptr) {
     ERROR("Could not generate text surface: ", t_text);

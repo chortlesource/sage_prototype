@@ -238,14 +238,13 @@ void             assets::load_tiles(state_ptr const& g_state, Json::Value const&
   for(int n = 1; n < ntiles + 1; n++) {
     std::string index   = std::to_string(n);
 
-    std::string colorid = t_config["TILES"][index]["COLOR"].asString();
     int tile_x          = t_config["TILES"][index]["X"].asInt();
     int tile_y          = t_config["TILES"][index]["Y"].asInt();
 
     SDL_Rect  src { tile_x * tile_w, tile_y * tile_h, tile_w, tile_h };
 
     // Add it to the font map
-    tile_ptr t = std::make_shared<tile>(g_state, texture, src, colorid);
+    tile_ptr t = std::make_shared<tile>(g_state, texture, src);
     if((tiles.try_emplace(n, t).second))
       INFO("Tile loaded:", n);
     else

@@ -35,10 +35,10 @@ button::button(state_ptr const& g_state, std::string const& caption, std::string
   b_texts.push_back(text(g_state, caption, fontid, "L_GREEN"));
   b_texts.push_back(text(g_state, caption, fontid, "D_GRAY"));
 
-  o_source   = b_texts[0].get_source();
-  o_position = b_texts[0].get_position();
-  o_texture  = b_texts[0].get_textureptr();
-
+  o_source    = b_texts[0].get_source();
+  o_position  = b_texts[0].get_position();
+  o_texture   = b_texts[0].get_textureptr();
+  o_color     = { 255, 255, 255, 255 };
   initialized = true;
 }
 

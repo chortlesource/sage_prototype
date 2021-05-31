@@ -63,7 +63,7 @@ void window::initialize(Json::Value const& g_config) {
   }
 
   SDL_RenderSetLogicalSize(g_renderer.get(), w, h);
-  SDL_SetRenderDrawColor(g_renderer.get(), 255, 255, 255, 255);
+  SDL_SetRenderDrawColor(g_renderer.get(), 0, 0, 0, 255);
   SDL_RenderClear(g_renderer.get());
   SDL_RenderPresent(g_renderer.get());
 
@@ -95,8 +95,10 @@ void window::update(state_ptr const& g_state) {
   }
 
   // Render to the screen
+
   SDL_RenderPresent(g_renderer.get());
-  SDL_SetRenderDrawColor(g_renderer.get(), 0, 0, 0, 255);
+  SDL_Color bg_color = g_state->get_assets().find_color("BLACK");
+  SDL_SetRenderDrawColor(g_renderer.get(), bg_color.r, bg_color.g, bg_color.b, 255);
   SDL_RenderClear(g_renderer.get());
 }
 

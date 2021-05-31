@@ -55,9 +55,13 @@ map::map(state_ptr const& g_state, int const& w, int const& h) : object(g_state)
   // Configure object variables
   o_source   = SDL_Rect { 0, 0, scrnw, scrnh };
   o_position = SDL_Rect { 0, 0, scrnw, scrnh };
+  o_color    = SDL_Color{ 255, 255, 255, 255 };
 
   // Generate our map image
   SDL_SetRenderTarget(render, o_texture.get());
+  SDL_Color bg_color = g_state->get_assets().find_color("BLACK");
+  SDL_SetRenderDrawColor(render, bg_color.r, bg_color.g, bg_color.b, 255);
+  SDL_RenderClear(render);
   SDL_RenderCopy(render, m_overlay.get(), NULL, &opos);
   SDL_SetRenderTarget(render, NULL);
 
@@ -111,7 +115,8 @@ bool const& map::update(state_ptr const& g_state) {
   SDL_Renderer *render = g_state->get_window().get_render();
   SDL_Rect opos { (scrnw / 2) - (map_w / 2), (scrnh / 2) - (map_h / 2), map_w + m_zoom, map_h + m_zoom };
   SDL_SetRenderTarget(render, o_texture.get());
-  SDL_SetRenderDrawColor(render, 0, 0, 0, 255);
+  SDL_Color bg_color = g_state->get_assets().find_color("BLACK");
+  SDL_SetRenderDrawColor(render, bg_color.r, bg_color.g, bg_color.b, 255);
   SDL_RenderClear(render);
   SDL_RenderCopy(render, m_overlay.get(), NULL, &opos);
   SDL_SetRenderTarget(render, NULL);
@@ -125,7 +130,13 @@ void map::gen_overlay(state_ptr const& g_state, int const& tile_w, int const& ti
 
   // Generate the overlay
   SDL_SetRenderTarget(render, m_overlay.get());
-  tile_ptr t = g_state->get_assets().find_tile(11);
+  SDL_Color bg_color = g_state->get_assets().find_color("BLACK");
+  SDL_SetRenderDrawColor(render, bg_color.r, bg_color.g, bg_color.b, 0);
+  SDL_RenderClear(render);
+
+  tile_ptr t       = g_state->get_assets().find_tile(11);
+  SDL_Color tcolor = g_state->get_assets().find_color("D_GRAY");
+  SDL_SetTextureColorMod(t->get_texture(), tcolor.r, tcolor.g, tcolor.b);
 
   for(int x = 0; x < m_width; x++) {
     for(int y = 0; y < m_height; y++) {
@@ -133,8 +144,10 @@ void map::gen_overlay(state_ptr const& g_state, int const& tile_w, int const& ti
       SDL_RenderCopy(render, t->get_texture(), &t->get_source(), &pos);
     }
   }
+
+  SDL_SetTextureColorMod(t->get_texture(), 255, 255, 255);
   SDL_SetTextureBlendMode(m_overlay.get(), SDL_BLENDMODE_BLEND);
-  SDL_SetTextureAlphaMod(m_overlay.get(), 40);
+  SDL_SetTextureAlphaMod(m_overlay.get(), 70);
   SDL_SetRenderTarget(render, NULL);
 }
 
