@@ -32,6 +32,7 @@ tile::tile(state_ptr const& g_state, sdltexture_ptr const& texture, SDL_Rect con
   // Configure object variables
   o_source   = SDL_Rect{ 0, 0, src.w, src.h };
   o_position = o_source;
+  o_color    = { 255, 255, 255, 255 };
 
   SDL_Renderer *render = g_state->get_window().get_render();
 
@@ -47,8 +48,10 @@ tile::tile(state_ptr const& g_state, sdltexture_ptr const& texture, SDL_Rect con
   SDL_SetRenderDrawColor(render, 0,0,0,0);
   SDL_RenderClear(render);
   // Write the portion of the texture to the tile texture
+  SDL_SetTextureColorMod(texture.get(), o_color.r, o_color.g, o_color.b);
   SDL_RenderCopy(render, texture.get(), &src, &o_position);
   SDL_SetRenderTarget(render, NULL);
+  initialized = true;
 }
 
 

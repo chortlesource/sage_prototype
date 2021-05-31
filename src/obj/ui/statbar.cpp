@@ -34,12 +34,12 @@ statbar::statbar(state_ptr const& g_state) : object(g_state) {
   int tile_w = g_state->get_assets().find_json("atlas")["TILE_W"].asInt();
   int tile_h = g_state->get_assets().find_json("atlas")["TILE_H"].asInt();
 
-  glyph_ptr slash = g_state->get_assets().find_glyph("/");
-  glyph_ptr hash  = g_state->get_assets().find_glyph("#");
-  glyph_ptr colon = g_state->get_assets().find_glyph(":");
-  glyph_ptr zero  = g_state->get_assets().find_glyph("0");
-  tile_ptr  dolla = g_state->get_assets().find_tile(15);
-  tile_ptr  heart = g_state->get_assets().find_tile(16);
+  glyph_ptr  slash = g_state->get_assets().find_glyph("/");
+  glyph_ptr  hash  = g_state->get_assets().find_glyph("#");
+  glyph_ptr  colon = g_state->get_assets().find_glyph(":");
+  glyph_ptr  zero  = g_state->get_assets().find_glyph("0");
+  object_ptr dolla = g_state->get_assets().find_tile(15);
+  object_ptr heart = g_state->get_assets().find_tile(16);
 
   SDL_Color def = g_state->get_assets().find_color("DEFAULT");
   SDL_Color red = g_state->get_assets().find_color("RED");

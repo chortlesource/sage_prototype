@@ -47,8 +47,8 @@ public:
   void             load_colors(Json::Value const& c_config);
   SDL_Color const& find_color(std::string const& id);
 
-  void             load_tiles(state_ptr const& g_state, Json::Value const& t_config);
-  tile_ptr  const& find_tile(int const& id);
+  void              load_tiles(state_ptr const& g_state, Json::Value const& t_config);
+  object_ptr const& find_tile(int const& id);
 
   void             load_glyphs(state_ptr const& g_state);
   glyph_ptr const& find_glyph(std::string const& id);
@@ -58,7 +58,7 @@ private:
   std::unordered_map<std::string, sdltexture_ptr> textures;
   std::unordered_map<std::string, font_ptr>       fonts;
   std::unordered_map<std::string, SDL_Color>      colors;
-  std::unordered_map<int, tile_ptr>               tiles;
+  std::unordered_map<int, object_ptr>             tiles;
   std::unordered_map<std::string, glyph_ptr>      glyphs;
 };
 

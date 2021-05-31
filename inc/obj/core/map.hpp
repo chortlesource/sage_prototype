@@ -28,29 +28,16 @@
 /////////////////////////////////////////////////////////////
 // MAP Class
 //
-// The map class is a basic level map to be drawn to the stage
+// The map class represents a basic level map
 
-class map : public object {
+class map : public layer {
 public:
-  map(state_ptr const& g_state, int const& w, int const& h);
-  ~map();
+  map(state_ptr const& g_state);
 
   virtual bool const& update(state_ptr const& g_state) override;
 
 private:
-  int              m_width;
-  int              m_height;
-  int              m_offsetx;
-  int              m_offsety;
-  int              m_zoom;
-  bool             m_pressed;
-  sdltexture_ptr   m_overlay;
-  sdltexture_ptr   m_maptxtr;
-  std::vector<int> m_map;
-
-  void gen_overlay(state_ptr const& g_state, int const& tile_w, int const& tile_h);
-  void gen_maptxtr(state_ptr const& g_state, int const& tile_w, int const& tile_h);
-
+  object_ptr cursor;
 };
 
 #endif // _SAGE_MAP_HPP

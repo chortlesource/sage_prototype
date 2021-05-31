@@ -32,7 +32,7 @@ button::button(state_ptr const& g_state, std::string const& caption, std::string
   b_clicked  = false;
   b_action   = action;
   b_texts.push_back(text(g_state, caption, fontid, "L_GRAY"));
-  b_texts.push_back(text(g_state, caption, fontid, "L_GREEN"));
+  b_texts.push_back(text(g_state, caption, fontid, "BLUE"));
   b_texts.push_back(text(g_state, caption, fontid, "D_GRAY"));
 
   o_source    = b_texts[0].get_source();

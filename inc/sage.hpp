@@ -76,9 +76,8 @@
 #include <obj/ui/menu.hpp>
 #include <obj/ui/frame.hpp>
 
-// Core
-#include <core/game.hpp>
-#include <core/map.hpp>
+// Core Objects
+#include <obj/core/map.hpp>
 
 // System
 #include <sys/events.hpp>

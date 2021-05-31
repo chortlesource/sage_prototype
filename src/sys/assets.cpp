@@ -242,7 +242,7 @@ void             assets::load_tiles(state_ptr const& g_state, Json::Value const&
     SDL_Rect  src { tile_x * tile_w, tile_y * tile_h, tile_w, tile_h };
 
     // Add it to the font map
-    tile_ptr t = std::make_shared<tile>(g_state, texture, src);
+    object_ptr t = std::make_shared<tile>(g_state, texture, src);
     if(!(tiles.try_emplace(n, t).second))
       WARN("Tile already loaded: ", n);
   }
@@ -250,7 +250,7 @@ void             assets::load_tiles(state_ptr const& g_state, Json::Value const&
 }
 
 
-tile_ptr  const& assets::find_tile(int const& id) {
+object_ptr const& assets::find_tile(int const& id) {
   // Try to access the tile and handle the exception
   try {
     return tiles.at(id);

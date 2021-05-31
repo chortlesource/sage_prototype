@@ -137,12 +137,10 @@ void engine::on_user_init() {
   g_state->get_stage().add_menu("MAIN_MENU", mainmenu);
 
   // Generate the map
-  layer_ptr lay = std::make_shared<layer>(g_state);
-  object_ptr m  = std::make_shared<map>(g_state, 30, 30);
-  lay->add(m);
+  layer_ptr m   = std::make_shared<map>(g_state);
 
   layer_ptr fr = std::make_shared<frame>(g_state);
-  g_state->get_stage().add(lay);
+  g_state->get_stage().add(m);
   g_state->get_stage().add(fr);
 
   // Show the main menu by default
