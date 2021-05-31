@@ -34,9 +34,12 @@ gtext::gtext(state_ptr const& g_state, std::string const& caption, std::string c
   int tile_w = g_state->get_assets().find_json("atlas")["TILE_W"].asInt();
   int tile_h = g_state->get_assets().find_json("atlas")["TILE_H"].asInt();
 
+  // Handle punctuation
+  std::string gstring = parse_text(caption);
+
   // Configure our gtext object
-  o_source   = { 0, 0, tile_w * (int)caption.size(), tile_h };
-  o_position = { 0, 0, tile_w * (int)caption.size(), tile_h };
+  o_source   = { 0, 0, tile_w * (int)gstring.size(), tile_h };
+  o_position = { 0, 0, tile_w * (int)gstring.size(), tile_h };
   o_color    = { 255, 255, 255, 255 };
 
   // Create our gtext texture
@@ -59,18 +62,55 @@ gtext::gtext(state_ptr const& g_state, std::string const& caption, std::string c
   // Draw our glyphs onto the texture
   SDL_Color fg = g_state->get_assets().find_color(fgcolor);
 
-  for(int i = 0; i < (int)caption.size(); i++) {
-    glyph_ptr g = g_state->get_assets().find_glyph(caption.substr(i, 1));
+  for(int i = 0; i < (int)gstring.size(); i++) {
+    glyph_ptr g = g_state->get_assets().find_glyph(gstring.substr(i, 1));
     SDL_Rect pos { i * tile_w, 0, tile_w, tile_h };
-
-    if(caption.substr(i, 1) == ".")
-      pos { }
     SDL_SetTextureColorMod(g->get_texture(), fg.r, fg.g, fg.b);
     SDL_RenderCopy(render, g->get_texture(), &g->get_source(), &pos);
   }
 
+  // Add punctuation
+  std::array<char, 3> punctuation { ',', '.', '\'' };
+  int pcount = 0;
+
+  for(int i = 0; i < (int)caption.size(); i++) {
+    for(auto &p : punctuation) {
+      if(caption[i] == p) {
+        glyph_ptr g = g_state->get_assets().find_glyph(caption.substr(i, 1));
+        SDL_Rect pos { (i - pcount) * tile_w, 0, tile_w, tile_h };
+        pos.x -= (tile_w / 2);
+        SDL_SetTextureColorMod(g->get_texture(), fg.r, fg.g, fg.b);
+        SDL_RenderCopy(render, g->get_texture(), &g->get_source(), &pos);
+        pcount += 1;
+      }
+    }
+  }
+
+
+  // Reset the renderer
   SDL_SetRenderTarget(render, NULL);
   initialized = true;
 }
 
-std::array<std::string, 4> punctuation { ",", ".", ":", ";" };
+
+std::string gtext::parse_text(std::string const& value) {
+  std::array<char, 3> punctuation { ',', '.', '\'' };
+  std::string gstring;
+  bool found = false;
+
+  // Seek out punctuation and ignore it
+  for(auto &c : value) {
+    for(auto &p : punctuation)
+      if(c == p)
+        found = true;
+
+    if(found) {
+      found = false;
+      continue;
+    } else {
+      gstring.append(1, c);
+    }
+  }
+
+  return gstring;
+}

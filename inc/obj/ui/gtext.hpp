@@ -33,6 +33,9 @@
 class gtext : public object {
 public:
   gtext(state_ptr const& g_state, std::string const& caption, std::string const& fgcolor, std::string const& bgcolor);
+
+private:
+  std::string parse_text(std::string const& value);
 };
 
 

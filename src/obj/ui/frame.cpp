@@ -64,7 +64,6 @@ frame::frame(state_ptr const& g_state) : layer(g_state) {
   versn->set_position({ tile_w * 2, o_position.h - tile_h, 0, 0 });
   add(title);
   add(versn);
-  //SDL_RenderCopy(render, title->get_texture(), NULL, &title->get_position());
 
   SDL_SetRenderTarget(render, NULL);
 }

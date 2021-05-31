@@ -122,9 +122,7 @@ sdltexture_ptr const& assets::load_texture(SDL_Renderer *render, std::string con
 
   if(texture != nullptr) {
     // Add it to the texture map
-    if((textures.try_emplace(id, texture)).second)
-      INFO("Texture file loaded:", id);
-    else
+    if(!(textures.try_emplace(id, texture)).second)
       WARN("Texture file already loaded: ", id);
 
     // Return our json file
@@ -169,9 +167,7 @@ void             assets::load_fonts(Json::Value const& g_config) {
 
     if(font != nullptr) {
       // Add it to the font map
-      if((fonts.try_emplace(id, font)).second)
-        INFO("Font file loaded:", src, "[", id, "]");
-      else
+      if(!(fonts.try_emplace(id, font)).second)
         WARN("Font file already loaded: ", src, "[", id, "]");
     } else {
       ERROR("Cannot load font file: ", src, "[", id, "]", TTF_GetError());
@@ -210,9 +206,7 @@ void             assets::load_colors(Json::Value const& config) {
     SDL_Color color { r, g, b, 255 };
 
     // Add it to the font map
-    if((colors.try_emplace(id, color)).second)
-      INFO("Color loaded:", id);
-    else
+    if(!(colors.try_emplace(id, color)).second)
       WARN("Color already loaded: ", id);
   }
 
@@ -249,9 +243,7 @@ void             assets::load_tiles(state_ptr const& g_state, Json::Value const&
 
     // Add it to the font map
     tile_ptr t = std::make_shared<tile>(g_state, texture, src);
-    if((tiles.try_emplace(n, t).second))
-      INFO("Tile loaded:", n);
-    else
+    if(!(tiles.try_emplace(n, t).second))
       WARN("Tile already loaded: ", n);
   }
   INFO("Tiles Loaded [COMPLETE]");
@@ -281,9 +273,9 @@ void             assets::load_glyphs(state_ptr const& g_state) {
     glyph_ptr gly = std::make_shared<glyph>(g_state, "F_16", g);
     if(!(glyphs.try_emplace(g, gly).second))
       WARN("Glyph already loaded: ", g);
-
-    INFO("Glyphs Loaded [COMPLETE]");
   }
+
+  INFO("Glyphs Loaded [COMPLETE]");
 }
 
 
