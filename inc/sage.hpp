@@ -61,14 +61,17 @@
 #include <util/debug.hpp>
 #include <util/timer.hpp>
 
-// Object
+// Object Primatives
 #include <obj/object.hpp>
 #include <obj/tile.hpp>
 #include <obj/layer.hpp>
 #include <obj/glyph.hpp>
+
+// UI Objects
 #include <obj/ui/text.hpp>
 #include <obj/ui/gtext.hpp>
 #include <obj/ui/button.hpp>
+#include <obj/ui/statbar.hpp>
 #include <obj/ui/menu.hpp>
 #include <obj/ui/frame.hpp>
 

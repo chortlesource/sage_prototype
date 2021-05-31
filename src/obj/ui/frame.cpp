@@ -60,10 +60,13 @@ frame::frame(state_ptr const& g_state) : layer(g_state) {
 
   object_ptr title = std::make_shared<gtext>(g_state, " sage ", "BLUE", "BLACK");
   object_ptr versn = std::make_shared<gtext>(g_state, _APP_VERSION, "RED", "BLACK");
+  object_ptr stats = std::make_shared<statbar>(g_state);
   title->set_position({(o_position.w / 2) - (title->get_position().w / 2), 0, 0, 0 });
   versn->set_position({ tile_w * 2, o_position.h - tile_h, 0, 0 });
+  stats->set_position({ o_position.w - (stats->get_position().w + tile_w), o_position.h - tile_h, 0, 0 });
   add(title);
   add(versn);
+  add(stats);
 
   SDL_SetRenderTarget(render, NULL);
 }
