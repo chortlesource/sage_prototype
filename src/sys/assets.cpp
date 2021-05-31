@@ -51,6 +51,9 @@ assets::assets() {
 
   tile_ptr empty_tile = nullptr;
   tiles.insert({0, empty_tile});
+
+  glyph_ptr empty_glyph = nullptr;
+  glyphs.insert({"EMPTY", empty_glyph });
 }
 
 
@@ -60,6 +63,7 @@ assets::~assets() {
   fonts.clear();
   colors.clear();
   tiles.clear();
+  glyphs.clear();
 }
 
 
@@ -263,4 +267,33 @@ tile_ptr  const& assets::find_tile(int const& id) {
   }
 
   return tiles.at(0);
+}
+
+
+void             assets::load_glyphs(state_ptr const& g_state) {
+  std::vector<std::string> gstrings = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l",
+    "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "0", "1", "2", "3", "4",
+    "5", "6", "7", "8", "9", "[", "]", "\"", "\\", "#", "*", "(", ")", "-", "+", "=", "'", "<", ">",
+    "?", "@", ".", ",", ";", ":", " ", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
+    "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
+
+  for(auto g : gstrings) {
+    glyph_ptr gly = std::make_shared<glyph>(g_state, "F_16", g);
+    if(!(glyphs.try_emplace(g, gly).second))
+      WARN("Glyph already loaded: ", g);
+
+    INFO("Glyphs Loaded [COMPLETE]");
+  }
+}
+
+
+glyph_ptr const& assets::find_glyph(std::string const& id) {
+  // Try to access the color and handle the exception
+  try {
+    return glyphs.at(id);
+  } catch (std::out_of_range const& oor) {
+    ERROR("Glyph not loaded: ", id);
+  }
+
+  return glyphs.at("EMPTY");
 }

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////
 //
-// sage - tile.cpp
+// sage - glyph.hpp
 //
 // Copyright (c) 2021 Christopher M. Short
 //
@@ -25,34 +25,37 @@
 
 
 /////////////////////////////////////////////////////////////
-// TILE Class implementation
+// GLYPH Class implementation
 //
 
-tile::tile(state_ptr const& g_state, sdltexture_ptr const& texture, SDL_Rect const& src) : object(g_state) {
-  // Configure object variables
-  o_source   = SDL_Rect{ 0, 0, src.w, src.h };
-  o_position = o_source;
-
+glyph::glyph(state_ptr const& g_state, std::string const& fontid, std::string const& ch) : object(g_state) {
+  // Obtain some essential variables
   SDL_Renderer *render = g_state->get_window().get_render();
+  int tile_w = g_state->get_assets().find_json("atlas")["TILE_W"].asInt();
+  int tile_h = g_state->get_assets().find_json("atlas")["TILE_H"].asInt();
 
-  // Allocate memory for the tile texture
-  sdltexture_ptr tmp_texture(SDL_CreateTexture(render, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,
-    o_source.w, o_source.h), [=](SDL_Texture *t){ SDL_DestroyTexture(t); });
+  // Configure our glyph object
+  o_source   = { 0, 0, tile_w, tile_h };
+  o_position = { 0, 0, tile_w, tile_h };
+  o_color    = { 255, 255, 255, 255 };
 
-  o_texture = tmp_texture;
+  // Generate the text and caculate it's position in the tile
+  text t(g_state, ch, fontid, "DEFAULT");
+  SDL_Rect source = t.get_source();
+  SDL_Rect newpos = { (o_position.w / 2) - (source.w / 2), (o_position.h / 2) - (source.h / 2) - 1, source.w, source.h };
 
-  // Clear the current texture
+  // Create our tile texture
+  sdltexture_ptr texture(SDL_CreateTexture(render, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,
+    tile_w, tile_h), [=](SDL_Texture *t){ SDL_DestroyTexture(t); });
+  o_texture = texture;
+
+  // Copy accross our glyph
   SDL_SetTextureBlendMode(o_texture.get(), SDL_BLENDMODE_BLEND);
   SDL_SetRenderTarget(render, o_texture.get());
   SDL_SetRenderDrawColor(render, 0,0,0,0);
   SDL_RenderClear(render);
-  // Write the portion of the texture to the tile texture
-  SDL_RenderCopy(render, texture.get(), &src, &o_position);
+  SDL_RenderCopy(render, t.get_texture(), &source, &newpos);
   SDL_SetRenderTarget(render, NULL);
-}
 
-
-tile::~tile() {
-  initialized = false;
-  o_texture   = nullptr;
+  initialized = true;
 }

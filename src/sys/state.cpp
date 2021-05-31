@@ -58,6 +58,9 @@ void state::initialize(state_ptr const& g_state) {
   // Load the game tiles
   g_assets.load_tiles(g_state, g_tiles);
 
+  // Load the font glyphs
+  g_assets.load_glyphs(g_state);
+
   // Set the gamestate status
   g_status = state::status::run;
 }

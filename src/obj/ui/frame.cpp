@@ -29,18 +29,20 @@
 //
 
 frame::frame(state_ptr const& g_state) : layer(g_state) {
+
   // Calculate tile dimensions
   int tile_w = g_state->get_assets().find_json("atlas")["TILE_W"].asInt();
   int tile_h = g_state->get_assets().find_json("atlas")["TILE_H"].asInt();
+
   int max_w  = o_position.w / tile_w;
   int max_h  = o_position.h / tile_h;
 
   SDL_Renderer *render = g_state->get_window().get_render();
 
   // Draw frame buffer
+  SDL_SetTextureBlendMode(o_texture.get(), SDL_BLENDMODE_BLEND);
   SDL_SetRenderTarget(render, o_texture.get());
-  SDL_Color bg_color = g_state->get_assets().find_color("BLACK");
-  SDL_SetRenderDrawColor(render, bg_color.r, bg_color.g, bg_color.b, 0);
+  SDL_SetRenderDrawColor(render, 0,0,0,0);
   SDL_RenderClear(render);
 
   tile_ptr t       = g_state->get_assets().find_tile(13);
@@ -56,5 +58,13 @@ frame::frame(state_ptr const& g_state) : layer(g_state) {
     }
   }
 
-  SDL_SetTextureColorMod(t->get_texture(), 255, 255, 255);
+  object_ptr title = std::make_shared<gtext>(g_state, " sage ", "BLUE", "BLACK");
+  object_ptr versn = std::make_shared<gtext>(g_state, _APP_VERSION, "RED", "BLACK");
+  title->set_position({(o_position.w / 2) - (title->get_position().w / 2), 0, 0, 0 });
+  versn->set_position({ tile_w * 2, o_position.h - tile_h, 0, 0 });
+  add(title);
+  add(versn);
+  //SDL_RenderCopy(render, title->get_texture(), NULL, &title->get_position());
+
+  SDL_SetRenderTarget(render, NULL);
 }

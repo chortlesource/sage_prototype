@@ -88,13 +88,10 @@ void layer::pop(object_ptr const& obj) {
 void layer::draw(state_ptr const& g_state) {
   if(!initialized) return;
 
-  SDL_Color bg_color   = g_state->get_assets().find_color("BLACK");
   SDL_Renderer *render = g_state->get_window().get_render();
 
   // First clear the texture
   SDL_SetRenderTarget(render, o_texture.get());
-  SDL_SetRenderDrawColor(render, bg_color.r, bg_color.g, bg_color.b, 255);
-  SDL_RenderClear(render);
 
   // Cycle through and draw objects to the layer
   for(auto const& id : l_objectid) {
@@ -102,7 +99,7 @@ void layer::draw(state_ptr const& g_state) {
 
     SDL_Color objc = obj->get_color();
 
-    SDL_SetTextureColorMod(o_texture.get(), objc.r, objc.g, objc.b);
+    SDL_SetTextureColorMod(obj->get_texture(), objc.r, objc.g, objc.b);
     SDL_RenderCopy(render, obj->get_texture(), &obj->get_source(), &obj->get_position());
   }
 

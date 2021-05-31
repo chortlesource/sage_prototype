@@ -4,6 +4,6 @@
   "SIZE" : {
     "0": { "NAME": "M_MNU_BUTTON", "SIZE": 20 },
     "1": { "NAME": "M_MNU_TITLE",  "SIZE": 30 },
-    "2": { "NAME": "F_16",  "SIZE": 16 }
+    "2": { "NAME": "F_16",  "SIZE": 10 }
   }
 }

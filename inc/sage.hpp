@@ -65,7 +65,9 @@
 #include <obj/object.hpp>
 #include <obj/tile.hpp>
 #include <obj/layer.hpp>
+#include <obj/glyph.hpp>
 #include <obj/ui/text.hpp>
+#include <obj/ui/gtext.hpp>
 #include <obj/ui/button.hpp>
 #include <obj/ui/menu.hpp>
 #include <obj/ui/frame.hpp>

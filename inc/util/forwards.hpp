@@ -35,6 +35,7 @@ class timer;
 // Object Classes
 class object;
 class tile;
+class glyph;
 class layer;
 
 // Core Classes
@@ -55,6 +56,7 @@ class engine;
 // System Smart Pointers
 using state_ptr      = std::shared_ptr<state>;
 using object_ptr     = std::shared_ptr<object>;
+using glyph_ptr      = std::shared_ptr<glyph>;
 using layer_ptr      = std::shared_ptr<layer>;
 using game_ptr       = std::shared_ptr<game>;
 
@@ -70,7 +72,7 @@ using tile_ptr       = std::shared_ptr<tile>;
 //
 
 static const std::string _APP_NAME    = "sage";
-static const std::string _APP_VERSION = "0.0.1-ALPHA";
+static const std::string _APP_VERSION = "v0.0.1-A";
 static const std::string _APP_AUTHOR  = "C. M. Short";
 static const std::string _APP_SOURCE  = "http://www.github.com/chortlesoft/sage";
 static const std::string _APP_INIT    = "./asset/init.json";

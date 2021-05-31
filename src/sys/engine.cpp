@@ -140,9 +140,9 @@ void engine::on_user_init() {
   layer_ptr lay = std::make_shared<layer>(g_state);
   object_ptr m  = std::make_shared<map>(g_state, 30, 30);
   lay->add(m);
-  g_state->get_stage().add(lay);
 
   layer_ptr fr = std::make_shared<frame>(g_state);
+  g_state->get_stage().add(lay);
   g_state->get_stage().add(fr);
 
   // Show the main menu by default
