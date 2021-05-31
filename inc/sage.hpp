@@ -68,6 +68,7 @@
 #include <obj/ui/text.hpp>
 #include <obj/ui/button.hpp>
 #include <obj/ui/menu.hpp>
+#include <obj/ui/frame.hpp>
 
 // Core
 #include <core/game.hpp>

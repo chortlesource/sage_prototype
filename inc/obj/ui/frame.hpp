@@ -31,7 +31,9 @@
 // The frame class displays the game stat frame
 
 class frame : public layer {
-  
+public:
+  frame(state_ptr const& g_state);
+
 };
 
 

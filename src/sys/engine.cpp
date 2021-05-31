@@ -142,6 +142,9 @@ void engine::on_user_init() {
   lay->add(m);
   g_state->get_stage().add(lay);
 
+  layer_ptr fr = std::make_shared<frame>(g_state);
+  g_state->get_stage().add(fr);
+
   // Show the main menu by default
   g_state->get_stage().use_menu("MAIN_MENU");
   g_state->set_status(state::status::menu);
