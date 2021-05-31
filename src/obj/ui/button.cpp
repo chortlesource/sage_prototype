@@ -31,9 +31,9 @@
 button::button(state_ptr const& g_state, std::string const& caption, std::string const& fontid, std::string const& action) : object(g_state) {
   b_clicked  = false;
   b_action   = action;
-  b_texts.push_back(text(g_state, caption, fontid, "B_NORMAL"));
-  b_texts.push_back(text(g_state, caption, fontid, "B_OVER"));
-  b_texts.push_back(text(g_state, caption, fontid, "B_CLICK"));
+  b_texts.push_back(text(g_state, caption, fontid, "L_GRAY"));
+  b_texts.push_back(text(g_state, caption, fontid, "L_GREEN"));
+  b_texts.push_back(text(g_state, caption, fontid, "D_GRAY"));
 
   o_source   = b_texts[0].get_source();
   o_position = b_texts[0].get_position();
