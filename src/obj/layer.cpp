@@ -91,7 +91,10 @@ void layer::draw(state_ptr const& g_state) {
   SDL_Renderer *render = g_state->get_window().get_render();
 
   // First clear the texture
+  SDL_SetTextureBlendMode(o_texture.get(), SDL_BLENDMODE_BLEND);
   SDL_SetRenderTarget(render, o_texture.get());
+  SDL_SetRenderDrawColor(render, 0, 0, 0, 0);
+  SDL_RenderClear(render);
 
   // Cycle through and draw objects to the layer
   for(auto const& id : l_objectid) {
