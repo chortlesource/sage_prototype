@@ -85,6 +85,7 @@
 #include <sys/assets.hpp>
 #include <sys/stage.hpp>
 #include <sys/window.hpp>
+#include <sys/game.hpp>
 #include <sys/state.hpp>
 #include <sys/engine.hpp>
 

@@ -32,19 +32,27 @@
 // Utility Classes
 class timer;
 
-// Object Classes
+// Object Primatives
 class object;
 class tile;
 class glyph;
 class layer;
 
-// Core Classes
-class game;
+// UI Objects
+class text;
+class gtext;
+class button;
+class border;
+class statbar;
+class menu;
+class frame;
 
 // System Classes
 class manager;
 class assets;
+class stage;
 class window;
+class game;
 class state;
 class engine;
 

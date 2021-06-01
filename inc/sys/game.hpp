@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////
 //
-// sage - layer.hpp
+// sage - game.hpp
 //
 // Copyright (c) 2021 Christopher M. Short
 //
@@ -21,32 +21,25 @@
 //
 ////////////////////////////////////////////////////////////////////////////
 
-#ifndef _SAGE_LAYER_HPP
-#define _SAGE_LAYER_HPP
+#ifndef _SAGE_GAME_HPP
+#define _SAGE_GAME_HPP
 
 
 /////////////////////////////////////////////////////////////
-// LAYER Class
+// GAME Class
 //
-// The layer class contains objects to be drawn
+// The game class is a container for game data
 
-class layer : public object {
+class game {
 public:
-  layer(state_ptr const& g_state);
-  virtual ~layer();
+  game(state_ptr const& g_state);
 
-  virtual bool const& update(state_ptr const& g_state) override;
-  virtual void        finalize(state_ptr const& g_state) {}
+  void update(state_ptr const& g_state);
+  void finalize(state_ptr const& g_state);
 
-  void add(object_ptr const& obj);
-  void pop(object_ptr const& obj);
-
-protected:
-  std::unordered_map<unsigned int, object_ptr> l_objects;
-  std::vector<unsigned int>                    l_objectid;
-
-  void draw(state_ptr const& g_state);
+private:
+  layer_ptr g_map;
+  layer_ptr g_frame;
 };
 
-
-#endif // _SAGE_LAYER_HPP
+#endif // _SAGE_GAME_HPP

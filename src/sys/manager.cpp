@@ -99,14 +99,14 @@ void manager::update() {
         {
           key_event k(key_event::type::press, s_event.key.keysym.sym, s_event.key.keysym.scancode, s_event.key.state, s_event.key.keysym.mod);
           events.push(event(k));
-          INFO("KEY_DOWN: ", SDL_GetKeyName(s_event.key.keysym.sym));
+          //INFO("KEY_DOWN: ", SDL_GetKeyName(s_event.key.keysym.sym));
         }
         break;
       case SDL_KEYUP:
         {
           key_event k(key_event::type::release, s_event.key.keysym.sym, s_event.key.keysym.scancode, s_event.key.state, s_event.key.keysym.mod);
           events.push(event(k));
-          INFO("KEY_UP: ", SDL_GetKeyName(s_event.key.keysym.sym));
+          //INFO("KEY_UP: ", SDL_GetKeyName(s_event.key.keysym.sym));
         }
         break;
       case SDL_WINDOWEVENT:

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////
 //
-// sage - layer.hpp
+// sage - game.cpp
 //
 // Copyright (c) 2021 Christopher M. Short
 //
@@ -21,32 +21,32 @@
 //
 ////////////////////////////////////////////////////////////////////////////
 
-#ifndef _SAGE_LAYER_HPP
-#define _SAGE_LAYER_HPP
+#include <sage.hpp>
 
 
 /////////////////////////////////////////////////////////////
-// LAYER Class
+// GAME Class implementation
 //
-// The layer class contains objects to be drawn
 
-class layer : public object {
-public:
-  layer(state_ptr const& g_state);
-  virtual ~layer();
+game::game(state_ptr const& g_state) {
+  // Initialize our game Objects
+  g_map   = std::make_shared<map>(g_state);
+  g_frame = std::make_shared<frame>(g_state);
 
-  virtual bool const& update(state_ptr const& g_state) override;
-  virtual void        finalize(state_ptr const& g_state) {}
+  // Add our map to the stage
+  g_state->get_stage().add(g_map);
+  g_state->get_stage().add(g_frame);
+}
 
-  void add(object_ptr const& obj);
-  void pop(object_ptr const& obj);
+void game::update(state_ptr const& g_state) {
+  // Do something
+}
 
-protected:
-  std::unordered_map<unsigned int, object_ptr> l_objects;
-  std::vector<unsigned int>                    l_objectid;
+void game::finalize(state_ptr const& g_state) {
+  // Finalize game objects
+  g_map->finalize(g_state);
+  g_frame->finalize(g_state);
 
-  void draw(state_ptr const& g_state);
-};
-
-
-#endif // _SAGE_LAYER_HPP
+  // Remove all objects from the stage
+  g_state->get_stage().clear();
+}

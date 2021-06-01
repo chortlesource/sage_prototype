@@ -136,13 +136,6 @@ void engine::on_user_init() {
   layer_ptr mainmenu = std::make_shared<menu>(g_state);
   g_state->get_stage().add_menu("MAIN_MENU", mainmenu);
 
-  // Generate the map
-  layer_ptr m   = std::make_shared<map>(g_state);
-
-  layer_ptr fr = std::make_shared<frame>(g_state);
-  g_state->get_stage().add(m);
-  g_state->get_stage().add(fr);
-
   // Show the main menu by default
   g_state->get_stage().use_menu("MAIN_MENU");
   g_state->set_status(state::status::menu);
@@ -178,6 +171,16 @@ void engine::on_event(event const& e) {
       if(e.button.command == "MNU_QUIT")
         g_state->set_status(state::status::exit);
       else if(e.button.command == "MNU_NEW") {
+        if(g_state->get_game() == nullptr) {
+          // Pop the menu and set to initialized
+          g_state->get_stage().pop_menu();
+          g_state->set_status(state::status::run);
+
+          // Initialize the new game
+          game_ptr newgame = std::make_shared<game>(g_state);
+          g_state->set_game(newgame);
+          INFO("Starting new game...");
+        }
         break;
       }
       break;
@@ -189,7 +192,7 @@ void engine::on_event(event const& e) {
             g_state->set_status(state::status::menu);
             return;
           }
-          if(g_state->get_status() == state::status::menu) {
+          if(g_state->get_status() == state::status::menu && g_state->get_game() != nullptr) {
             g_state->get_stage().pop_menu();
             g_state->set_status(state::status::run);
             return;

@@ -64,7 +64,8 @@ public:
   void update();
 
   // state get and set functions
-  void set_status(status const& value) { g_status = value;}
+  void set_status(status const& value) { g_status = value; }
+  void set_game(game_ptr const& value) { g_game   = value; }
 
   timer       &      get_timer()   { return g_timer; }
   assets      &      get_assets()  { return g_assets; }
