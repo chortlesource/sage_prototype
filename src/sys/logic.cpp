@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////
 //
-// sage - game.cpp
+// sage - logic.cpp
 //
 // Copyright (c) 2021 Christopher M. Short
 //
@@ -25,28 +25,38 @@
 
 
 /////////////////////////////////////////////////////////////
-// GAME Class implementation
+// LOGIC Class implementation
 //
 
-game::game(state_ptr const& g_state) {
-  // Initialize our game Objects
-  g_map   = std::make_shared<map>(g_state);
-  g_frame = std::make_shared<frame>(g_state);
-
-  // Add our map to the stage
-  g_state->get_stage().add(g_map);
-  g_state->get_stage().add(g_frame);
+void logic::toggle_main_menu(state_ptr const& g_state) {
+  // Toggle the main menu
+  if(g_state->get_status() == state::status::run) {
+    g_state->get_stage().use_menu("MAIN_MENU");
+    g_state->set_status(state::status::menu);
+    return;
+  }
+  if(g_state->get_status() == state::status::menu && g_state->get_game() != nullptr) {
+    g_state->get_stage().pop_menu();
+    g_state->set_status(state::status::run);
+    return;
+  }
 }
 
-void game::update(state_ptr const& g_state) {
-  // Do something
+
+void logic::init_new_game(state_ptr const& g_state) {
+  if(g_state->get_game() == nullptr) {
+    // Pop the menu and set to initialized
+    g_state->get_stage().pop_menu();
+    g_state->set_status(state::status::run);
+
+    // Initialize the new game
+    game_ptr newgame = std::make_shared<game>(g_state);
+    g_state->set_game(newgame);
+    INFO("Starting new game...");
+  }
 }
 
-void game::finalize(state_ptr const& g_state) {
-  // Finalize game objects
-  g_map->finalize(g_state);
-  g_frame->finalize(g_state);
 
-  // Remove all objects from the stage
-  g_state->get_stage().clear(g_state);
+void logic::sage_halt(state_ptr const& g_state) {
+  g_state->set_status(state::status::exit);
 }

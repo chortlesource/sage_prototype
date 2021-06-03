@@ -86,6 +86,7 @@
 #include <sys/stage.hpp>
 #include <sys/window.hpp>
 #include <sys/game.hpp>
+#include <sys/logic.hpp>
 #include <sys/state.hpp>
 #include <sys/engine.hpp>
 

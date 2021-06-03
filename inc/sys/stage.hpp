@@ -37,10 +37,11 @@ public:
 
   void initialize(Json::Value const& g_config);
   void update(state_ptr const& g_state);
+  void finalize(state_ptr const& g_state);
 
   void add(layer_ptr const& layer);
   void pop();
-  void clear();
+  void clear(state_ptr const& g_state);
 
   void add_menu(std::string const& id, layer_ptr const& menu);
   void use_menu(std::string const& id);
@@ -51,6 +52,7 @@ private:
   unsigned int            s_menu_depth;
   SDL_Rect                s_position;
   std::vector<layer_ptr>  s_layers;
+  std::vector<std::string>                    s_menuid;
   std::unordered_map<std::string, layer_ptr>  s_menus;
 };
 

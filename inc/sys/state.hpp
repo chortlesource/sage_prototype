@@ -73,6 +73,7 @@ public:
   manager     &      get_manager() { return g_manager; }
   stage       &      get_stage()   { return g_stage; }
   game_ptr    &      get_game()    { return g_game; }
+  logic       &      get_logic()   { return g_logic; }
   istate      const& get_input()   { return g_input; }
   status      const& get_status()  { return g_status; }
   double      const& get_delta()   { return g_timer.delta(); }
@@ -84,6 +85,7 @@ private:
   manager  g_manager;
   stage    g_stage;
   game_ptr g_game;
+  logic    g_logic;
   window   g_window;
   istate   g_input;
   status   g_status;

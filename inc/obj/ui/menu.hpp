@@ -33,7 +33,10 @@
 class menu : public layer {
 public:
   menu(state_ptr const& g_state);
-  
+
+  virtual bool const& update(state_ptr const& g_state) override;
+  virtual void        finalize(state_ptr const& g_state) override;
+
 };
 
 #endif // _SAGE_MENU_HPP

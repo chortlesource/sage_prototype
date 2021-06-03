@@ -49,7 +49,8 @@ void object::set_visible(bool const& value) {
 
 
 void object::set_paused(bool const& value)  {
-  o_paused = value;
+  o_changed = true;
+  o_paused  = value;
 };
 
 

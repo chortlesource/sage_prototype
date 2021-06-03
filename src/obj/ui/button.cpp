@@ -51,6 +51,10 @@ button::~button() {
 
 
 bool const& button::update(state_ptr const& g_state) {
+  if(o_paused) {
+    o_texture = b_texts[2].get_textureptr();
+    return o_changed;
+  }
 
   // Lambda function for convenience
   auto is_over = [&] (int const& x, int const& y) {

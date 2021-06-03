@@ -49,6 +49,12 @@ layer::~layer() {
 }
 
 
+void layer::finalize(state_ptr const& g_state) {
+  for(auto &id : l_objectid)
+    l_objects[id]->finalize(g_state);
+}
+
+
 bool const& layer::update(state_ptr const& g_state) {
   if(!initialized || o_paused) return o_changed;
 

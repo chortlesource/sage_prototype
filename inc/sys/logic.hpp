@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////
 //
-// sage - layer.hpp
+// sage - logic.hpp
 //
 // Copyright (c) 2021 Christopher M. Short
 //
@@ -21,32 +21,22 @@
 //
 ////////////////////////////////////////////////////////////////////////////
 
-#ifndef _SAGE_LAYER_HPP
-#define _SAGE_LAYER_HPP
+#ifndef _SAGE_LOGIC_HPP
+#define _SAGE_LOGIC_HPP
 
 
 /////////////////////////////////////////////////////////////
-// LAYER Class
+// LOGIC Class
 //
-// The layer class contains objects to be drawn
+// The logic class contains game logic methods.
 
-class layer : public object {
+class logic {
 public:
-  layer(state_ptr const& g_state);
-  virtual ~layer();
 
-  virtual bool const& update(state_ptr const& g_state) override;
-  virtual void        finalize(state_ptr const& g_state) override;
-
-  void add(object_ptr const& obj);
-  void pop(object_ptr const& obj);
-
-protected:
-  std::unordered_map<unsigned int, object_ptr> l_objects;
-  std::vector<unsigned int>                    l_objectid;
-
-  void draw(state_ptr const& g_state);
+  void toggle_main_menu(state_ptr const& g_state);
+  void init_new_game(state_ptr const& g_state);
+  void sage_halt(state_ptr const& g_state);
 };
 
 
-#endif // _SAGE_LAYER_HPP
+#endif // _SAGE_LOGIC_HPP

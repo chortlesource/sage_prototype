@@ -165,39 +165,20 @@ void engine::on_event(event const& e) {
   switch(e.type) {
     case eventtype::system:
       if(e.system.action == system_event::type::halt)
-        g_state->set_status(state::status::exit);
+        g_state->get_logic().sage_halt(g_state);
       break;
     case eventtype::button:
       if(e.button.command == "MNU_QUIT")
-        g_state->set_status(state::status::exit);
-      else if(e.button.command == "MNU_NEW") {
-        if(g_state->get_game() == nullptr) {
-          // Pop the menu and set to initialized
-          g_state->get_stage().pop_menu();
-          g_state->set_status(state::status::run);
-
-          // Initialize the new game
-          game_ptr newgame = std::make_shared<game>(g_state);
-          g_state->set_game(newgame);
-          INFO("Starting new game...");
-        }
-        break;
-      }
+        g_state->get_logic().sage_halt(g_state);
+      else if(e.button.command == "MNU_NEW")
+        g_state->get_logic().init_new_game(g_state);
+      else if(e.button.command == "MNU_CONT")
+        g_state->get_logic().toggle_main_menu(g_state);
       break;
     case eventtype::key:
       if(e.key.keytype == key_event::type::release) {
-        if(e.key.scancode == SDL_SCANCODE_ESCAPE) {
-          if(g_state->get_status() == state::status::run) {
-            g_state->get_stage().use_menu("MAIN_MENU");
-            g_state->set_status(state::status::menu);
-            return;
-          }
-          if(g_state->get_status() == state::status::menu && g_state->get_game() != nullptr) {
-            g_state->get_stage().pop_menu();
-            g_state->set_status(state::status::run);
-            return;
-          }
-        }
+        if(e.key.scancode == SDL_SCANCODE_ESCAPE)
+          g_state->get_logic().toggle_main_menu(g_state);
       }
       break;
     default:

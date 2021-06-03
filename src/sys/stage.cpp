@@ -28,7 +28,7 @@
 // STAGE Class implementation
 //
 
-stage::stage() : initialized(false), s_menu_depth(0), s_position(), s_layers(), s_menus() {}
+stage::stage() : initialized(false), s_menu_depth(0), s_position(), s_layers(), s_menuid(), s_menus() {}
 
 
 stage::~stage() {
@@ -47,6 +47,15 @@ void stage::initialize(Json::Value const& g_config) {
 
   initialized = true;
 }
+
+
+void stage::finalize(state_ptr const& g_state) {
+  for(auto &id : s_menuid)
+    s_menus[id]->finalize(g_state);
+
+  clear(g_state);
+}
+
 
 
 void stage::update(state_ptr const& g_state) {
@@ -78,7 +87,11 @@ void stage::pop() {
 }
 
 
-void stage::clear() {
+void stage::clear(state_ptr const& g_state) {
+  // Finalize our objects
+  for(auto &l : s_layers)
+    l->finalize(g_state);
+
   // Clear the layer stack
   s_layers.clear();
 }
@@ -86,10 +99,12 @@ void stage::clear() {
 
 void stage::add_menu(std::string const& id, layer_ptr const& menu) {
   // Add it to the menu map
-  if((s_menus.try_emplace(id, menu)).second)
+  if((s_menus.try_emplace(id, menu)).second) {
     INFO("Menu added:", id);
-  else
+    s_menuid.push_back(id);
+  } else {
     WARN("Duplicate menu: ", id);
+  }
 }
 
 
