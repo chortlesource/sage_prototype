@@ -57,6 +57,8 @@ void state::initialize(state_ptr const& g_state) {
 
   // Load the game tiles
   g_assets.load_tiles(g_state, g_tiles);
+  g_input.tile_w = g_state->get_assets().find_json("atlas")["TILE_W"].asInt();
+  g_input.tile_h = g_state->get_assets().find_json("atlas")["TILE_H"].asInt();
 
   // Load the font glyphs
   g_assets.load_glyphs(g_state);

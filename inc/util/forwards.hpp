@@ -47,6 +47,11 @@ class statbar;
 class menu;
 class frame;
 
+// Core Objects
+class map;
+class enemy;
+class worldgen;
+
 // System Classes
 class manager;
 class assets;

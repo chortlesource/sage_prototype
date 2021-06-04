@@ -37,7 +37,12 @@ public:
   virtual bool const& update(state_ptr const& g_state) override;
 
 private:
+  object_ptr gen;
   object_ptr cursor;
+  int        width;
+  int        height;
+
+  void update_cursor(state_ptr const& g_state);
 };
 
 #endif // _SAGE_MAP_HPP

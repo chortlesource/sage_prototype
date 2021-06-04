@@ -38,7 +38,6 @@ button::button(state_ptr const& g_state, std::string const& caption, std::string
   o_source    = b_texts[0].get_source();
   o_position  = b_texts[0].get_position();
   o_texture   = b_texts[0].get_textureptr();
-  o_color     = { 255, 255, 255, 255 };
   initialized = true;
 }
 

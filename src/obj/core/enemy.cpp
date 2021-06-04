@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////
 //
-// sage - border.cpp
+// sage - enemy.cpp
 //
 // Copyright (c) 2021 Christopher M. Short
 //
@@ -25,26 +25,18 @@
 
 
 /////////////////////////////////////////////////////////////
-// BORDER Class implementation
+// ENEMY Class implementation
 //
 
-border::border(state_ptr const& g_state, std::string const& colorid) : object(g_state) {
-  // Calculate border dimensions
-  int tile_w = g_state->get_assets().find_json("atlas")["TILE_W"].asInt();
-  int tile_h = g_state->get_assets().find_json("atlas")["TILE_H"].asInt();
-  int scrnw  = g_state->get_config()["APP_W"].asInt();
-  int scrnh  = g_state->get_config()["APP_H"].asInt();
+enemy::enemy(state_ptr const& g_state) : object(g_state) {
+  SDL_Renderer *render = g_state->get_window().get_render();
+  object_ptr t         = g_state->get_assets().find_tile(2);
 
   // Configure basic details about the object
-  o_source   = { 0, 0, scrnw, scrnh };
-  o_position = { 0, 0, scrnw, scrnh };
+  o_source   = { 0, 0, t->get_source().w, t->get_source().h };
+  o_position = o_source;
 
-  int max_w  = o_position.w / tile_w;
-  int max_h  = o_position.h / tile_h;
-
-  SDL_Renderer *render = g_state->get_window().get_render();
-
-  // Create our border texture
+  // Create our enemy texture
   sdltexture_ptr texture(SDL_CreateTexture(render, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,
     o_source.w, o_source.h), [=](SDL_Texture *t){ SDL_DestroyTexture(t); });
   o_texture = texture;
@@ -55,19 +47,8 @@ border::border(state_ptr const& g_state, std::string const& colorid) : object(g_
   SDL_SetRenderDrawColor(render, 0,0,0,0);
   SDL_RenderClear(render);
 
-  object_ptr t     = g_state->get_assets().find_tile(17);
-  SDL_Color tcolor = g_state->get_assets().find_color(colorid);
-  SDL_SetTextureColorMod(t->get_texture(), tcolor.r, tcolor.g, tcolor.b);
-
-  for(int x = 0; x < max_w; x++) {
-    for(int y = 0; y < max_h; y++) {
-      if(y == 0 || y == max_h - 1 || x == 0 || x == max_w - 1) {
-        SDL_Rect pos { x * tile_w, y * tile_w, tile_w, tile_h };
-        SDL_RenderCopy(render, t->get_texture(), &t->get_source(), &pos);
-      }
-    }
-  }
-
+  SDL_SetTextureColorMod(t->get_texture(), o_color.r, o_color.g, o_color.b);
+  SDL_RenderCopy(render, t->get_texture(), &t->get_source(), &o_position);
   SDL_SetRenderTarget(render, NULL);
   initialized = true;
 }
