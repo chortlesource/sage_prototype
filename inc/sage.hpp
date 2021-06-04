@@ -44,6 +44,7 @@
 #include <chrono>
 #include <iomanip>
 #include <fstream>
+#include <random>
 #include <functional>
 #include <filesystem>
 
@@ -60,6 +61,7 @@
 #include <util/forwards.hpp>
 #include <util/debug.hpp>
 #include <util/timer.hpp>
+#include <util/perlin.hpp>
 
 // Object Primatives
 #include <obj/object.hpp>
@@ -77,6 +79,7 @@
 #include <obj/ui/frame.hpp>
 
 // Core Objects
+#include <obj/core/worldgen.hpp>
 #include <obj/core/map.hpp>
 #include <obj/core/enemy.hpp>
 

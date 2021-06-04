@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////
 //
-// sage - map.hpp
+// sage - worldgen.hpp
 //
 // Copyright (c) 2021 Christopher M. Short
 //
@@ -21,28 +21,32 @@
 //
 ////////////////////////////////////////////////////////////////////////////
 
-#ifndef _SAGE_MAP_HPP
-#define _SAGE_MAP_HPP
+#ifndef _SAGE_WORLDGEN_HPP
+#define _SAGE_WORLDGEN_HPP
 
 
 /////////////////////////////////////////////////////////////
-// MAP Class
+// WORLDGEN Class
 //
-// The map class represents a basic level map
+// The worldgen class generates a tilemap based on perlin noise
 
-class map : public layer {
+class worldgen {
 public:
-  map(state_ptr const& g_state);
+  enum biome { water = 0, sand, dirt, grass, forrest, mountain };
 
-  virtual bool const& update(state_ptr const& g_state) override;
+  worldgen() {};
+  worldgen(int const& width, int const& height);
+
+  std::vector<int> const& get_map() { return w_map; }
 
 private:
-  worldgen   gen;
-  object_ptr cursor;
-  int        width;
-  int        height;
+  std::vector<double> w_elev;
+  std::vector<double> w_temp;
+  std::vector<int>    w_map;
 
-  void update_cursor(state_ptr const& g_state);
+  void generate_noise_map(int const& width, int const& height);
+  void generate_world_map(int const& width, int const& height);
+  void print_world_map   (int const& width, int const& height);
 };
 
-#endif // _SAGE_MAP_HPP
+#endif // _SAGE_WORLDGEN_HPP

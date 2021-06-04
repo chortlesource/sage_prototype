@@ -29,21 +29,41 @@
 //
 
 map::map(state_ptr const& g_state) : layer(g_state) {
-
+  // Add the cursor to the map
   cursor = g_state->get_assets().find_tile(12);
   cursor->set_position({32, 32, 0, 0});
   cursor->set_color({255, 255, 255, 255});
   add(cursor);
 
-  object_ptr e = std::make_shared<enemy>(g_state);//g_state->get_assets().find_tile(2);//
-  e->set_position({16, 16, 0, 0});
-  add(e);
+  int tile_w = g_state->get_input().tile_w;
+  int tile_h = g_state->get_input().tile_h;
+  int w      = g_state->get_input().width;
+  int h      = g_state->get_input().height;
+
+  width  = (w / tile_w) - (tile_w * 2);
+  height = (h / tile_h) - (tile_h * 2);
+  gen    = worldgen(width, height);
+
 }
 
 
 bool const& map::update(state_ptr const& g_state) {
   if(!initialized || o_paused) return o_changed;
 
+  // Update the cursor position
+  update_cursor(g_state);
+
+  for(auto const& id : l_objectid)
+    o_changed += l_objects[id]->update(g_state);
+
+  if(o_changed)
+    draw(g_state);
+
+  return o_changed;
+}
+
+
+void map::update_cursor(state_ptr const& g_state) {
   int tile_w = g_state->get_assets().find_json("atlas")["TILE_W"].asInt();
   int tile_h = g_state->get_assets().find_json("atlas")["TILE_H"].asInt();
 
@@ -62,12 +82,4 @@ bool const& map::update(state_ptr const& g_state) {
     cursor->set_position({ worldx * tile_w, worldy * tile_h, 0, 0});
     o_changed += 1;
   }
-
-  for(auto const& id : l_objectid)
-    o_changed += l_objects[id]->update(g_state);
-
-  if(o_changed)
-    draw(g_state);
-
-  return o_changed;
 }
