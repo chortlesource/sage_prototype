@@ -30,7 +30,7 @@
 
 object::object(state_ptr const& g_state) : initialized(false), o_visible(true),
   o_paused(false), o_changed(false), o_source({0,0,0,0}), o_position({0,0,0,0}),
-    o_color({0,0,0,0}), o_texture(nullptr), o_eventid(g_state->get_manager().get_delegate_id()) {}
+    o_color({255,255,255,255}), o_texture(nullptr), o_eventid(g_state->get_manager().get_delegate_id()) {}
 
 object::~object() {
   initialized = false;

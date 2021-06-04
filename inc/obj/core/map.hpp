@@ -38,6 +38,9 @@ public:
 
 private:
   object_ptr cursor;
+  int width;
+  int height;
+
 };
 
 #endif // _SAGE_MAP_HPP

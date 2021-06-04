@@ -40,7 +40,6 @@ gtext::gtext(state_ptr const& g_state, std::string const& caption, std::string c
   // Configure our gtext object
   o_source   = { 0, 0, tile_w * (int)gstring.size(), tile_h };
   o_position = { 0, 0, tile_w * (int)gstring.size(), tile_h };
-  o_color    = { 255, 255, 255, 255 };
 
   // Create our gtext texture
   sdltexture_ptr texture(SDL_CreateTexture(render, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,

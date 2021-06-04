@@ -78,6 +78,7 @@
 
 // Core Objects
 #include <obj/core/map.hpp>
+#include <obj/core/enemy.hpp>
 
 // System
 #include <sys/events.hpp>

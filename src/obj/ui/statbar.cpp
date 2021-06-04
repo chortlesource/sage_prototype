@@ -49,7 +49,6 @@ statbar::statbar(state_ptr const& g_state) : object(g_state) {
   // Configure basic details about the object
   o_source   = { 0, 0, tile_w * 9, tile_h };
   o_position = { 0, 0, tile_w * 9, tile_h };
-  o_color    = { 255, 255, 255, 255 };
 
   // Create our sidebar texture
   sdltexture_ptr texture(SDL_CreateTexture(render, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,

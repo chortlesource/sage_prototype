@@ -29,10 +29,15 @@
 //
 
 map::map(state_ptr const& g_state) : layer(g_state) {
+
   cursor = g_state->get_assets().find_tile(12);
   cursor->set_position({32, 32, 0, 0});
   cursor->set_color({255, 255, 255, 255});
   add(cursor);
+
+  object_ptr e = std::make_shared<enemy>(g_state);//g_state->get_assets().find_tile(2);//
+  e->set_position({16, 16, 0, 0});
+  add(e);
 }
 
 
@@ -44,8 +49,8 @@ bool const& map::update(state_ptr const& g_state) {
 
   // Lambda function for convenience
   auto is_over = [&] (int const& x, int const& y) {
-    return (x > (o_position.x - tile_w) && x < (o_position.x - tile_w) + o_position.w &&
-      y > (o_position.y - tile_h) && y < (o_position.y - tile_h) + o_position.h);
+    return (x > (o_position.x + tile_w) && x < (o_position.x - tile_w) + o_position.w &&
+      y > (o_position.y + tile_h) && y < (o_position.y - tile_h) + o_position.h);
   };
 
   // Obtain the current position of the mouse
@@ -55,8 +60,14 @@ bool const& map::update(state_ptr const& g_state) {
     int worldx = mouse.x / tile_w;
     int worldy = mouse.y / tile_h;
     cursor->set_position({ worldx * tile_w, worldy * tile_h, 0, 0});
-    draw(g_state);
+    o_changed += 1;
   }
+
+  for(auto const& id : l_objectid)
+    o_changed += l_objects[id]->update(g_state);
+
+  if(o_changed)
+    draw(g_state);
 
   return o_changed;
 }

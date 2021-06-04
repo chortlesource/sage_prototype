@@ -40,11 +40,13 @@ struct istate {
   // Window state
   int             width;
   int             height;
+  int             tile_w;
+  int             tile_h;
 
   // Keyboard state
   const uint8_t  *keys;
 
-  istate() : x(0), y(0), buttons(0), width(0), height(0), keys(SDL_GetKeyboardState(NULL)) {};
+  istate() : x(0), y(0), buttons(0), width(0), height(0), tile_w(0), tile_h(0), keys(SDL_GetKeyboardState(NULL)) {};
 };
 
 
