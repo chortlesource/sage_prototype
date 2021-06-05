@@ -28,15 +28,20 @@
 // WORLDGEN Class implementation
 //
 
-worldgen::worldgen(int const& width, int const& height) {
+worldgen::worldgen(state_ptr const& g_state, int const& width, int const& height) : object(g_state) {
   // Generate the biome and temperature map
   generate_noise_map(width, height);
 
   // Populate the map based on noise and elevation
   generate_world_map(width, height);
 
-  // Print the map to take a look
-  print_world_map(width, height);
+  // Generate the map texture
+  int tile_w = g_state->get_assets().find_json("atlas")["TILE_W"].asInt();
+  int tile_h = g_state->get_assets().find_json("atlas")["TILE_H"].asInt();
+  generate_world_txt(g_state, width, height, tile_w, tile_h);
+
+  o_source   = { 0, 0, width * tile_w, height * tile_h };
+  o_position = { tile_w, tile_h, o_source.w, o_source.h };
 }
 
 
@@ -45,7 +50,13 @@ void worldgen::generate_world_map(int const& width, int const& height) {
   w_map.resize(size);
 
   for(int i = 0; i < size; i++) {
-    if(w_elev[i] < 0.05f) w_map[i] = biome::water;
+    if(w_elev[i] < 0.07f) {
+      if(w_temp[i] > 0.7)
+        w_map[i] = biome::water;
+      else
+        w_map[i] = biome::sand;
+    }
+
     if(w_elev[i] < 0.12f) w_map[i] = biome::sand;
 
     if(w_elev[i] > 0.7f) {
@@ -57,28 +68,18 @@ void worldgen::generate_world_map(int const& width, int const& height) {
     }
 
     if(w_elev[i] < 0.5f) {
-      if(w_temp[i] < 0.1) w_map[i] = biome::sand;
-      if(w_temp[i] < 0.3) w_map[i] = biome::grass;
-      if(w_temp[i] < 0.7) w_map[i] = biome::forrest;
+      if(w_temp[i] > 0.1) w_map[i] = biome::sand;
+      if(w_temp[i] > 0.3) w_map[i] = biome::grass;
+      if(w_temp[i] > 0.7) w_map[i] = biome::forrest;
       continue;
     }
 
     if(w_elev[i] < 0.27f) {
-      if(w_temp[i] < 0.1) w_map[i] = biome::sand;
-      if(w_temp[i] < 0.3) w_map[i] = biome::dirt;
-      if(w_temp[i] < 0.7) w_map[i] = biome::forrest;
+      if(w_temp[i] > 0.1) w_map[i] = biome::sand;
+      if(w_temp[i] > 0.3) w_map[i] = biome::dirt;
+      if(w_temp[i] > 0.7) w_map[i] = biome::forrest;
       continue;
     }
-  }
-}
-
-
-void worldgen::print_world_map(int const& width, int const& height) {
-  for(int y = 0; y < height; y++) {
-    for(int x = 0; x < width; x++) {
-      std::cout << w_map[y * width + x];
-    }
-    std::cout << std::endl;
   }
 }
 
@@ -105,4 +106,63 @@ void worldgen::generate_noise_map(int const& width, int const& height) {
       w_temp[y * width + x] = temp;
     }
   }
+}
+
+
+void worldgen::generate_world_txt(state_ptr const& g_state, int const& width, int const& height, int const& tile_w, int const& tile_h) {
+  // Create our world texture
+  SDL_Renderer *render = g_state->get_window().get_render();
+  sdltexture_ptr texture(SDL_CreateTexture(render, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,
+    width * tile_w, height * tile_h), [=](SDL_Texture *t){ SDL_DestroyTexture(t); });
+  o_texture = texture;
+
+  // Clear our texture to make transparent
+  SDL_SetTextureBlendMode(o_texture.get(), SDL_BLENDMODE_BLEND);
+  SDL_SetRenderTarget(render, o_texture.get());
+  SDL_SetRenderDrawColor(render, 0,0,0,0);
+  SDL_RenderClear(render);
+
+  for(int y = 0; y < height; y++) {
+    for(int x = 0; x < width; x++) {
+      SDL_Color  color { 255, 255, 255, 255 };
+      SDL_Rect   pos   { x * tile_w, y * tile_h, tile_w, tile_h };
+      object_ptr t = g_state->get_assets().find_tile(2);
+
+      switch(w_map[y * width + x]) {
+        case biome::water:
+          t     = g_state->get_assets().find_tile(11);
+          color = g_state->get_assets().find_color("BLUE");
+          break;
+        case biome::sand:
+          t     = g_state->get_assets().find_tile(16);
+          color = g_state->get_assets().find_color("YELLOW");
+          break;
+        case biome::dirt:
+          t     = g_state->get_assets().find_tile(21);
+          color = g_state->get_assets().find_color("BROWN");
+          break;
+        case biome::grass:
+          t     = g_state->get_assets().find_tile(16);
+          color = g_state->get_assets().find_color("L_GREEN");
+          break;
+        case biome::forrest:
+          t     = g_state->get_assets().find_tile(5);
+          color = g_state->get_assets().find_color("GREEN");
+          break;
+        case biome::mountain:
+          t     = g_state->get_assets().find_tile(6);
+          color = g_state->get_assets().find_color("L_GREY");
+          break;
+        default:
+          break;
+      }
+
+      SDL_SetTextureColorMod(t->get_texture(), color.r, color.g, color.b);
+      SDL_RenderCopy(render, t->get_texture(), &t->get_source(), &pos);
+    }
+  }
+
+  SDL_SetRenderTarget(render, NULL);
+  INFO("DONE");
+  initialized = true;
 }

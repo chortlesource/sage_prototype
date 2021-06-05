@@ -37,7 +37,7 @@ public:
   virtual bool const& update(state_ptr const& g_state) override;
 
 private:
-  worldgen   gen;
+  object_ptr gen;
   object_ptr cursor;
   int        width;
   int        height;

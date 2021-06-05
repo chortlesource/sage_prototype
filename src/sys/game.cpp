@@ -36,7 +36,6 @@ game::game(state_ptr const& g_state) {
   // Add our map to the stage
   g_state->get_stage().add(g_map);
   g_state->get_stage().add(g_frame);
-
 }
 
 void game::update(state_ptr const& g_state) {

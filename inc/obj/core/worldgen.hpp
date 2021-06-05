@@ -30,23 +30,22 @@
 //
 // The worldgen class generates a tilemap based on perlin noise
 
-class worldgen {
+class worldgen : public object {
 public:
-  enum biome { water = 0, sand, dirt, grass, forrest, mountain };
+  enum class biome { water, sand, dirt, grass, forrest, mountain };
 
-  worldgen() {};
-  worldgen(int const& width, int const& height);
-
-  std::vector<int> const& get_map() { return w_map; }
+  worldgen(state_ptr const& g_state, int const& width, int const& height);
 
 private:
   std::vector<double> w_elev;
   std::vector<double> w_temp;
-  std::vector<int>    w_map;
+  std::vector<biome>  w_map;
+  sdltexture_ptr      w_texture;
 
   void generate_noise_map(int const& width, int const& height);
   void generate_world_map(int const& width, int const& height);
-  void print_world_map   (int const& width, int const& height);
+  void generate_world_txt(state_ptr const& g_state, int const& width, int const& height, int const& tile_w, int const& tile_h);
 };
+
 
 #endif // _SAGE_WORLDGEN_HPP

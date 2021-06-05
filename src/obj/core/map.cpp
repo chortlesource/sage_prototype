@@ -30,20 +30,22 @@
 
 map::map(state_ptr const& g_state) : layer(g_state) {
   // Add the cursor to the map
-  cursor = g_state->get_assets().find_tile(12);
+  cursor = g_state->get_assets().find_tile(15);
   cursor->set_position({32, 32, 0, 0});
   cursor->set_color({255, 255, 255, 255});
-  add(cursor);
 
   int tile_w = g_state->get_input().tile_w;
   int tile_h = g_state->get_input().tile_h;
   int w      = g_state->get_input().width;
   int h      = g_state->get_input().height;
 
-  width  = (w / tile_w) - (tile_w * 2);
-  height = (h / tile_h) - (tile_h * 2);
-  gen    = worldgen(width, height);
+  width  = (w / tile_w) - 2;
+  height = (h / tile_h) - 2;
+  gen    = std::make_shared<worldgen>(g_state, width, height);
 
+  // Add our objects to the screen
+  add(gen);
+  add(cursor);
 }
 
 

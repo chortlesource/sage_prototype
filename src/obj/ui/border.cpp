@@ -55,7 +55,7 @@ border::border(state_ptr const& g_state, std::string const& colorid) : object(g_
   SDL_SetRenderDrawColor(render, 0,0,0,0);
   SDL_RenderClear(render);
 
-  object_ptr t     = g_state->get_assets().find_tile(13);
+  object_ptr t     = g_state->get_assets().find_tile(17);
   SDL_Color tcolor = g_state->get_assets().find_color(colorid);
   SDL_SetTextureColorMod(t->get_texture(), tcolor.r, tcolor.g, tcolor.b);
 

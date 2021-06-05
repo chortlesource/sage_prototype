@@ -35,7 +35,6 @@ enemy::enemy(state_ptr const& g_state) : object(g_state) {
   // Configure basic details about the object
   o_source   = { 0, 0, t->get_source().w, t->get_source().h };
   o_position = o_source;
-  o_color    = { 255, 255, 255, 255 };
 
   // Create our enemy texture
   sdltexture_ptr texture(SDL_CreateTexture(render, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,
