@@ -105,6 +105,7 @@ void layer::draw(state_ptr const& g_state) {
   // Cycle through and draw objects to the layer
   for(auto const& id : l_objectid) {
     object_ptr &obj = l_objects[id];
+    if(!obj->get_visible()) continue;
 
     SDL_Color objc = obj->get_color();
 

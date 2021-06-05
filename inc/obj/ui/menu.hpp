@@ -37,6 +37,9 @@ public:
   virtual bool const& update(state_ptr const& g_state) override;
   virtual void        finalize(state_ptr const& g_state) override;
 
+private:
+  void toggle_continue();
+
 };
 
 #endif // _SAGE_MENU_HPP

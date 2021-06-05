@@ -57,13 +57,12 @@ menu::menu(state_ptr const& g_state) : layer(g_state) {
 
   title->set_position({ startx - (title->get_source().w / 2), starty - (title->get_source().h / 2) + (offset += padd), 0, 0});
   conbtn->set_position({ startx - (conbtn->get_source().w / 2), starty - (conbtn->get_source().h / 2) + (offset += (padd + (padd / 2))), 0, 0});
-  newbtn->set_position({ startx - (newbtn->get_source().w / 2), starty - (newbtn->get_source().h / 2) + (offset += padd), 0, 0});
+  newbtn->set_position({ startx - (newbtn->get_source().w / 2), starty - (newbtn->get_source().h / 2) + offset, 0, 0});
   loadbtn->set_position({ startx - (loadbtn->get_source().w / 2), starty - (loadbtn->get_source().h / 2) + (offset += padd), 0, 0});
   aboutbtn->set_position({ startx - (aboutbtn->get_source().w / 2), starty - (aboutbtn->get_source().h / 2) + (offset += padd), 0, 0});
   quitbtn->set_position({ startx - (quitbtn->get_source().w / 2), starty - (quitbtn->get_source().h / 2) + (offset += padd), 0, 0});
 
-  if(g_state->get_game() == nullptr)
-    conbtn->set_paused(true);
+  l_objects[l_objectid[3]]->set_visible(false);
 }
 
 
@@ -76,10 +75,8 @@ void        menu::finalize(state_ptr const& g_state) {
 
 bool const& menu::update(state_ptr const& g_state) {
 
-  if(g_state->get_game() == nullptr)
-    l_objects[l_objectid[3]]->set_paused(true);
-  else
-    l_objects[l_objectid[3]]->set_paused(false);
+  if(g_state->get_game() != nullptr)
+    toggle_continue();
 
   for(auto const& id : l_objectid)
     o_changed += l_objects[id]->update(g_state);
@@ -88,4 +85,21 @@ bool const& menu::update(state_ptr const& g_state) {
     draw(g_state);
 
   return o_changed;
+}
+
+
+void menu::toggle_continue() {
+  int padd = l_objects[l_objectid[2]]->get_source().h;
+
+  if(!l_objects[l_objectid[3]]->get_visible()) {
+    // Make the continue button visible
+    l_objects[l_objectid[3]]->set_visible(true);
+
+    for(unsigned int i = 4; i < 8; i++) {
+      // Obtain each menu item in turn and add padding
+      SDL_Rect pos = l_objects[l_objectid[i]]->get_position();
+      pos.y       += padd;
+      l_objects[l_objectid[i]]->set_position(pos);
+    }
+  }
 }
