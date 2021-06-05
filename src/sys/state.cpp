@@ -72,15 +72,23 @@ void state::update() {
   if(g_status == state::status::exit) return;
 
   // Obtain the current mouse state
-  g_input.buttons = SDL_GetMouseState(&g_input.x, &g_input.y);
+  int x, y;
+  g_input.buttons = SDL_GetMouseState(&x, &y);
 
   // Track window resizes
   SDL_GetWindowSize(g_window.get_window(), &g_input.width, &g_input.height);
 
   float scalex = ((float)g_input.width / g_config["APP_W"].asInt());
   float scaley = ((float)g_input.height / g_config["APP_H"].asInt());
-  g_input.x /= scalex;
-  g_input.y /= scaley;
+  x /= scalex;
+  y /= scaley;
+
+  // Clarify if we have moved the mouse if so show it
+  if(x != g_input.x && y != g_input.y)
+    SDL_ShowCursor(SDL_ENABLE);
+
+  g_input.x = x;
+  g_input.y = y;
 
   // Update the keyboard state
   SDL_PumpEvents();

@@ -116,6 +116,7 @@ void stage::use_menu(std::string const& id) {
   try {
     // Try to add out menu to the layer vector
     s_layers.push_back(s_menus.at(id));
+    s_layers.back()->set_active(true);
     s_menu_depth += 1; // to track how many menu's are present
 
   } catch (std::out_of_range const& oor) {
@@ -132,6 +133,7 @@ void stage::pop_menu() {
   if(s_menu_depth == 0) return;
 
   // Pop our menu from the back
+  s_layers.back()->set_active(false);
   s_layers.pop_back();
   s_menu_depth -= 1;
 

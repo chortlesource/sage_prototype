@@ -31,9 +31,9 @@
 button::button(state_ptr const& g_state, std::string const& caption, std::string const& fontid, std::string const& action) : object(g_state) {
   b_clicked  = false;
   b_action   = action;
-  b_texts.push_back(text(g_state, caption, fontid, "L_GRAY"));
-  b_texts.push_back(text(g_state, caption, fontid, "BLUE"));
-  b_texts.push_back(text(g_state, caption, fontid, "D_GRAY"));
+  b_texts.push_back(gtext(g_state, caption, "L_GRAY", "NONE"));
+  b_texts.push_back(gtext(g_state, caption, "BLUE", "NONE"));
+  b_texts.push_back(gtext(g_state, caption, "D_GRAY", "NONE"));
 
   o_source    = b_texts[0].get_source();
   o_position  = b_texts[0].get_position();
@@ -55,6 +55,17 @@ bool const& button::update(state_ptr const& g_state) {
     return o_changed;
   }
 
+  if(SDL_ShowCursor(SDL_QUERY) == SDL_ENABLE)
+    handle_mouse(g_state);
+  else
+    handle_key(g_state);
+
+  // Let our layer know if we need to redraw the button
+  return o_changed;
+}
+
+
+void button::handle_mouse(state_ptr const& g_state) {
   // Lambda function for convenience
   auto is_over = [&] (int const& x, int const& y) {
     return (x > o_position.x && x < o_position.x + o_position.w && y > o_position.y && y < o_position.y + o_position.h);
@@ -67,22 +78,43 @@ bool const& button::update(state_ptr const& g_state) {
   if(is_over(mouse.x, mouse.y)) {
     if(mouse.buttons & SDL_BUTTON(SDL_BUTTON_LEFT)) {
       o_texture = b_texts[2].get_textureptr();
-      o_changed  = true;
+      o_changed = true;
       if(!b_clicked) {
         g_state->get_manager().send_event(event(button_event(button_event::type::clicked, b_action)));
         b_clicked = true;
       }
     } else {
       o_texture = b_texts[1].get_textureptr();
-      o_changed    = true;
+      o_changed = true;
       b_clicked = false;
     }
   } else {
     o_texture = b_texts[0].get_textureptr();
-    o_changed    = true;
+    o_changed = true;
     b_clicked = false;
   }
+}
 
-  // Let our layer know if we need to redraw the button
-  return o_changed;
+
+void button::handle_key  (state_ptr const& g_state) {
+  // Obtain the current input state
+  istate const& keyboard = g_state->get_input();
+
+  // Clarify the current button status
+  if(o_active) {
+    o_texture = b_texts[1].get_textureptr();
+
+    if(!b_clicked) {
+      if(keyboard.keys[SDL_SCANCODE_RETURN]) {
+        o_texture = b_texts[2].get_textureptr();
+        g_state->get_manager().send_event(event(button_event(button_event::type::clicked, b_action)));
+        b_clicked = true;
+        return;
+      }
+    }
+    b_clicked = false;
+  } else {
+    b_clicked = false;
+    o_texture = b_texts[0].get_textureptr();
+  }
 }

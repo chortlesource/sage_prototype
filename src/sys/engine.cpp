@@ -133,8 +133,12 @@ void engine::start() {
 
 void engine::on_user_init() {
   // Initialize the main menu
-  layer_ptr mainmenu = std::make_shared<menu>(g_state);
+  layer_ptr mainmenu = std::make_shared<menumain>(g_state);
   g_state->get_stage().add_menu("MAIN_MENU", mainmenu);
+
+  // Initialize the world menu
+  layer_ptr worldmenu = std::make_shared<menuworld>(g_state);
+  g_state->get_stage().add_menu("WORLD_MENU", worldmenu);
 
   // Show the main menu by default
   g_state->get_stage().use_menu("MAIN_MENU");
@@ -176,6 +180,7 @@ void engine::on_event(event const& e) {
         g_state->get_logic().toggle_main_menu(g_state);
       break;
     case eventtype::key:
+      SDL_ShowCursor(SDL_DISABLE);
       if(e.key.keytype == key_event::type::release) {
         if(e.key.scancode == SDL_SCANCODE_ESCAPE)
           g_state->get_logic().toggle_main_menu(g_state);

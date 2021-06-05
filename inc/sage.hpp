@@ -80,10 +80,12 @@
 #include <obj/ui/border.hpp>
 #include <obj/ui/overlay.hpp>
 #include <obj/ui/statbar.hpp>
-#include <obj/ui/menu.hpp>
 #include <obj/ui/frame.hpp>
 
 // Core Objects
+#include <obj/core/menu.hpp>
+#include <obj/core/menumain.hpp>
+#include <obj/core/menuworld.hpp>
 #include <obj/core/worldgen.hpp>
 #include <obj/core/map.hpp>
 #include <obj/core/enemy.hpp>

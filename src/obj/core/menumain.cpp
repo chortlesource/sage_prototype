@@ -25,10 +25,10 @@
 
 
 /////////////////////////////////////////////////////////////
-// MENU Class implementation
+// MENUMAIN Class implementation
 //
 
-menu::menu(state_ptr const& g_state) : layer(g_state) {
+menumain::menumain(state_ptr const& g_state) : menu(g_state) {
   // Create our menu objects
   object_ptr over     = std::make_shared<overlay>(g_state, "BLACK", 230);
   object_ptr bordr    = std::make_shared<border>(g_state, "D_GRAY");
@@ -48,6 +48,11 @@ menu::menu(state_ptr const& g_state) : layer(g_state) {
   add(loadbtn);
   add(aboutbtn);
   add(quitbtn);
+  add_menu_object(conbtn);
+  add_menu_object(newbtn);
+  add_menu_object(loadbtn);
+  add_menu_object(aboutbtn);
+  add_menu_object(quitbtn);
 
   // Calculate the space our menu will take up
   int padd   = title->get_source().h;
@@ -66,14 +71,7 @@ menu::menu(state_ptr const& g_state) : layer(g_state) {
 }
 
 
-void        menu::finalize(state_ptr const& g_state) {
-  for(auto &id : l_objectid)
-    l_objects[id]->finalize(g_state);
-
-}
-
-
-bool const& menu::update(state_ptr const& g_state) {
+bool const& menumain::update(state_ptr const& g_state) {
 
   if(g_state->get_game() != nullptr)
     toggle_continue();
@@ -88,7 +86,7 @@ bool const& menu::update(state_ptr const& g_state) {
 }
 
 
-void menu::toggle_continue() {
+void menumain::toggle_continue() {
   int padd = l_objects[l_objectid[2]]->get_source().h;
 
   if(!l_objects[l_objectid[3]]->get_visible()) {

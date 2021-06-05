@@ -38,9 +38,12 @@ public:
   virtual bool const& update(state_ptr const& g_state) override;
 
 private:
-  bool              b_clicked;
-  std::string       b_action;
-  std::vector<text> b_texts;
+  bool               b_clicked;
+  std::string        b_action;
+  std::vector<gtext> b_texts;
+
+  void handle_mouse(state_ptr const& g_state);
+  void handle_key  (state_ptr const& g_state);
 };
 
 

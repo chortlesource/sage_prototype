@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////
 //
-// sage - menu.hpp
+// sage - menumain.hpp
 //
 // Copyright (c) 2021 Christopher M. Short
 //
@@ -21,21 +21,20 @@
 //
 ////////////////////////////////////////////////////////////////////////////
 
-#ifndef _SAGE_MENU_HPP
-#define _SAGE_MENU_HPP
+#ifndef _SAGE_MENUMAIN_HPP
+#define _SAGE_MENUMAIN_HPP
 
 
 /////////////////////////////////////////////////////////////
-// MENU Class
+// MENUMAIN Class
 //
-// The menu class handles the games main menu logic
+// The menumain class handles the games menumain logic
 
-class menu : public layer {
+class menumain : public menu {
 public:
-  menu(state_ptr const& g_state);
+  menumain(state_ptr const& g_state);
 
   virtual bool const& update(state_ptr const& g_state) override;
-  virtual void        finalize(state_ptr const& g_state) override;
 
 private:
   void toggle_continue();

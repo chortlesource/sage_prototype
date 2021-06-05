@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////
 //
-// sage - layer.hpp
+// sage - menuworld.hpp
 //
 // Copyright (c) 2021 Christopher M. Short
 //
@@ -21,32 +21,20 @@
 //
 ////////////////////////////////////////////////////////////////////////////
 
-#ifndef _SAGE_LAYER_HPP
-#define _SAGE_LAYER_HPP
+#ifndef _SAGE_MENUWORLD_HPP
+#define _SAGE_MENUWORLD_HPP
 
 
 /////////////////////////////////////////////////////////////
-// LAYER Class
+// MENUWOLRD Class
 //
-// The layer class contains objects to be drawn
+// The menuworld class handles the worldgen menu logic
 
-class layer : public object {
+class menuworld : public menu {
 public:
-  layer(state_ptr const& g_state);
-  virtual ~layer();
+  menuworld(state_ptr const& g_state);
 
-  virtual bool const& update(state_ptr const& g_state) override;
-  virtual void        finalize(state_ptr const& g_state) override;
-
-  virtual void add(object_ptr const& obj);
-  virtual void pop(object_ptr const& obj);
-
-protected:
-  std::unordered_map<unsigned int, object_ptr> l_objects;
-  std::vector<unsigned int>                    l_objectid;
-
-  void draw(state_ptr const& g_state);
 };
 
 
-#endif // _SAGE_LAYER_HPP
+#endif // _SAGE_MENUWORLD_HPP
