@@ -112,11 +112,11 @@ void worldgen::generate_world_txt(state_ptr const& g_state, int const& width, in
           color = g_state->get_assets().find_color("BLUE");
           break;
         case biome::sand:
-          t     = g_state->get_assets().find_tile(16);
+          t     = g_state->get_assets().find_tile(17);
           color = g_state->get_assets().find_color("YELLOW");
           break;
         case biome::grass:
-          t     = g_state->get_assets().find_tile(16);
+          t     = g_state->get_assets().find_tile(17);
           color = g_state->get_assets().find_color("GREEN");
           break;
         case biome::forrest:
@@ -124,11 +124,11 @@ void worldgen::generate_world_txt(state_ptr const& g_state, int const& width, in
           color = g_state->get_assets().find_color("GREEN");
           break;
         case biome::dirt:
-          t     = g_state->get_assets().find_tile(21);
+          t     = g_state->get_assets().find_tile(23);
           color = g_state->get_assets().find_color("BROWN");
           break;
         case biome::swamp:
-          t     = g_state->get_assets().find_tile(21);
+          t     = g_state->get_assets().find_tile(23);
           color = g_state->get_assets().find_color("GREEN");
           break;
         case biome::mountain:

@@ -41,12 +41,14 @@ public:
   // object get and set functions
   virtual void set_visible(bool const& value) final;
   virtual void set_paused(bool const& value)  final;
+  virtual void set_active(bool const& value)  final;
   virtual void set_position(SDL_Rect const& value) final;
   virtual void set_color(SDL_Color const& value) final;
   virtual void set_eventid(unsigned int const& value) final;
 
   virtual bool const&         get_visible()     const final;
   virtual bool const&         get_paused()      const final;
+  virtual bool const&         get_active()      const final;
   virtual SDL_Rect  const&    get_source()      const final;
   virtual SDL_Rect  const&    get_position()    const final;
   virtual SDL_Color const&    get_color()       const final;
@@ -59,6 +61,7 @@ protected:
   bool           o_visible;
   bool           o_paused;
   bool           o_changed;
+  bool           o_active;
 
   SDL_Rect       o_source;
   SDL_Rect       o_position;

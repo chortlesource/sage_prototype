@@ -29,7 +29,7 @@
 //
 
 object::object(state_ptr const& g_state) : initialized(false), o_visible(true),
-  o_paused(false), o_changed(false), o_source({0,0,0,0}), o_position({0,0,0,0}),
+  o_paused(false), o_changed(false), o_active(false), o_source({0,0,0,0}), o_position({0,0,0,0}),
     o_color({255,255,255,255}), o_texture(nullptr), o_eventid(g_state->get_manager().get_delegate_id()) {}
 
 object::~object() {
@@ -52,6 +52,12 @@ void object::set_paused(bool const& value)  {
   o_changed = true;
   o_paused  = value;
 };
+
+
+void object::set_active(bool const& value) {
+  o_changed = true;
+  o_active  = value;
+}
 
 
 void object::set_position(SDL_Rect const& value) {
@@ -79,6 +85,11 @@ bool const&         object::get_visible()  const {
 bool const&         object::get_paused()   const {
   return o_paused;
 };
+
+
+bool const&         object::get_active()   const {
+  return o_active;
+}
 
 
 SDL_Rect  const&    object::get_source()   const {

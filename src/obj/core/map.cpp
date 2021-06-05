@@ -30,7 +30,7 @@
 
 map::map(state_ptr const& g_state) : layer(g_state) {
   // Add the cursor to the map
-  cursor = g_state->get_assets().find_tile(15);
+  cursor = g_state->get_assets().find_tile(16);
   cursor->set_position({32, 32, 0, 0});
   cursor->set_color({255, 255, 255, 255});
 

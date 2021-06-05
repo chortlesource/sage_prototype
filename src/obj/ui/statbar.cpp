@@ -38,8 +38,8 @@ statbar::statbar(state_ptr const& g_state) : object(g_state) {
   glyph_ptr  hash  = g_state->get_assets().find_glyph("#");
   glyph_ptr  colon = g_state->get_assets().find_glyph(":");
   glyph_ptr  zero  = g_state->get_assets().find_glyph("0");
-  object_ptr dolla = g_state->get_assets().find_tile(15);
-  object_ptr heart = g_state->get_assets().find_tile(16);
+  object_ptr dolla = g_state->get_assets().find_tile(21);
+  object_ptr heart = g_state->get_assets().find_tile(22);
 
   SDL_Color def = g_state->get_assets().find_color("DEFAULT");
   SDL_Color red = g_state->get_assets().find_color("RED");
