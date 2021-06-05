@@ -74,6 +74,7 @@
 #include <obj/ui/gtext.hpp>
 #include <obj/ui/button.hpp>
 #include <obj/ui/border.hpp>
+#include <obj/ui/overlay.hpp>
 #include <obj/ui/statbar.hpp>
 #include <obj/ui/menu.hpp>
 #include <obj/ui/frame.hpp>

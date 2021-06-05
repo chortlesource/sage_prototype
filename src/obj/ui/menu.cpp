@@ -30,6 +30,7 @@
 
 menu::menu(state_ptr const& g_state) : layer(g_state) {
   // Create our menu objects
+  object_ptr over     = std::make_shared<overlay>(g_state, "BLACK", 230);
   object_ptr bordr    = std::make_shared<border>(g_state, "D_GRAY");
   object_ptr title    = std::make_shared<text>(g_state, "SAGE", "M_MNU_TITLE", "DEFAULT");
   object_ptr conbtn   = std::make_shared<button>(g_state, "Continue", "M_MNU_BUTTON", "MNU_CONT");
@@ -39,6 +40,7 @@ menu::menu(state_ptr const& g_state) : layer(g_state) {
   object_ptr quitbtn  = std::make_shared<button>(g_state, "Quit", "M_MNU_BUTTON", "MNU_QUIT");
 
   // Add our menu objects to the menu
+  add(over);
   add(bordr);
   add(title);
   add(conbtn);
@@ -75,9 +77,9 @@ void        menu::finalize(state_ptr const& g_state) {
 bool const& menu::update(state_ptr const& g_state) {
 
   if(g_state->get_game() == nullptr)
-    l_objects[l_objectid[2]]->set_paused(true);
+    l_objects[l_objectid[3]]->set_paused(true);
   else
-    l_objects[l_objectid[2]]->set_paused(false);
+    l_objects[l_objectid[3]]->set_paused(false);
 
   for(auto const& id : l_objectid)
     o_changed += l_objects[id]->update(g_state);
