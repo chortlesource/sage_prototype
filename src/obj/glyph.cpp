@@ -28,7 +28,7 @@
 // GLYPH Class implementation
 //
 
-glyph::glyph(state_ptr const& g_state, std::string const& fontid, std::string const& ch) : object(g_state) {
+glyph::glyph(state_ptr const& g_state, std::string const& fontid, char const& ch) : object(g_state) {
   // Obtain some essential variables
   SDL_Renderer *render = g_state->get_window().get_render();
   int tile_w = g_state->get_assets().find_json("atlas")["TILE_W"].asInt();
@@ -40,7 +40,7 @@ glyph::glyph(state_ptr const& g_state, std::string const& fontid, std::string co
   o_color    = { 255, 255, 255, 255 };
 
   // Generate the text and caculate it's position in the tile
-  text t(g_state, ch, fontid, "DEFAULT");
+  text t(g_state, std::string(1, ch), fontid, "DEFAULT");
   SDL_Rect source = t.get_source();
   SDL_Rect newpos = { (o_position.w / 2) - (source.w / 2), (o_position.h / 2) - (source.h / 2) - 1, source.w, source.h };
 

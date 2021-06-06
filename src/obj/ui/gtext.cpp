@@ -62,7 +62,7 @@ gtext::gtext(state_ptr const& g_state, std::string const& caption, std::string c
   SDL_Color fg = g_state->get_assets().find_color(fgcolor);
 
   for(int i = 0; i < (int)gstring.size(); i++) {
-    glyph_ptr g = g_state->get_assets().find_glyph(gstring.substr(i, 1));
+    glyph_ptr g = g_state->get_assets().find_glyph(gstring[i]);
     SDL_Rect pos { i * tile_w, 0, tile_w, tile_h };
     SDL_SetTextureColorMod(g->get_texture(), fg.r, fg.g, fg.b);
     SDL_RenderCopy(render, g->get_texture(), &g->get_source(), &pos);
@@ -75,7 +75,7 @@ gtext::gtext(state_ptr const& g_state, std::string const& caption, std::string c
   for(int i = 0; i < (int)caption.size(); i++) {
     for(auto &p : punctuation) {
       if(caption[i] == p) {
-        glyph_ptr g = g_state->get_assets().find_glyph(caption.substr(i, 1));
+        glyph_ptr g = g_state->get_assets().find_glyph(caption[i]);
         SDL_Rect pos { (i - pcount) * tile_w, 0, tile_w, tile_h };
         pos.x -= (tile_w / 2);
         SDL_SetTextureColorMod(g->get_texture(), fg.r, fg.g, fg.b);

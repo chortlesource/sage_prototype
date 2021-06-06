@@ -42,7 +42,7 @@ private:
   int         length;
   std::string caption;
 
-  bool handle_key (std::string const& str);
+  bool handle_key (const char *str);
   void handle_draw(state_ptr const& g_state);
 
   void register_delegates(state_ptr const& g_state);

@@ -93,12 +93,12 @@ void textbox::finalize(state_ptr const& g_state) {
 }
 
 
-bool textbox::handle_key(std::string const& str) {
+bool textbox::handle_key(const char *str) {
   bool rvalue = false;
 
   // Cycle through out APP_STRINGS to clarify the character is a known string
-  for(auto &s : APP_STRINGS)
-    if(s == str) rvalue = true;
+  for(auto &s : _APP_CHARS)
+    if(s == str[0]) rvalue = true;
 
   return rvalue;
 }
@@ -123,16 +123,8 @@ void textbox::handle_draw(state_ptr const& g_state) {
 
   if(size != 0) {
     for(int i = 0; i < size; i++) {
-      std::string str;
-
-      // Handle caption text based on length
-      if(caption.size() > 1)
-        str = caption.substr(offset + i, 1);
-      else
-        str = caption;
-
       // Find the corresponding glyph and add to the textbox
-      glyph_ptr gly   = g_state->get_assets().find_glyph(str);
+      glyph_ptr gly   = g_state->get_assets().find_glyph(caption[i + offset]);
 
       if(gly != nullptr) {
         // Copy the glyph to the image
@@ -197,7 +189,7 @@ void textbox::on_event(event const& e) {
             o_changed = true; // Redraw the textbox
             break;
           default:
-            std::string key = SDL_GetKeyName(e.key.key);
+            const char *key = SDL_GetKeyName(e.key.key);
             if(handle_key(key)) {
               caption.append(key);
 

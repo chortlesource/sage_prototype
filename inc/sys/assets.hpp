@@ -51,7 +51,7 @@ public:
   object_ptr const& find_tile(int const& id);
 
   void             load_glyphs(state_ptr const& g_state);
-  glyph_ptr const& find_glyph(std::string const& id);
+  glyph_ptr const& find_glyph(char const& id);
 
 private:
   std::unordered_map<std::string, Json::Value>    jsons;
@@ -59,7 +59,7 @@ private:
   std::unordered_map<std::string, font_ptr>       fonts;
   std::unordered_map<std::string, SDL_Color>      colors;
   std::unordered_map<int, object_ptr>             tiles;
-  std::unordered_map<std::string, glyph_ptr>      glyphs;
+  std::unordered_map<char, glyph_ptr>             glyphs;
 };
 
 

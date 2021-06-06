@@ -32,7 +32,7 @@
 
 class glyph : public object {
 public:
-  glyph(state_ptr const& g_state, std::string const& fontid, std::string const& ch);
+  glyph(state_ptr const& g_state, std::string const& fontid, char const& ch);
 
 };
 

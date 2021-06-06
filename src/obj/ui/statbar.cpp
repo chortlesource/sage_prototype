@@ -34,10 +34,10 @@ statbar::statbar(state_ptr const& g_state) : object(g_state) {
   int tile_w = g_state->get_assets().find_json("atlas")["TILE_W"].asInt();
   int tile_h = g_state->get_assets().find_json("atlas")["TILE_H"].asInt();
 
-  glyph_ptr  slash = g_state->get_assets().find_glyph("/");
-  glyph_ptr  hash  = g_state->get_assets().find_glyph("#");
-  glyph_ptr  colon = g_state->get_assets().find_glyph(":");
-  glyph_ptr  zero  = g_state->get_assets().find_glyph("0");
+  glyph_ptr  slash = g_state->get_assets().find_glyph('/');
+  glyph_ptr  hash  = g_state->get_assets().find_glyph('#');
+  glyph_ptr  colon = g_state->get_assets().find_glyph(':');
+  glyph_ptr  zero  = g_state->get_assets().find_glyph('0');
   object_ptr dolla = g_state->get_assets().find_tile(21);
   object_ptr heart = g_state->get_assets().find_tile(22);
 
