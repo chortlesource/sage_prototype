@@ -30,9 +30,9 @@
 
 gtext::gtext(state_ptr const& g_state, std::string const& caption, std::string const& fgcolor, std::string const& bgcolor) : object(g_state) {
   // Obtain some essential variables
-  SDL_Renderer *render = g_state->get_window().get_render();
-  int tile_w = g_state->get_assets().find_json("atlas")["TILE_W"].asInt();
-  int tile_h = g_state->get_assets().find_json("atlas")["TILE_H"].asInt();
+  SDL_Renderer *render = g_state->get_window()->get_render();
+  int tile_w = g_state->get_assets()->find_json("atlas")["TILE_W"].asInt();
+  int tile_h = g_state->get_assets()->find_json("atlas")["TILE_H"].asInt();
 
   // Handle punctuation
   std::string gstring = parse_text(caption);
@@ -53,16 +53,16 @@ gtext::gtext(state_ptr const& g_state, std::string const& caption, std::string c
   if(bgcolor == "NONE") {
     SDL_SetRenderDrawColor(render, 0,0,0,0);
   } else {
-    SDL_Color bg = g_state->get_assets().find_color(bgcolor);
+    SDL_Color bg = g_state->get_assets()->find_color(bgcolor);
     SDL_SetRenderDrawColor(render, bg.r, bg.g, bg.b, 255);
   }
   SDL_RenderClear(render);
 
   // Draw our glyphs onto the texture
-  SDL_Color fg = g_state->get_assets().find_color(fgcolor);
+  SDL_Color fg = g_state->get_assets()->find_color(fgcolor);
 
   for(int i = 0; i < (int)gstring.size(); i++) {
-    glyph_ptr g = g_state->get_assets().find_glyph(gstring[i]);
+    glyph_ptr g = g_state->get_assets()->find_glyph(gstring[i]);
     SDL_Rect pos { i * tile_w, 0, tile_w, tile_h };
     SDL_SetTextureColorMod(g->get_texture(), fg.r, fg.g, fg.b);
     SDL_RenderCopy(render, g->get_texture(), &g->get_source(), &pos);
@@ -75,7 +75,7 @@ gtext::gtext(state_ptr const& g_state, std::string const& caption, std::string c
   for(int i = 0; i < (int)caption.size(); i++) {
     for(auto &p : punctuation) {
       if(caption[i] == p) {
-        glyph_ptr g = g_state->get_assets().find_glyph(caption[i]);
+        glyph_ptr g = g_state->get_assets()->find_glyph(caption[i]);
         SDL_Rect pos { (i - pcount) * tile_w, 0, tile_w, tile_h };
         pos.x -= (tile_w / 2);
         SDL_SetTextureColorMod(g->get_texture(), fg.r, fg.g, fg.b);

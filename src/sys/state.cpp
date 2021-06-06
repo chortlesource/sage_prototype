@@ -28,7 +28,8 @@
 // STATE Class implementation
 //
 
-state::state() : g_timer(), g_assets(), g_manager(), g_stage(), g_game(nullptr), g_window(), g_input(), g_status(status::init), g_config(Json::Value::null) {}
+state::state() : g_timer(nullptr), g_assets(nullptr), g_window(nullptr), g_manager(nullptr),
+  g_stage(nullptr), g_game(nullptr), g_logic(nullptr), g_input(), g_status(status::init), g_config(Json::Value::null) {}
 
 
 state::~state() {
@@ -37,31 +38,39 @@ state::~state() {
 
 
 void state::initialize(state_ptr const& g_state) {
+  // Initialize the event manager
+  g_timer   = std::make_shared<timer>();
+  g_assets  = std::make_shared<assets>();
+  g_window  = std::make_shared<window>();
+  g_manager = std::make_shared<manager>();
+  g_stage   = std::make_shared<stage>();
+  g_logic   = std::make_shared<logic>();
+
   // Load the default configuration files
-  g_config             = g_assets.load_json("init", _APP_INIT);
-  Json::Value g_fonts  = g_assets.load_json("fonts", g_config["FONTS_JSON"].asString());
-  Json::Value g_colors = g_assets.load_json("colors", g_config["COLORS_JSON"].asString());
-  Json::Value g_tiles  = g_assets.load_json("atlas", g_config["ATLAS_JSON"].asString());
+  g_config             = g_assets->load_json("init", _APP_INIT);
+  Json::Value g_fonts  = g_assets->load_json("fonts", g_config["FONTS_JSON"].asString());
+  Json::Value g_colors = g_assets->load_json("colors", g_config["COLORS_JSON"].asString());
+  Json::Value g_tiles  = g_assets->load_json("atlas", g_config["ATLAS_JSON"].asString());
 
   // Initialize the game window
-  g_window.initialize(g_config);
+  g_window->initialize(g_config);
 
   // Initialize the stage
-  g_stage.initialize(g_config);
+  g_stage->initialize(g_config);
 
   // Load the game fonts
-  g_assets.load_fonts(g_fonts);
+  g_assets->load_fonts(g_fonts);
 
   // Load the game colors
-  g_assets.load_colors(g_colors);
+  g_assets->load_colors(g_colors);
 
   // Load the game tiles
-  g_assets.load_tiles(g_state, g_tiles);
-  g_input.tile_w = g_state->get_assets().find_json("atlas")["TILE_W"].asInt();
-  g_input.tile_h = g_state->get_assets().find_json("atlas")["TILE_H"].asInt();
+  g_assets->load_tiles(g_state, g_tiles);
+  g_input.tile_w = g_state->get_assets()->find_json("atlas")["TILE_W"].asInt();
+  g_input.tile_h = g_state->get_assets()->find_json("atlas")["TILE_H"].asInt();
 
   // Load the font glyphs
-  g_assets.load_glyphs(g_state);
+  g_assets->load_glyphs(g_state);
 
   // Set the gamestate status
   g_status = state::status::run;
@@ -76,7 +85,7 @@ void state::update() {
   g_input.buttons = SDL_GetMouseState(&x, &y);
 
   // Track window resizes
-  SDL_GetWindowSize(g_window.get_window(), &g_input.width, &g_input.height);
+  SDL_GetWindowSize(g_window->get_window(), &g_input.width, &g_input.height);
 
   float scalex = ((float)g_input.width / g_config["APP_W"].asInt());
   float scaley = ((float)g_input.height / g_config["APP_H"].asInt());

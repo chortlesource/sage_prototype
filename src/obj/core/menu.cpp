@@ -54,12 +54,12 @@ void menu::register_delegates(state_ptr const& g_state) {
   // Register the event listeners
   std::function<void(event const&)> callback = [=](event const& e) -> void { this->on_event(e); };
 
-  g_state->get_manager().add_delegate(delegate(o_eventid, eventtype::key, callback));
+  o_manager->add_delegate(delegate(o_eventid, eventtype::key, callback));
 }
 
 
 void menu::remove_delegates(state_ptr const& g_state) {
-  g_state->get_manager().remove_delegate(delegate(o_eventid, eventtype::key, nullptr));
+  o_manager->remove_delegate(delegate(o_eventid, eventtype::key, nullptr));
 }
 
 

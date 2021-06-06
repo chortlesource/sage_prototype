@@ -28,14 +28,14 @@
 // GAME Class implementation
 //
 
-game::game(state_ptr const& g_state) {
+game::game(state_ptr const& g_state, unsigned int const& seed) {
   // Initialize our game Objects
-  g_map   = std::make_shared<map>(g_state);
+  g_map   = std::make_shared<map>(g_state, seed);
   g_frame = std::make_shared<frame>(g_state);
 
   // Add our map to the stage
-  g_state->get_stage().add(g_map);
-  g_state->get_stage().add(g_frame);
+  g_state->get_stage()->add(g_map);
+  g_state->get_stage()->add(g_frame);
 }
 
 void game::update(state_ptr const& g_state) {
@@ -48,5 +48,5 @@ void game::finalize(state_ptr const& g_state) {
   g_frame->finalize(g_state);
 
   // Remove all objects from the stage
-  g_state->get_stage().clear(g_state);
+  g_state->get_stage()->clear(g_state);
 }

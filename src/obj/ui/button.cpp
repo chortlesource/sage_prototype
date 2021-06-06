@@ -79,12 +79,12 @@ void button::handle_mouse(state_ptr const& g_state) {
     if(mouse.buttons & SDL_BUTTON(SDL_BUTTON_LEFT)) {
       b_clicked = true;
 
-      while(SDL_GetMouseState(NULL, NULL) ) { SDL_PumpEvents(); }
+      while(SDL_GetMouseState(NULL, NULL)) { SDL_PumpEvents(); }
     }
     if(b_clicked) {
       o_texture = b_texts[2].get_textureptr();
       o_changed = true;
-      g_state->get_manager().send_event(event(button_event(button_event::type::clicked, b_action)));
+      o_manager->send_event(event(button_event(button_event::type::clicked, b_action)));
     } else {
       o_texture = b_texts[1].get_textureptr();
       o_changed = true;
@@ -109,7 +109,7 @@ void button::handle_key  (state_ptr const& g_state) {
     if(!b_clicked) {
       if(keyboard.keys[SDL_SCANCODE_RETURN]) {
         o_texture = b_texts[2].get_textureptr();
-        g_state->get_manager().send_event(event(button_event(button_event::type::clicked, b_action)));
+        o_manager->send_event(event(button_event(button_event::type::clicked, b_action)));
         b_clicked = true;
         return;
       }

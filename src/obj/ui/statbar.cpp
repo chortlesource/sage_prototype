@@ -30,21 +30,21 @@
 
 statbar::statbar(state_ptr const& g_state) : object(g_state) {
   // Obtain some essential variables
-  SDL_Renderer *render = g_state->get_window().get_render();
-  int tile_w = g_state->get_assets().find_json("atlas")["TILE_W"].asInt();
-  int tile_h = g_state->get_assets().find_json("atlas")["TILE_H"].asInt();
+  SDL_Renderer *render = g_state->get_window()->get_render();
+  int tile_w = g_state->get_assets()->find_json("atlas")["TILE_W"].asInt();
+  int tile_h = g_state->get_assets()->find_json("atlas")["TILE_H"].asInt();
 
-  glyph_ptr  slash = g_state->get_assets().find_glyph('/');
-  glyph_ptr  hash  = g_state->get_assets().find_glyph('#');
-  glyph_ptr  colon = g_state->get_assets().find_glyph(':');
-  glyph_ptr  zero  = g_state->get_assets().find_glyph('0');
-  object_ptr dolla = g_state->get_assets().find_tile(21);
-  object_ptr heart = g_state->get_assets().find_tile(22);
+  glyph_ptr  slash = g_state->get_assets()->find_glyph('/');
+  glyph_ptr  hash  = g_state->get_assets()->find_glyph('#');
+  glyph_ptr  colon = g_state->get_assets()->find_glyph(':');
+  glyph_ptr  zero  = g_state->get_assets()->find_glyph('0');
+  object_ptr dolla = g_state->get_assets()->find_tile(21);
+  object_ptr heart = g_state->get_assets()->find_tile(22);
 
-  SDL_Color def = g_state->get_assets().find_color("DEFAULT");
-  SDL_Color red = g_state->get_assets().find_color("RED");
-  SDL_Color yel = g_state->get_assets().find_color("YELLOW");
-  SDL_Color cyn = g_state->get_assets().find_color("CYAN");
+  SDL_Color def = g_state->get_assets()->find_color("DEFAULT");
+  SDL_Color red = g_state->get_assets()->find_color("RED");
+  SDL_Color yel = g_state->get_assets()->find_color("YELLOW");
+  SDL_Color cyn = g_state->get_assets()->find_color("CYAN");
 
   // Configure basic details about the object
   o_source   = { 0, 0, tile_w * 9, tile_h };
@@ -58,7 +58,7 @@ statbar::statbar(state_ptr const& g_state) : object(g_state) {
   // Configure the background of the gtext
   SDL_SetTextureBlendMode(o_texture.get(), SDL_BLENDMODE_BLEND);
   SDL_SetRenderTarget(render, o_texture.get());
-  SDL_Color bg = g_state->get_assets().find_color("BLACK");
+  SDL_Color bg = g_state->get_assets()->find_color("BLACK");
   SDL_SetRenderDrawColor(render, bg.r, bg.g, bg.b, 255);
   SDL_RenderClear(render);
 

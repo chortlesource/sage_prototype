@@ -97,7 +97,7 @@ void window::update(state_ptr const& g_state) {
   // Render to the screen
 
   SDL_RenderPresent(g_renderer.get());
-  SDL_Color bg_color = g_state->get_assets().find_color("BLACK");
+  SDL_Color bg_color = g_state->get_assets()->find_color("BLACK");
   SDL_SetRenderDrawColor(g_renderer.get(), bg_color.r, bg_color.g, bg_color.b, 255);
   SDL_RenderClear(g_renderer.get());
 }

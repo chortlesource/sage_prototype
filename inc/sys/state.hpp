@@ -69,30 +69,31 @@ public:
   void set_status(status const& value) { g_status = value; }
   void set_game(game_ptr const& value) { g_game   = value; }
 
-  timer       &      get_timer()   { return g_timer; }
-  assets      &      get_assets()  { return g_assets; }
-  window      &      get_window()  { return g_window; }
-  manager     &      get_manager() { return g_manager; }
-  stage       &      get_stage()   { return g_stage; }
+  timer_ptr   &      get_timer()   { return g_timer; }
+  assets_ptr  &      get_assets()  { return g_assets; }
+  window_ptr  &      get_window()  { return g_window; }
+  manager_ptr &      get_manager() { return g_manager; }
+  stage_ptr   &      get_stage()   { return g_stage; }
   game_ptr    &      get_game()    { return g_game; }
-  logic       &      get_logic()   { return g_logic; }
+  logic_ptr   &      get_logic()   { return g_logic; }
+
   istate      &      get_input()   { return g_input; }
   status      const& get_status()  { return g_status; }
-  double      const& get_delta()   { return g_timer.delta(); }
+  double      const& get_delta()   { return g_timer->delta(); }
   Json::Value const& get_config()  { return g_config; }
 
 private:
-  timer    g_timer;
-  assets   g_assets;
-  manager  g_manager;
-  stage    g_stage;
-  game_ptr g_game;
-  logic    g_logic;
-  window   g_window;
-  istate   g_input;
-  status   g_status;
+  timer_ptr    g_timer;
+  assets_ptr   g_assets;
+  window_ptr   g_window;
+  manager_ptr  g_manager;
+  stage_ptr    g_stage;
+  game_ptr     g_game;
+  logic_ptr    g_logic;
 
-  Json::Value g_config;
+  istate       g_input;
+  status       g_status;
+  Json::Value  g_config;
 };
 
 

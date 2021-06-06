@@ -64,7 +64,6 @@ engine::engine() {
   // Initialize game
   on_user_init();
 
-
   initialized = true;
 }
 
@@ -91,7 +90,7 @@ void engine::start() {
   if(!initialized) return;
 
   // Initialize the timer
-  g_state->get_timer().start();
+  g_state->get_timer()->start();
 
   double rate    = 0.01;
   double elapsed = 0.00;
@@ -100,7 +99,7 @@ void engine::start() {
   while(g_state->get_status() != state::status::exit) {
 
     // Update the timer each loop
-    g_state->get_timer().update();
+    g_state->get_timer()->update();
     double delta = g_state->get_delta();
 
     // Calculate the frame time elapsed
@@ -112,16 +111,16 @@ void engine::start() {
       g_state->update();
 
       // Poll for game events
-      g_state->get_manager().update();
+      g_state->get_manager()->update();
 
       // Handle game logic
       on_user_update();
 
       // Update the game world
-      g_state->get_stage().update(g_state);
+      g_state->get_stage()->update(g_state);
 
       // Render the game world to the screen
-      g_state->get_window().update(g_state);
+      g_state->get_window()->update(g_state);
       elapsed -= rate;
     }
   }
@@ -134,34 +133,36 @@ void engine::start() {
 void engine::on_user_init() {
   // Initialize the main menu
   layer_ptr mainmenu = std::make_shared<menumain>(g_state);
-  g_state->get_stage().add_menu("MAIN_MENU", mainmenu);
+  g_state->get_stage()->add_menu("MAIN_MENU", mainmenu);
 
   // Initialize the world menu
   layer_ptr worldmenu = std::make_shared<menuworld>(g_state);
-  g_state->get_stage().add_menu("WORLD_MENU", worldmenu);
+  g_state->get_stage()->add_menu("WORLD_MENU", worldmenu);
 
   // Show the main menu by default
-  g_state->get_stage().use_menu("MAIN_MENU");
+  g_state->get_stage()->use_menu("MAIN_MENU");
   g_state->set_status(state::status::menu);
 }
 
 
 void engine::register_delegates() {
-  eventid = g_state->get_manager().get_delegate_id();
+  eventid = g_state->get_manager()->get_delegate_id();
 
   // Register the event listeners
   std::function<void(event const&)> callback = [=](event const& e) -> void { this->on_event(e); };
 
-  g_state->get_manager().add_delegate(delegate(eventid, eventtype::button, callback));
-  g_state->get_manager().add_delegate(delegate(eventid, eventtype::key, callback));
-  g_state->get_manager().add_delegate(delegate(eventid, eventtype::system, callback));
+  g_state->get_manager()->add_delegate(delegate(eventid, eventtype::button, callback));
+  g_state->get_manager()->add_delegate(delegate(eventid, eventtype::key, callback));
+  g_state->get_manager()->add_delegate(delegate(eventid, eventtype::system, callback));
+  g_state->get_manager()->add_delegate(delegate(eventid, eventtype::data, callback));
 }
 
 
 void engine::remove_delegates() {
-  g_state->get_manager().remove_delegate(delegate(eventid, eventtype::button, nullptr));
-  g_state->get_manager().remove_delegate(delegate(eventid, eventtype::key, nullptr));
-  g_state->get_manager().remove_delegate(delegate(eventid, eventtype::system, nullptr));
+  g_state->get_manager()->remove_delegate(delegate(eventid, eventtype::button, nullptr));
+  g_state->get_manager()->remove_delegate(delegate(eventid, eventtype::key, nullptr));
+  g_state->get_manager()->remove_delegate(delegate(eventid, eventtype::system, nullptr));
+  g_state->get_manager()->add_delegate(delegate(eventid, eventtype::data, nullptr));
 }
 
 
@@ -169,26 +170,30 @@ void engine::on_event(event const& e) {
   switch(e.type) {
     case eventtype::system:
       if(e.system.action == system_event::type::halt)
-        g_state->get_logic().sage_halt(g_state);
+        g_state->get_logic()->sage_halt(g_state);
       break;
     case eventtype::button:
       if(e.button.command == "MNU_QUIT")
-        g_state->get_logic().sage_halt(g_state);
+        g_state->get_logic()->sage_halt(g_state);
       else if(e.button.command == "MNU_WORLD_SHOW")
-        g_state->get_stage().use_menu("WORLD_MENU");
+        g_state->get_stage()->use_menu("WORLD_MENU");
       else if(e.button.command == "MNU_WORLD_CREATE")
-        g_state->get_logic().init_new_game(g_state);
+        g_state->get_manager()->send_event(event(data_event(data_event::type::request, "ENGINE", "WORLDSEED", "")));
       else if(e.button.command == "MNU_WORLD_CANCEL")
-        g_state->get_stage().pop_menu();
+        g_state->get_stage()->pop_menu();
       else if(e.button.command == "MNU_CONT")
-        g_state->get_logic().toggle_main_menu(g_state);
+        g_state->get_logic()->toggle_main_menu(g_state);
       break;
     case eventtype::key:
       SDL_ShowCursor(SDL_DISABLE);
       if(e.key.keytype == key_event::type::release) {
         if(e.key.scancode == SDL_SCANCODE_ESCAPE)
-          g_state->get_logic().toggle_main_menu(g_state);
+          g_state->get_logic()->toggle_main_menu(g_state);
       }
+      break;
+    case eventtype::data:
+      if(e.data.action == data_event::type::response && e.data.origin == "WORLDSEED")
+        g_state->get_logic()->init_new_game(g_state, e.data.data);
       break;
     default:
       break;

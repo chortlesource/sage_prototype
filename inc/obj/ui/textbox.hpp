@@ -32,15 +32,18 @@
 
 class textbox : public object {
 public:
-  textbox(state_ptr const& g_state, int const& len);
+  textbox(state_ptr const& g_state, std::string const& name, int const& len);
 
   virtual bool const& update  (state_ptr const& g_state) override;
   virtual void        finalize(state_ptr const& g_state) override;
+  virtual void        data() override;
+  virtual void        reset() override;
 
 private:
   int         offset;
   int         length;
   std::string caption;
+  std::string t_name;
 
   bool handle_key (const char *str);
   void handle_draw(state_ptr const& g_state);

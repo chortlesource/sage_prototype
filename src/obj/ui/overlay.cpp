@@ -34,7 +34,7 @@ overlay::overlay(state_ptr const& g_state, std::string const& colorid, int const
   o_source   = { 0, 0, scrnw, scrnh };
   o_position = { 0, 0, scrnw, scrnh };
 
-  SDL_Renderer *render = g_state->get_window().get_render();
+  SDL_Renderer *render = g_state->get_window()->get_render();
 
   // Create our border texture
   sdltexture_ptr texture(SDL_CreateTexture(render, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,
@@ -44,7 +44,7 @@ overlay::overlay(state_ptr const& g_state, std::string const& colorid, int const
   // Clear our texture to make transparent
   SDL_SetTextureBlendMode(o_texture.get(), SDL_BLENDMODE_BLEND);
   SDL_SetRenderTarget(render, o_texture.get());
-  SDL_Color color = g_state->get_assets().find_color(colorid);
+  SDL_Color color = g_state->get_assets()->find_color(colorid);
   SDL_SetRenderDrawColor(render, color.r, color.g, color.b, alpha);
   SDL_RenderClear(render);
 

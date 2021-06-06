@@ -32,9 +32,9 @@ text::text(state_ptr const& g_state, std::string const& caption, std::string con
   t_text = caption;
 
   // Some helper vars to generate the button
-  SDL_Renderer *render = g_state->get_window().get_render();
-  TTF_Font     *font   = g_state->get_assets().find_font(fontid).get();
-  o_color              = g_state->get_assets().find_color(colorid);
+  SDL_Renderer *render = g_state->get_window()->get_render();
+  TTF_Font     *font   = g_state->get_assets()->find_font(fontid).get();
+  o_color              = g_state->get_assets()->find_color(colorid);
 
 
   // Create a surface for the text

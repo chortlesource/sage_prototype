@@ -34,7 +34,7 @@ class logic {
 public:
 
   void toggle_main_menu(state_ptr const& g_state);
-  void init_new_game(state_ptr const& g_state);
+  void init_new_game(state_ptr const& g_state, std::string const& seed);
   void sage_halt(state_ptr const& g_state);
 };
 

@@ -33,7 +33,7 @@ menuworld::menuworld(state_ptr const& g_state) : menu(g_state) {
   object_ptr bordr    = std::make_shared<border>(g_state, "D_GRAY");
   object_ptr title    = std::make_shared<text>(g_state, "CREATE NEW WORLD", "M_MNU_TITLE", "DEFAULT");
   object_ptr seedlbl  = std::make_shared<gtext>(g_state, "ENTER SEED", "DEFAULT", "NONE");
-  object_ptr seedtxt  = std::make_shared<textbox>(g_state, 15);
+  object_ptr seedtxt  = std::make_shared<textbox>(g_state,"WORLDSEED" , 15);
   object_ptr creabtn  = std::make_shared<button>(g_state, "Create", "M_MNU_BUTTON", "MNU_WORLD_CREATE");
   object_ptr cancbtn  = std::make_shared<button>(g_state, "Cancel", "M_MNU_BUTTON", "MNU_WORLD_CANCEL");
 

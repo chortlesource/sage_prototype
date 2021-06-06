@@ -69,7 +69,7 @@ void stage::update(state_ptr const& g_state) {
     // Draw our layers to the window
     for(auto &l : s_layers) {
       if(l->get_visible())
-        SDL_RenderCopy(g_state->get_window().get_render(), l->get_texture(), NULL, &s_position);
+        SDL_RenderCopy(g_state->get_window()->get_render(), l->get_texture(), NULL, &s_position);
     }
   }
 }

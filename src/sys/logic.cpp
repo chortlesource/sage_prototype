@@ -31,27 +31,30 @@
 void logic::toggle_main_menu(state_ptr const& g_state) {
   // Toggle the main menu
   if(g_state->get_status() == state::status::run) {
-    g_state->get_stage().use_menu("MAIN_MENU");
+    g_state->get_stage()->use_menu("MAIN_MENU");
     g_state->set_status(state::status::menu);
     return;
   }
   if(g_state->get_status() == state::status::menu && g_state->get_game() != nullptr) {
-    g_state->get_stage().pop_menu();
+    g_state->get_stage()->pop_menu();
     g_state->set_status(state::status::run);
     return;
   }
 }
 
 
-void logic::init_new_game(state_ptr const& g_state) {
+void logic::init_new_game(state_ptr const& g_state, std::string const& seed) {
+  // Hash the seed
+  std::hash<std::string> to_hash;
+
   if(g_state->get_game() == nullptr) {
     // Pop the menu and set to initialized
-    g_state->get_stage().pop_menu(); // Pop the creation menu
-    g_state->get_stage().pop_menu(); // Pop the main menu
+    g_state->get_stage()->pop_menu(); // Pop the creation menu
+    g_state->get_stage()->pop_menu(); // Pop the main menu
     g_state->set_status(state::status::run);
 
     // Initialize the new game
-    game_ptr newgame = std::make_shared<game>(g_state);
+    game_ptr newgame = std::make_shared<game>(g_state, to_hash(seed));
     g_state->set_game(newgame);
     INFO("Starting new game...");
   }

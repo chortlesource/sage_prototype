@@ -35,7 +35,7 @@ layer::layer(state_ptr const& g_state) : object(g_state) {
   o_position = SDL_Rect { 0, 0, w, h };
 
   // Create a texture for the layer
-  sdltexture_ptr texture(SDL_CreateTexture(g_state->get_window().get_render(), SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,
+  sdltexture_ptr texture(SDL_CreateTexture(g_state->get_window()->get_render(), SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,
   o_position.w, o_position.h), [=](SDL_Texture *t){ SDL_DestroyTexture(t); });
 
   o_texture   = texture;
@@ -103,7 +103,7 @@ void layer::pop(object_ptr const& obj) {
 void layer::draw(state_ptr const& g_state) {
   if(!initialized) return;
 
-  SDL_Renderer *render = g_state->get_window().get_render();
+  SDL_Renderer *render = g_state->get_window()->get_render();
 
   // First clear the texture
   SDL_SetTextureBlendMode(o_texture.get(), SDL_BLENDMODE_BLEND);

@@ -31,8 +31,8 @@
 frame::frame(state_ptr const& g_state) : layer(g_state) {
 
   // Calculate tile dimensions
-  int tile_w = g_state->get_assets().find_json("atlas")["TILE_W"].asInt();
-  int tile_h = g_state->get_assets().find_json("atlas")["TILE_H"].asInt();
+  int tile_w = g_state->get_assets()->find_json("atlas")["TILE_W"].asInt();
+  int tile_h = g_state->get_assets()->find_json("atlas")["TILE_H"].asInt();
 
   object_ptr bordr = std::make_shared<border>(g_state, "L_GRAY");
   object_ptr title = std::make_shared<gtext>(g_state, " sage ", "BLUE", "BLACK");

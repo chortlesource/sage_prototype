@@ -30,8 +30,8 @@
 
 border::border(state_ptr const& g_state, std::string const& colorid) : object(g_state) {
   // Calculate border dimensions
-  int tile_w = g_state->get_assets().find_json("atlas")["TILE_W"].asInt();
-  int tile_h = g_state->get_assets().find_json("atlas")["TILE_H"].asInt();
+  int tile_w = g_state->get_assets()->find_json("atlas")["TILE_W"].asInt();
+  int tile_h = g_state->get_assets()->find_json("atlas")["TILE_H"].asInt();
   int scrnw  = g_state->get_config()["APP_W"].asInt();
   int scrnh  = g_state->get_config()["APP_H"].asInt();
 
@@ -42,7 +42,7 @@ border::border(state_ptr const& g_state, std::string const& colorid) : object(g_
   int max_w  = o_position.w / tile_w;
   int max_h  = o_position.h / tile_h;
 
-  SDL_Renderer *render = g_state->get_window().get_render();
+  SDL_Renderer *render = g_state->get_window()->get_render();
 
   // Create our border texture
   sdltexture_ptr texture(SDL_CreateTexture(render, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,
@@ -55,8 +55,8 @@ border::border(state_ptr const& g_state, std::string const& colorid) : object(g_
   SDL_SetRenderDrawColor(render, 0,0,0,0);
   SDL_RenderClear(render);
 
-  object_ptr t     = g_state->get_assets().find_tile(19);
-  SDL_Color tcolor = g_state->get_assets().find_color(colorid);
+  object_ptr t     = g_state->get_assets()->find_tile(19);
+  SDL_Color tcolor = g_state->get_assets()->find_color(colorid);
   SDL_SetTextureColorMod(t->get_texture(), tcolor.r, tcolor.g, tcolor.b);
 
   for(int x = 0; x < max_w; x++) {

@@ -32,7 +32,7 @@
 
 class map : public layer {
 public:
-  map(state_ptr const& g_state);
+  map(state_ptr const& g_state, unsigned int const& seed);
 
   virtual bool const& update(state_ptr const& g_state) override;
 

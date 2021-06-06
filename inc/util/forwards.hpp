@@ -53,11 +53,12 @@ class enemy;
 class worldgen;
 
 // System Classes
-class manager;
 class assets;
-class stage;
 class window;
+class manager;
+class stage;
 class game;
+class logic;
 class state;
 class engine;
 
@@ -66,12 +67,20 @@ class engine;
 // SMART POINTERS
 //
 
-// System Smart Pointers
+// State pointer types
+using timer_ptr      = std::shared_ptr<timer>;
+using assets_ptr     = std::shared_ptr<assets>;
+using window_ptr     = std::shared_ptr<window>;
+using manager_ptr    = std::shared_ptr<manager>;
+using stage_ptr      = std::shared_ptr<stage>;
+using game_ptr       = std::shared_ptr<game>;
+using logic_ptr      = std::shared_ptr<logic>;
 using state_ptr      = std::shared_ptr<state>;
+
+// Object pointer types
 using object_ptr     = std::shared_ptr<object>;
 using glyph_ptr      = std::shared_ptr<glyph>;
 using layer_ptr      = std::shared_ptr<layer>;
-using game_ptr       = std::shared_ptr<game>;
 
 // SDL Smart Pointers
 using sdlwindow_ptr  = std::shared_ptr<SDL_Window>;

@@ -34,12 +34,13 @@ class worldgen : public object {
 public:
   enum class biome { water, sand, grass, forrest, dirt, swamp, mountain, snow };
 
-  worldgen(state_ptr const& g_state, int const& width, int const& height);
+  worldgen(state_ptr const& g_state, int const& width, int const& height, unsigned int seed = std::default_random_engine::default_seed);
 
 private:
   std::vector<double> w_elev;
   std::vector<double> w_temp;
   std::vector<biome>  w_map;
+  unsigned int        w_seed;
   sdltexture_ptr      w_texture;
 
   void generate_noise_map(int const& width, int const& height);

@@ -30,7 +30,7 @@
 
 object::object(state_ptr const& g_state) : initialized(false), o_visible(true),
   o_paused(false), o_changed(false), o_active(false), o_source({0,0,0,0}), o_position({0,0,0,0}),
-    o_color({255,255,255,255}), o_texture(nullptr), o_eventid(g_state->get_manager().get_delegate_id()) {}
+    o_color({255,255,255,255}), o_texture(nullptr), o_manager(g_state->get_manager()), o_eventid(g_state->get_manager()->get_delegate_id()) {}
 
 object::~object() {
   initialized = false;
@@ -40,7 +40,15 @@ object::~object() {
 
 bool const& object::update(state_ptr const& g_state) { return o_changed; };
 
+
+void        object::data() {};
+
+
 void        object::finalize(state_ptr const& g_state) {};
+
+
+void        object::reset() {};
+
 
 void object::set_visible(bool const& value) {
   o_changed = true;

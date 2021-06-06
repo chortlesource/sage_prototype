@@ -32,7 +32,7 @@
 
 class game {
 public:
-  game(state_ptr const& g_state);
+  game(state_ptr const& g_state, unsigned int const& seed);
 
   void update(state_ptr const& g_state);
   void finalize(state_ptr const& g_state);

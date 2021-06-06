@@ -28,9 +28,9 @@
 // MAP Class implementation
 //
 
-map::map(state_ptr const& g_state) : layer(g_state) {
+map::map(state_ptr const& g_state, unsigned int const& seed) : layer(g_state) {
   // Add the cursor to the map
-  cursor = g_state->get_assets().find_tile(16);
+  cursor = g_state->get_assets()->find_tile(16);
   cursor->set_position({32, 32, 0, 0});
   cursor->set_color({255, 255, 255, 255});
 
@@ -41,7 +41,7 @@ map::map(state_ptr const& g_state) : layer(g_state) {
 
   width  = (w / tile_w) - 2;
   height = (h / tile_h) - 2;
-  gen    = std::make_shared<worldgen>(g_state, width, height);
+  gen    = std::make_shared<worldgen>(g_state, width, height, seed);
 
   // Add our objects to the screen
   add(gen);
@@ -66,8 +66,8 @@ bool const& map::update(state_ptr const& g_state) {
 
 
 void map::update_cursor(state_ptr const& g_state) {
-  int tile_w = g_state->get_assets().find_json("atlas")["TILE_W"].asInt();
-  int tile_h = g_state->get_assets().find_json("atlas")["TILE_H"].asInt();
+  int tile_w = g_state->get_assets()->find_json("atlas")["TILE_W"].asInt();
+  int tile_h = g_state->get_assets()->find_json("atlas")["TILE_H"].asInt();
 
   // Lambda function for convenience
   auto is_over = [&] (int const& x, int const& y) {

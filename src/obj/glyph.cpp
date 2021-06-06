@@ -30,9 +30,9 @@
 
 glyph::glyph(state_ptr const& g_state, std::string const& fontid, char const& ch) : object(g_state) {
   // Obtain some essential variables
-  SDL_Renderer *render = g_state->get_window().get_render();
-  int tile_w = g_state->get_assets().find_json("atlas")["TILE_W"].asInt();
-  int tile_h = g_state->get_assets().find_json("atlas")["TILE_H"].asInt();
+  SDL_Renderer *render = g_state->get_window()->get_render();
+  int tile_w = g_state->get_assets()->find_json("atlas")["TILE_W"].asInt();
+  int tile_h = g_state->get_assets()->find_json("atlas")["TILE_H"].asInt();
 
   // Configure our glyph object
   o_source   = { 0, 0, tile_w, tile_h };

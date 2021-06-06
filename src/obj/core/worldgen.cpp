@@ -28,7 +28,7 @@
 // WORLDGEN Class implementation
 //
 
-worldgen::worldgen(state_ptr const& g_state, int const& width, int const& height) : object(g_state) {
+worldgen::worldgen(state_ptr const& g_state, int const& width, int const& height, unsigned int seed) : object(g_state) {
   // Generate the biome and temperature map
   generate_noise_map(width, height);
 
@@ -36,12 +36,13 @@ worldgen::worldgen(state_ptr const& g_state, int const& width, int const& height
   generate_world_map(width, height);
 
   // Generate the map texture
-  int tile_w = g_state->get_assets().find_json("atlas")["TILE_W"].asInt();
-  int tile_h = g_state->get_assets().find_json("atlas")["TILE_H"].asInt();
+  int tile_w = g_state->get_assets()->find_json("atlas")["TILE_W"].asInt();
+  int tile_h = g_state->get_assets()->find_json("atlas")["TILE_H"].asInt();
   generate_world_txt(g_state, width, height, tile_w, tile_h);
 
   o_source   = { 0, 0, width * tile_w, height * tile_h };
   o_position = { tile_w, tile_h, o_source.w, o_source.h };
+  w_seed     = seed;
 }
 
 
@@ -68,7 +69,7 @@ void worldgen::generate_noise_map(int const& width, int const& height) {
   w_temp.resize(width * height + 1);
 
   // Initialize the perlin noise generator
-  perlin noise(std::default_random_engine::default_seed);
+  perlin noise(w_seed);
 
   // Generate the noisemaps
   double nx = 1.0 / width;
@@ -89,7 +90,7 @@ void worldgen::generate_noise_map(int const& width, int const& height) {
 
 void worldgen::generate_world_txt(state_ptr const& g_state, int const& width, int const& height, int const& tile_w, int const& tile_h) {
   // Create our world texture
-  SDL_Renderer *render = g_state->get_window().get_render();
+  SDL_Renderer *render = g_state->get_window()->get_render();
   sdltexture_ptr texture(SDL_CreateTexture(render, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,
     width * tile_w, height * tile_h), [=](SDL_Texture *t){ SDL_DestroyTexture(t); });
   o_texture = texture;
@@ -104,36 +105,36 @@ void worldgen::generate_world_txt(state_ptr const& g_state, int const& width, in
     for(int x = 0; x < width; x++) {
       SDL_Color  color { 255, 255, 255, 255 };
       SDL_Rect   pos   { x * tile_w, y * tile_h, tile_w, tile_h };
-      object_ptr t = g_state->get_assets().find_tile(16);
+      object_ptr t = g_state->get_assets()->find_tile(16);
 
       switch(w_map[y * width + x]) {
         case biome::water:
-          t     = g_state->get_assets().find_tile(11);
-          color = g_state->get_assets().find_color("BLUE");
+          t     = g_state->get_assets()->find_tile(11);
+          color = g_state->get_assets()->find_color("BLUE");
           break;
         case biome::sand:
-          t     = g_state->get_assets().find_tile(17);
-          color = g_state->get_assets().find_color("YELLOW");
+          t     = g_state->get_assets()->find_tile(17);
+          color = g_state->get_assets()->find_color("YELLOW");
           break;
         case biome::grass:
-          t     = g_state->get_assets().find_tile(17);
-          color = g_state->get_assets().find_color("GREEN");
+          t     = g_state->get_assets()->find_tile(17);
+          color = g_state->get_assets()->find_color("GREEN");
           break;
         case biome::forrest:
-          t     = g_state->get_assets().find_tile(5);
-          color = g_state->get_assets().find_color("GREEN");
+          t     = g_state->get_assets()->find_tile(5);
+          color = g_state->get_assets()->find_color("GREEN");
           break;
         case biome::dirt:
-          t     = g_state->get_assets().find_tile(23);
-          color = g_state->get_assets().find_color("BROWN");
+          t     = g_state->get_assets()->find_tile(23);
+          color = g_state->get_assets()->find_color("BROWN");
           break;
         case biome::swamp:
-          t     = g_state->get_assets().find_tile(23);
-          color = g_state->get_assets().find_color("GREEN");
+          t     = g_state->get_assets()->find_tile(23);
+          color = g_state->get_assets()->find_color("GREEN");
           break;
         case biome::mountain:
-          t     = g_state->get_assets().find_tile(6);
-          color = g_state->get_assets().find_color("D_GRAY");
+          t     = g_state->get_assets()->find_tile(6);
+          color = g_state->get_assets()->find_color("D_GRAY");
           break;
         default:
           break;

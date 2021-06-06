@@ -227,7 +227,7 @@ SDL_Color const& assets::find_color(std::string const& id) {
 
 
 void             assets::load_tiles(state_ptr const& g_state, Json::Value const& t_config) {
-  sdltexture_ptr texture = load_texture(g_state->get_window().get_render(), "atlas", t_config["ATLAS"].asString());
+  sdltexture_ptr texture = load_texture(g_state->get_window()->get_render(), "atlas", t_config["ATLAS"].asString());
 
   int tile_w = t_config["TILE_W"].asInt();
   int tile_h = t_config["TILE_H"].asInt();

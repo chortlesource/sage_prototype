@@ -29,8 +29,8 @@
 //
 
 enemy::enemy(state_ptr const& g_state) : object(g_state) {
-  SDL_Renderer *render = g_state->get_window().get_render();
-  object_ptr t         = g_state->get_assets().find_tile(2);
+  SDL_Renderer *render = g_state->get_window()->get_render();
+  object_ptr t         = g_state->get_assets()->find_tile(2);
 
   // Configure basic details about the object
   o_source   = { 0, 0, t->get_source().w, t->get_source().h };

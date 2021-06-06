@@ -28,7 +28,7 @@
 // TEXTBOX Class implementation
 //
 
-textbox::textbox(state_ptr const& g_state, int const& len) : object(g_state) {
+textbox::textbox(state_ptr const& g_state, std::string const& name, int const& len) : object(g_state) {
   // Initialize dimension variables
   int tile_w = g_state->get_input().tile_w;
   int tile_h = g_state->get_input().tile_h;
@@ -38,12 +38,13 @@ textbox::textbox(state_ptr const& g_state, int const& len) : object(g_state) {
   // Initialize our object
   o_source   = { 0, 0, width, height };
   o_position = o_source;
-  o_active  = false;
+  o_active   = false;
   caption    = "";
   offset     = 0;
   length     = len;
+  t_name     = name;
 
-  SDL_Renderer *render = g_state->get_window().get_render();
+  SDL_Renderer *render = g_state->get_window()->get_render();
 
   // Create our textbox texture
   sdltexture_ptr texture(SDL_CreateTexture(render, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,
@@ -86,6 +87,20 @@ bool const& textbox::update(state_ptr const& g_state) {
 }
 
 
+void textbox::data() {
+  // Send out data as requested
+  o_manager->send_event(event(data_event(data_event::type::response, t_name, "", caption)));
+};
+
+
+void textbox::reset() {
+  // Clear the current contents of the textbox
+  offset    = 0;
+  o_changed = true;
+  caption.clear();
+}
+
+
 void textbox::finalize(state_ptr const& g_state) {
   // Remove event delegates
   initialized = false;
@@ -109,12 +124,12 @@ void textbox::handle_draw(state_ptr const& g_state) {
   int tile_w = g_state->get_input().tile_w;
   int tile_h = g_state->get_input().tile_h;
 
-  SDL_Renderer *render = g_state->get_window().get_render();
+  SDL_Renderer *render = g_state->get_window()->get_render();
 
   // Clear our texture for drawing
   SDL_SetTextureBlendMode(o_texture.get(), SDL_BLENDMODE_BLEND);
   SDL_SetRenderTarget(render, o_texture.get());
-  SDL_Color color = g_state->get_assets().find_color("D_GRAY");
+  SDL_Color color = g_state->get_assets()->find_color("D_GRAY");
   SDL_SetRenderDrawColor(render, color.r, color.g, color.b, 255);
   SDL_RenderClear(render);
 
@@ -124,7 +139,7 @@ void textbox::handle_draw(state_ptr const& g_state) {
   if(size != 0) {
     for(int i = 0; i < size; i++) {
       // Find the corresponding glyph and add to the textbox
-      glyph_ptr gly   = g_state->get_assets().find_glyph(caption[i + offset]);
+      glyph_ptr gly   = g_state->get_assets()->find_glyph(caption[i + offset]);
 
       if(gly != nullptr) {
         // Copy the glyph to the image
@@ -136,7 +151,7 @@ void textbox::handle_draw(state_ptr const& g_state) {
 
   // Print the cursor if the textbox is active
   if(o_active) {
-    object_ptr cursor = g_state->get_assets().find_tile(12);
+    object_ptr cursor = g_state->get_assets()->find_tile(12);
     SDL_Rect pos { tile_w * size, 0, tile_w, tile_h };
     SDL_RenderCopy(render, cursor->get_texture(), &cursor->get_source(), &pos);
   }
@@ -150,12 +165,14 @@ void textbox::register_delegates(state_ptr const& g_state) {
   // Register the event listeners
   std::function<void(event const&)> callback = [=](event const& e) -> void { this->on_event(e); };
 
-  g_state->get_manager().add_delegate(delegate(o_eventid, eventtype::key, callback));
+  o_manager->add_delegate(delegate(o_eventid, eventtype::key, callback));
+  o_manager->add_delegate(delegate(o_eventid, eventtype::data, callback));
 }
 
 
 void textbox::remove_delegates(state_ptr const& g_state) {
-  g_state->get_manager().remove_delegate(delegate(o_eventid, eventtype::key, nullptr));
+  o_manager->remove_delegate(delegate(o_eventid, eventtype::key, nullptr));
+  o_manager->add_delegate(delegate(o_eventid, eventtype::data, nullptr));
 }
 
 
@@ -200,6 +217,11 @@ void textbox::on_event(event const& e) {
             break;
         };
       }
+      break;
+    case eventtype::data:
+      if(e.data.target == t_name && e.data.action == data_event::type::request)
+        data();
+      break;
     default:
       break;
   }

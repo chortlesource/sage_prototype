@@ -30,12 +30,12 @@
 //
 
 enum class eventtype {
-  none, system, button, key
+  none, system, button, key, data
 };
 
 
-static const std::array<std::string, 4> eventstring = {
-  "NON_EVENT", "SYSTEM_EVENT", "BUTTON_EVENT", "KEY_EVENT"
+static const std::array<std::string, 5> eventstring = {
+  "NON_EVENT", "SYSTEM_EVENT", "BUTTON_EVENT", "KEY_EVENT", "DATA_EVENT"
 };
 
 
@@ -85,6 +85,25 @@ struct key_event {
   key_event(type const& t, int const& k, int const s, int const& a, int const& m) : keytype(t), key(k), scancode(s), action(a), mods(m) {};
 };
 
+
+/////////////////////////////////////////////////////////////
+// DATA_EVENT Struct
+//
+
+struct data_event {
+  enum class type { none, request, response };
+
+  const type action;
+  const std::string origin;
+  const std::string target;
+  const std::string data;
+
+  data_event() : action(type::none), origin(), target(), data() {};
+  data_event(type const& a, std::string const& o, std::string const& t, std::string const& d)
+    : action(a), origin(o), target(t), data(d) {};
+};
+
+
 /////////////////////////////////////////////////////////////
 // EVENT struct
 //
@@ -95,11 +114,13 @@ struct event {
   system_event system;
   button_event button;
   key_event    key;
+  data_event   data;
 
   event() : type(eventtype::none), system(), button(), key() {};
-  event(system_event const& s) : type(eventtype::system), system(s), button(), key() {};
-  event(button_event const& b) : type(eventtype::button), system(), button(b), key() {};
-  event(key_event const& k)    : type(eventtype::key), system(), button(), key(k) {};
+  event(system_event const& s) : type(eventtype::system), system(s), button(), key(), data() {};
+  event(button_event const& b) : type(eventtype::button), system(), button(b), key(), data() {};
+  event(key_event const& k)    : type(eventtype::key), system(), button(), key(k), data()    {};
+  event(data_event const& d)   : type(eventtype::data), system(), button(), key(), data(d)   {};
 };
 
 

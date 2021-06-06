@@ -37,14 +37,16 @@ public:
 
   virtual bool const& update(state_ptr const& g_state);
   virtual void        finalize(state_ptr const& g_state);
+  virtual void        data();
+  virtual void        reset();
 
   // object get and set functions
-  virtual void set_visible(bool const& value) final;
+  virtual void set_visible(bool const& value);
   virtual void set_paused(bool const& value);
-  virtual void set_active(bool const& value)  final;
-  virtual void set_position(SDL_Rect const& value) final;
-  virtual void set_color(SDL_Color const& value) final;
-  virtual void set_eventid(unsigned int const& value) final;
+  virtual void set_active(bool const& value);
+  virtual void set_position(SDL_Rect const& value);
+  virtual void set_color(SDL_Color const& value);
+  virtual void set_eventid(unsigned int const& value);
 
   virtual bool const&         get_visible()     const final;
   virtual bool const&         get_paused()      const final;
@@ -67,8 +69,10 @@ protected:
   SDL_Rect       o_position;
   SDL_Color      o_color;
   sdltexture_ptr o_texture;
+  manager_ptr    o_manager;
 
   unsigned int   o_eventid;
+  std::string    o_name;
 };
 
 

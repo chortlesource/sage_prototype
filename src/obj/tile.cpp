@@ -34,7 +34,7 @@ tile::tile(state_ptr const& g_state, sdltexture_ptr const& texture, SDL_Rect con
   o_position = o_source;
   o_color    = { 255, 255, 255, 255 };
 
-  SDL_Renderer *render = g_state->get_window().get_render();
+  SDL_Renderer *render = g_state->get_window()->get_render();
 
   // Allocate memory for the tile texture
   sdltexture_ptr tmp_texture(SDL_CreateTexture(render, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,
