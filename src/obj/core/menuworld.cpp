@@ -34,8 +34,8 @@ menuworld::menuworld(state_ptr const& g_state) : menu(g_state) {
   object_ptr title    = std::make_shared<text>(g_state, "CREATE NEW WORLD", "M_MNU_TITLE", "DEFAULT");
   object_ptr seedlbl  = std::make_shared<gtext>(g_state, "ENTER SEED", "DEFAULT", "NONE");
   object_ptr seedtxt  = std::make_shared<textbox>(g_state, 15);
-  object_ptr creabtn  = std::make_shared<button>(g_state, "Create", "M_MNU_BUTTON", "MNU_CREATE_WORLD");
-  object_ptr cancbtn  = std::make_shared<button>(g_state, "Cancel", "M_MNU_BUTTON", "MNU_CANCEL_WORLD");
+  object_ptr creabtn  = std::make_shared<button>(g_state, "Create", "M_MNU_BUTTON", "MNU_WORLD_CREATE");
+  object_ptr cancbtn  = std::make_shared<button>(g_state, "Cancel", "M_MNU_BUTTON", "MNU_WORLD_CANCEL");
 
   // Add our menu objects to the menu
   add(over);
@@ -58,6 +58,6 @@ menuworld::menuworld(state_ptr const& g_state) : menu(g_state) {
   title->set_position({ startx - (title->get_source().w / 2), starty - (title->get_source().h / 2) + (offset += padd), 0, 0});
   seedlbl->set_position({ startx - (seedlbl->get_source().w / 2), starty - (seedlbl->get_source().h / 2) + (offset += (padd + (padd / 2))), 0, 0});
   seedtxt->set_position({ startx - (seedtxt->get_source().w / 2), starty - (seedtxt->get_source().h / 2) + (offset += padd), 0, 0});
-  creabtn->set_position({ startx - (creabtn->get_source().w / 2), starty - (creabtn->get_source().h / 2) + (offset += padd), 0, 0});
-  cancbtn->set_position({ startx - (cancbtn->get_source().w / 2), starty - (cancbtn->get_source().h / 2) + (offset += padd), 0, 0});
+  creabtn->set_position({ startx - creabtn->get_source().w - (creabtn->get_source().w / 2), starty - (creabtn->get_source().h / 2) + (offset += padd), 0, 0});
+  cancbtn->set_position({ startx + (cancbtn->get_source().w / 2), starty - (cancbtn->get_source().h / 2) + offset, 0, 0});
 }

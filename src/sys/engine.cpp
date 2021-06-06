@@ -174,8 +174,12 @@ void engine::on_event(event const& e) {
     case eventtype::button:
       if(e.button.command == "MNU_QUIT")
         g_state->get_logic().sage_halt(g_state);
-      else if(e.button.command == "MNU_NEW")
+      else if(e.button.command == "MNU_WORLD_SHOW")
+        g_state->get_stage().use_menu("WORLD_MENU");
+      else if(e.button.command == "MNU_WORLD_CREATE")
         g_state->get_logic().init_new_game(g_state);
+      else if(e.button.command == "MNU_WORLD_CANCEL")
+        g_state->get_stage().pop_menu();
       else if(e.button.command == "MNU_CONT")
         g_state->get_logic().toggle_main_menu(g_state);
       break;

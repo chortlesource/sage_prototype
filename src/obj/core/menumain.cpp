@@ -34,7 +34,7 @@ menumain::menumain(state_ptr const& g_state) : menu(g_state) {
   object_ptr bordr    = std::make_shared<border>(g_state, "D_GRAY");
   object_ptr title    = std::make_shared<text>(g_state, "SAGE", "M_MNU_TITLE", "DEFAULT");
   object_ptr conbtn   = std::make_shared<button>(g_state, "Continue", "M_MNU_BUTTON", "MNU_CONT");
-  object_ptr newbtn   = std::make_shared<button>(g_state, "New", "M_MNU_BUTTON", "MNU_NEW");
+  object_ptr newbtn   = std::make_shared<button>(g_state, "New", "M_MNU_BUTTON", "MNU_WORLD_SHOW");
   object_ptr loadbtn  = std::make_shared<button>(g_state, "Load", "M_MNU_BUTTON", "MNU_LOAD");
   object_ptr aboutbtn = std::make_shared<button>(g_state, "About", "M_MNU_BUTTON", "MNU_ABOUT");
   object_ptr quitbtn  = std::make_shared<button>(g_state, "Quit", "M_MNU_BUTTON", "MNU_QUIT");

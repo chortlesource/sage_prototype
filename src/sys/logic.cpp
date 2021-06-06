@@ -46,7 +46,8 @@ void logic::toggle_main_menu(state_ptr const& g_state) {
 void logic::init_new_game(state_ptr const& g_state) {
   if(g_state->get_game() == nullptr) {
     // Pop the menu and set to initialized
-    g_state->get_stage().pop_menu();
+    g_state->get_stage().pop_menu(); // Pop the creation menu
+    g_state->get_stage().pop_menu(); // Pop the main menu
     g_state->set_status(state::status::run);
 
     // Initialize the new game

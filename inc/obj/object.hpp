@@ -40,7 +40,7 @@ public:
 
   // object get and set functions
   virtual void set_visible(bool const& value) final;
-  virtual void set_paused(bool const& value)  final;
+  virtual void set_paused(bool const& value);
   virtual void set_active(bool const& value)  final;
   virtual void set_position(SDL_Rect const& value) final;
   virtual void set_color(SDL_Color const& value) final;

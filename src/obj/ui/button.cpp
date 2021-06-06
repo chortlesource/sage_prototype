@@ -72,17 +72,19 @@ void button::handle_mouse(state_ptr const& g_state) {
   };
 
   // Obtain the current position of the mouse
-  istate const& mouse = g_state->get_input();
+  istate& mouse = g_state->get_input();
 
   // Clarify if it's over our button and manip accordling
   if(is_over(mouse.x, mouse.y)) {
     if(mouse.buttons & SDL_BUTTON(SDL_BUTTON_LEFT)) {
+      b_clicked = true;
+
+      while(SDL_GetMouseState(NULL, NULL) ) { SDL_PumpEvents(); }
+    }
+    if(b_clicked) {
       o_texture = b_texts[2].get_textureptr();
       o_changed = true;
-      if(!b_clicked) {
-        g_state->get_manager().send_event(event(button_event(button_event::type::clicked, b_action)));
-        b_clicked = true;
-      }
+      g_state->get_manager().send_event(event(button_event(button_event::type::clicked, b_action)));
     } else {
       o_texture = b_texts[1].get_textureptr();
       o_changed = true;

@@ -37,6 +37,8 @@ public:
 
   virtual bool const& update(state_ptr const& g_state) override;
   virtual void        finalize(state_ptr const& g_state) override;
+  virtual void        set_paused(bool const& value);
+
 
   virtual void add(object_ptr const& obj);
   virtual void pop(object_ptr const& obj);

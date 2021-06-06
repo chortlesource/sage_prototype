@@ -68,6 +68,15 @@ bool const& layer::update(state_ptr const& g_state) {
 }
 
 
+void layer::set_paused(bool const& value) {
+  o_changed = true;
+  o_paused  = value;
+
+  for(auto const& id : l_objectid)
+    l_objects[id]->set_paused(value);
+}
+
+
 void layer::add(object_ptr const& obj) {
   if((l_objects.try_emplace(obj->get_id(), obj)).second)
     INFO("Added object:", obj->get_id());

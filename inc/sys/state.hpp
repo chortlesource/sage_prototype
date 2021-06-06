@@ -76,7 +76,7 @@ public:
   stage       &      get_stage()   { return g_stage; }
   game_ptr    &      get_game()    { return g_game; }
   logic       &      get_logic()   { return g_logic; }
-  istate      const& get_input()   { return g_input; }
+  istate      &      get_input()   { return g_input; }
   status      const& get_status()  { return g_status; }
   double      const& get_delta()   { return g_timer.delta(); }
   Json::Value const& get_config()  { return g_config; }
