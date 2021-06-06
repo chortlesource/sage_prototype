@@ -141,9 +141,6 @@ void textbox::handle_draw(state_ptr const& g_state) {
 
   if(size != 0) {
     for(int i = 0; i < size; i++) {
-      if(caption[i + offset] == 'L')
-        DEBUG("L FOUND");
-
       // Find the corresponding glyph and add to the textbox
       glyph_ptr gly   = g_state->get_assets()->find_glyph(caption[i + offset]);
 
@@ -211,6 +208,16 @@ void textbox::on_event(event const& e) {
             if(length <= (int)caption.size())
               offset  += 1;
             o_changed = true; // Redraw the textbox
+            break;
+          case SDL_SCANCODE_CAPSLOCK:
+          case SDL_SCANCODE_LSHIFT:
+          case SDL_SCANCODE_LALT:
+          case SDL_SCANCODE_LCTRL:
+          case SDL_SCANCODE_LGUI:
+          case SDL_SCANCODE_RSHIFT:
+          case SDL_SCANCODE_RALT:
+          case SDL_SCANCODE_RCTRL:
+          case SDL_SCANCODE_RGUI:
             break;
           default:
             handle_key(SDL_GetKeyName(e.key.key));

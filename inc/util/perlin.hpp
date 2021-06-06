@@ -1,28 +1,41 @@
 ////////////////////////////////////////////////////////////////////////////
 //
-// sage - perlin.hpp
+// [APP] - perlin.hpp
 //
-// Copyright (c) 2021 Christopher M. Short
+// Copyright (c) 2020 Christopher M. Short
 //
-// This file is part of sage.
+// This file is part of [APP].
 //
-// sage is free software: you can redistribute it and/or modify it
-// under the terms of the GNU General Public License as published by
+// [APP] is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// sage is distributed in the hope that it will be useful, but WITHOUT
-// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
-// or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
-// License for more details.
+// [APP] is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with sage. If not, see <https://www.gnu.org/licenses/>.
+// along with [APP]. If not, see <https://www.gnu.org/licenses/>.
 //
 ////////////////////////////////////////////////////////////////////////////
 
 #ifndef _PERLIN_HPP
 #define _PERLIN_HPP
+
+
+/////////////////////////////////////////////////////////////
+// DEPENDENCIES
+//
+
+// Standard Libraries
+#include <cstdint>
+#include <algorithm>
+#include <array>
+#include <numeric>
+#include <random>
+#include <type_traits>
 
 
 /////////////////////////////////////////////////////////////

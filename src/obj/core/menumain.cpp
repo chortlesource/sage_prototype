@@ -38,6 +38,8 @@ menumain::menumain(state_ptr const& g_state) : menu(g_state) {
   object_ptr loadbtn  = std::make_shared<button>(g_state, "Load", "M_MNU_BUTTON", "MNU_LOAD");
   object_ptr aboutbtn = std::make_shared<button>(g_state, "About", "M_MNU_BUTTON", "MNU_ABOUT");
   object_ptr quitbtn  = std::make_shared<button>(g_state, "Quit", "M_MNU_BUTTON", "MNU_QUIT");
+  object_ptr copylbl  = std::make_shared<gtext>(g_state, "Copyright (c) 2021 C. M. Short", "D_GRAY", "NONE");
+
 
   // Add our menu objects to the menu
   add(over);
@@ -48,6 +50,7 @@ menumain::menumain(state_ptr const& g_state) : menu(g_state) {
   add(loadbtn);
   add(aboutbtn);
   add(quitbtn);
+  add(copylbl);
   add_menu_object(conbtn);
   add_menu_object(newbtn);
   add_menu_object(loadbtn);
@@ -60,12 +63,15 @@ menumain::menumain(state_ptr const& g_state) : menu(g_state) {
   int starty = (o_position.h / 2) - (padd * 5); //- height;
   int offset = 0;
 
-  title->set_position({ startx - (title->get_source().w / 2), starty - (title->get_source().h / 2) + (offset += padd), 0, 0});
-  conbtn->set_position({ startx - (conbtn->get_source().w / 2), starty - (conbtn->get_source().h / 2) + (offset += (padd + (padd / 2))), 0, 0});
-  newbtn->set_position({ startx - (newbtn->get_source().w / 2), starty - (newbtn->get_source().h / 2) + offset, 0, 0});
-  loadbtn->set_position({ startx - (loadbtn->get_source().w / 2), starty - (loadbtn->get_source().h / 2) + (offset += padd), 0, 0});
-  aboutbtn->set_position({ startx - (aboutbtn->get_source().w / 2), starty - (aboutbtn->get_source().h / 2) + (offset += padd), 0, 0});
-  quitbtn->set_position({ startx - (quitbtn->get_source().w / 2), starty - (quitbtn->get_source().h / 2) + (offset += padd), 0, 0});
+  title->set_position({ startx - (title->get_source().w / 2), starty - (padd / 2) + (offset += padd), 0, 0});
+  conbtn->set_position({ startx - (conbtn->get_source().w / 2), starty - (padd / 2) + (offset += (padd + (padd / 2))), 0, 0});
+  newbtn->set_position({ startx - (newbtn->get_source().w / 2), starty - (padd / 2) + offset, 0, 0});
+  loadbtn->set_position({ startx - (loadbtn->get_source().w / 2), starty - (padd / 2) + (offset += padd), 0, 0});
+  aboutbtn->set_position({ startx - (aboutbtn->get_source().w / 2), starty - (padd / 2) + (offset += padd), 0, 0});
+  quitbtn->set_position({ startx - (quitbtn->get_source().w / 2), starty - (padd / 2) + (offset += padd), 0, 0});
+
+  copylbl->set_position({ startx - (copylbl->get_source().w / 2), o_position.h - (padd * 3), 0, 0});
+
 
   l_objects[l_objectid[3]]->set_visible(false);
 }

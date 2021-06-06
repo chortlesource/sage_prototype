@@ -46,14 +46,21 @@ void logic::toggle_main_menu(state_ptr const& g_state) {
 void logic::init_new_game(state_ptr const& g_state, std::string const& seed) {
   // Hash the seed
   std::hash<std::string> to_hash;
+  unsigned int const& hvalue = to_hash(seed);
 
+  INFO("H: ", hvalue);
+
+  // Clear the stage first
   g_state->get_stage()->clear(g_state);
-  g_state->set_game(nullptr);
-  g_state->set_status(state::status::run);
+
+  INFO("H: ", hvalue);
+
 
   // Initialize the new game
-  game_ptr newgame = std::make_shared<game>(g_state, to_hash(seed));
+  game_ptr newgame = std::make_shared<game>(g_state, hvalue);
   g_state->set_game(newgame);
+  g_state->set_status(state::status::run);
+
   INFO("Creating new world...");
 }
 

@@ -55,11 +55,11 @@ menuworld::menuworld(state_ptr const& g_state) : menu(g_state) {
   int starty = (o_position.h / 2) - (padd * 5); //- height;
   int offset = 0;
 
-  title->set_position({ startx - (title->get_source().w / 2), starty - (title->get_source().h / 2) + (offset += padd), 0, 0});
-  seedlbl->set_position({ startx - (seedlbl->get_source().w / 2), starty - (seedlbl->get_source().h / 2) + (offset += (padd + (padd / 2))), 0, 0});
-  seedtxt->set_position({ startx - (seedtxt->get_source().w / 2), starty - (seedtxt->get_source().h / 2) + (offset += padd), 0, 0});
-  creabtn->set_position({ startx - creabtn->get_source().w - (creabtn->get_source().w / 2), starty - (creabtn->get_source().h / 2) + (offset += padd), 0, 0});
-  cancbtn->set_position({ startx + (cancbtn->get_source().w / 2), starty - (cancbtn->get_source().h / 2) + offset, 0, 0});
+  title->set_position({ startx - (title->get_source().w / 2), starty - (padd / 2) + (offset += padd), 0, 0});
+  seedlbl->set_position({ startx - (seedlbl->get_source().w / 2), starty - (padd / 2) + (offset += (padd + (padd / 2))), 0, 0});
+  seedtxt->set_position({ startx - (seedtxt->get_source().w / 2), starty - (padd / 2) + (offset += padd), 0, 0});
+  creabtn->set_position({ startx - creabtn->get_source().w - (creabtn->get_source().w / 2), starty - (padd / 2) + (offset += padd), 0, 0});
+  cancbtn->set_position({ startx + (cancbtn->get_source().w / 2), starty - (padd / 2) + offset, 0, 0});
 }
 
 

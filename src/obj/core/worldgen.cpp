@@ -28,7 +28,7 @@
 // WORLDGEN Class implementation
 //
 
-worldgen::worldgen(state_ptr const& g_state, int const& width, int const& height, unsigned int seed) : object(g_state) {
+worldgen::worldgen(state_ptr const& g_state, int const& width, int const& height, unsigned int const& seed) : object(g_state) {
   // Generate the biome and temperature map
   generate_noise_map(width, height);
 
@@ -42,7 +42,7 @@ worldgen::worldgen(state_ptr const& g_state, int const& width, int const& height
 
   o_source   = { 0, 0, width * tile_w, height * tile_h };
   o_position = { tile_w, tile_h, o_source.w, o_source.h };
-  w_seed     = seed;
+  w_seed = seed;
 }
 
 
@@ -68,8 +68,7 @@ void worldgen::generate_noise_map(int const& width, int const& height) {
   w_elev.resize(width * height + 1);
   w_temp.resize(width * height + 1);
 
-  // Initialize the perlin noise generator
-  perlin noise(w_seed);
+  perlin w_noise(w_seed);
 
   // Generate the noisemaps
   double nx = 1.0 / width;
@@ -78,8 +77,8 @@ void worldgen::generate_noise_map(int const& width, int const& height) {
 
   for(int y = 0; y < height; y++) {
     for(int x = 0; x < width; x++) {
-      double elev = noise.octave_noise_0_1(x * nx * res, y * ny * res, 0.1, 20);
-      double temp = noise.octave_noise_0_1(x * nx * res, y * ny * res, 1, 3);
+      double elev = w_noise.octave_noise_0_1(x * nx * res, y * ny * res, 0.1, 20);
+      double temp = w_noise.octave_noise_0_1(x * nx * res, y * ny * res, 1, 3);
 
       w_elev[y * width + x] = elev;
       w_temp[y * width + x] = temp;
