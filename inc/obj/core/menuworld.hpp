@@ -34,6 +34,7 @@ class menuworld : public menu {
 public:
   menuworld(state_ptr const& g_state);
 
+  virtual void reset() override;
 };
 
 

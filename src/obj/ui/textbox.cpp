@@ -108,14 +108,16 @@ void textbox::finalize(state_ptr const& g_state) {
 }
 
 
-bool textbox::handle_key(const char *str) {
-  bool rvalue = false;
+void textbox::handle_key(const char *str) {
 
-  // Cycle through out APP_STRINGS to clarify the character is a known string
-  for(auto &s : _APP_CHARS)
-    if(s == str[0]) rvalue = true;
-
-  return rvalue;
+  for(auto const& key : _APP_CHARS) {
+    if(key == str[0]) {
+      caption.append(1, key);
+      if(length <= (int)caption.size())
+        offset  += 1;
+      o_changed = true; // Redraw the textbox
+    }
+  }
 }
 
 
@@ -130,6 +132,7 @@ void textbox::handle_draw(state_ptr const& g_state) {
   SDL_SetTextureBlendMode(o_texture.get(), SDL_BLENDMODE_BLEND);
   SDL_SetRenderTarget(render, o_texture.get());
   SDL_Color color = g_state->get_assets()->find_color("D_GRAY");
+  SDL_Color tcolor = g_state->get_assets()->find_color("DEFAULT");
   SDL_SetRenderDrawColor(render, color.r, color.g, color.b, 255);
   SDL_RenderClear(render);
 
@@ -138,12 +141,16 @@ void textbox::handle_draw(state_ptr const& g_state) {
 
   if(size != 0) {
     for(int i = 0; i < size; i++) {
+      if(caption[i + offset] == 'L')
+        DEBUG("L FOUND");
+
       // Find the corresponding glyph and add to the textbox
       glyph_ptr gly   = g_state->get_assets()->find_glyph(caption[i + offset]);
 
       if(gly != nullptr) {
         // Copy the glyph to the image
         SDL_Rect pos = { tile_w * i, 0 , tile_w, tile_h };
+        SDL_SetTextureColorMod(gly->get_texture(), tcolor.r, tcolor.g, tcolor.b);
         SDL_RenderCopy(render, gly->get_texture(), &gly->get_source(), &pos);
       }
     }
@@ -206,14 +213,7 @@ void textbox::on_event(event const& e) {
             o_changed = true; // Redraw the textbox
             break;
           default:
-            const char *key = SDL_GetKeyName(e.key.key);
-            if(handle_key(key)) {
-              caption.append(key);
-
-              if(length <= (int)caption.size())
-                offset  += 1;
-              o_changed = true; // Redraw the textbox
-            }
+            handle_key(SDL_GetKeyName(e.key.key));
             break;
         };
       }

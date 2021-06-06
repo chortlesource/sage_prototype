@@ -54,6 +54,7 @@ glyph::glyph(state_ptr const& g_state, std::string const& fontid, char const& ch
   SDL_SetRenderTarget(render, o_texture.get());
   SDL_SetRenderDrawColor(render, 0,0,0,0);
   SDL_RenderClear(render);
+  SDL_SetTextureColorMod(texture.get(), o_color.r, o_color.g, o_color.b);
   SDL_RenderCopy(render, t.get_texture(), &source, &newpos);
   SDL_SetRenderTarget(render, NULL);
 

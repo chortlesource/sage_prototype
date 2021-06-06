@@ -45,7 +45,7 @@ private:
   std::string caption;
   std::string t_name;
 
-  bool handle_key (const char *str);
+  void handle_key (const char *str);
   void handle_draw(state_ptr const& g_state);
 
   void register_delegates(state_ptr const& g_state);

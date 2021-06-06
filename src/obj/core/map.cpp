@@ -84,4 +84,8 @@ void map::update_cursor(state_ptr const& g_state) {
     cursor->set_position({ worldx * tile_w, worldy * tile_h, 0, 0});
     o_changed += 1;
   }
+
+  if(SDL_ShowCursor(SDL_QUERY) == SDL_ENABLE)
+    SDL_ShowCursor(SDL_DISABLE);
+
 }

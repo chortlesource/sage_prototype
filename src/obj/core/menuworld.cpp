@@ -29,7 +29,7 @@
 
 menuworld::menuworld(state_ptr const& g_state) : menu(g_state) {
   // Create our menu objects
-  object_ptr over     = std::make_shared<overlay>(g_state, "BLACK", 230);
+  object_ptr over     = std::make_shared<overlay>(g_state, "BLACK", 255);
   object_ptr bordr    = std::make_shared<border>(g_state, "D_GRAY");
   object_ptr title    = std::make_shared<text>(g_state, "CREATE NEW WORLD", "M_MNU_TITLE", "DEFAULT");
   object_ptr seedlbl  = std::make_shared<gtext>(g_state, "ENTER SEED", "DEFAULT", "NONE");
@@ -60,4 +60,10 @@ menuworld::menuworld(state_ptr const& g_state) : menu(g_state) {
   seedtxt->set_position({ startx - (seedtxt->get_source().w / 2), starty - (seedtxt->get_source().h / 2) + (offset += padd), 0, 0});
   creabtn->set_position({ startx - creabtn->get_source().w - (creabtn->get_source().w / 2), starty - (creabtn->get_source().h / 2) + (offset += padd), 0, 0});
   cancbtn->set_position({ startx + (cancbtn->get_source().w / 2), starty - (cancbtn->get_source().h / 2) + offset, 0, 0});
+}
+
+
+void menuworld::reset() {
+  for(auto &obj : m_objects)
+    obj->reset();
 }
