@@ -47,17 +47,14 @@ void logic::init_new_game(state_ptr const& g_state, std::string const& seed) {
   // Hash the seed
   std::hash<std::string> to_hash;
 
-  if(g_state->get_game() == nullptr) {
-    // Pop the menu and set to initialized
-    g_state->get_stage()->pop_menu(); // Pop the creation menu
-    g_state->get_stage()->pop_menu(); // Pop the main menu
-    g_state->set_status(state::status::run);
+  g_state->get_stage()->clear(g_state);
+  g_state->set_game(nullptr);
+  g_state->set_status(state::status::run);
 
-    // Initialize the new game
-    game_ptr newgame = std::make_shared<game>(g_state, to_hash(seed));
-    g_state->set_game(newgame);
-    INFO("Starting new game...");
-  }
+  // Initialize the new game
+  game_ptr newgame = std::make_shared<game>(g_state, to_hash(seed));
+  g_state->set_game(newgame);
+  INFO("Creating new world...");
 }
 
 

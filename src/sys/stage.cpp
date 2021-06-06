@@ -89,6 +89,8 @@ void stage::pop() {
 
 void stage::clear(state_ptr const& g_state) {
   // Finalize our objects
+  while(s_menu_depth != 0) pop_menu();
+
   for(auto &l : s_layers)
     l->finalize(g_state);
 
