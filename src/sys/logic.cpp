@@ -48,13 +48,8 @@ void logic::init_new_game(state_ptr const& g_state, std::string const& seed) {
   std::hash<std::string> to_hash;
   unsigned int const& hvalue = to_hash(seed);
 
-  INFO("H: ", hvalue);
-
   // Clear the stage first
   g_state->get_stage()->clear(g_state);
-
-  INFO("H: ", hvalue);
-
 
   // Initialize the new game
   game_ptr newgame = std::make_shared<game>(g_state, hvalue);

@@ -1,28 +1,28 @@
 ////////////////////////////////////////////////////////////////////////////
 //
-// [APP] - perlin.hpp
+// sage - perlin.hpp
 //
-// Copyright (c) 2020 Christopher M. Short
+// Copyright (c) 2021 Christopher M. Short
 //
-// This file is part of [APP].
+// This file is part of sage.
 //
-// [APP] is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
+// sage is free software: you can redistribute it and/or modify it
+// under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// [APP] is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
+// sage is distributed in the hope that it will be useful, but WITHOUT
+// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+// or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+// License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with [APP]. If not, see <https://www.gnu.org/licenses/>.
+// along with sage. If not, see <https://www.gnu.org/licenses/>.
 //
 ////////////////////////////////////////////////////////////////////////////
 
-#ifndef _PERLIN_HPP
-#define _PERLIN_HPP
+#ifndef _SAGE_PERLIN_HPP
+#define _SAGE_PERLIN_HPP
 
 
 /////////////////////////////////////////////////////////////
@@ -100,11 +100,12 @@ private:
 
 
 public:
-  BaseNoise(unsigned int _seed = std::default_random_engine::default_seed) {
+  BaseNoise(unsigned int const& _seed) {
     seed(_seed);
   }
 
   void seed(unsigned int const& _seed) {
+    INFO("S: ", _seed);
     for(unsigned int i = 0; i < 256; ++i)
       p[i] = i;
 
@@ -199,4 +200,5 @@ public:
 
 using perlin = BaseNoise<double>;
 
-#endif // _PERLIN_HPP
+
+#endif // _SAGE_PERLIN_HPP
